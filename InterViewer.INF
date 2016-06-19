@@ -1,0 +1,21 @@
+[update]
+newversion=1.1.9.0
+localversion=InterViewer.exe
+descr=Версия 1.1.9.0\n- добавлен редактор для видов специализации\n\nВерсия 1.1.8.0\n- добавлены "горячие" клавиши\n\nВерсия 1.1.7.0\n- исправлены некоторые ошибки\n\nВерсия 1.1.6.0\n- исправлена ошибка сохранения записей\n\nВерсия 1.1.5.0\n- мелкие изменения
+[files]
+count=2
+[file1]
+url=InterViewer.exe_NEW
+newversion=1.1.9.0
+localversion=InterViewer.exe
+targetdir={app}
+filesize=10719744
+[file2]
+url=whats.txt
+localversion=whats.txt
+targetdir={app}
+filesize=420
+[application]
+appupdate=1
+appname=InterViewer.exe
+appcomps=InterViewer.exe_NEW 
