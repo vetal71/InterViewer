@@ -1,0 +1,15 @@
+[update]
+unconditional=1
+descr=Версия 1.1.5.0\n- мелкие изменения
+[files]
+count=1
+[file1]
+url=d:\InterViewer\Update\InterViewer.exe_NEW
+newversion=1.1.5.0
+localversion=InterViewer.exe
+targetdir={app}
+filesize=11732480
+[application]
+appupdate=1
+appname=InterViewer.exe
+appcomps=InterViewer.exe_NEW

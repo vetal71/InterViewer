@@ -648,6 +648,7 @@ object fMain: TfMain
             Navigator.Buttons.CustomButtons = <>
             FindPanel.DisplayMode = fpdmManual
             OnCellDblClick = gdvContractsCellDblClick
+            OnFocusedItemChanged = gdvContractsFocusedItemChanged
             DataController.DataSource = dm.dsContacts
             DataController.KeyFieldNames = 'CODE'
             DataController.Summary.DefaultGroupSummaryItems = <>
@@ -810,6 +811,16 @@ object fMain: TfMain
               Visible = False
               HeaderAlignmentHorz = taCenter
             end
+            object gdvContractsISBLACKLIST: TcxGridDBColumn
+              Caption = #1042' '#1063#1045#1056#1053#1054#1052' '#1057#1055#1048#1057#1050#1045
+              DataBinding.FieldName = 'ISBLACKLIST'
+              PropertiesClassName = 'TcxCheckBoxProperties'
+              Properties.DisplayChecked = #1044#1072
+              Properties.DisplayUnchecked = #1053#1077#1090
+              Properties.ValueChecked = '1'
+              Properties.ValueUnchecked = '0'
+              Width = 70
+            end
           end
           object gdlContracts: TcxGridLevel
             GridView = gdvContracts
@@ -897,7 +908,7 @@ object fMain: TfMain
           Hint = #1054#1090#1086#1073#1088#1072#1090#1100' '#1076#1083#1103' '#1087#1086#1082#1074#1072#1088#1090#1080#1088#1085#1086#1075#1086' '#1086#1087#1088#1086#1089#1072
           AllowAllUp = True
           GroupIndex = 1
-          Caption = #1055#1086#1082#1074#1072#1088#1090#1080#1088#1085#1099#1081' '#1074#1086#1087#1088#1086#1089
+          Caption = #1055#1086#1082#1074#1072#1088#1090#1080#1088#1085#1099#1081' '#1086#1087#1088#1086#1089
           OnClick = ButtonFilterClick
           OnDblClick = ButtonFilterDblClick
         end
@@ -1227,7 +1238,7 @@ object fMain: TfMain
     URL = 'InterViewer.INF'
     UserID = 'anonymous'
     VersionCheck = vcAlways
-    Version = '2.2.7.1'
+    Version = '2.4.0.0'
     Left = 689
     Top = 227
   end

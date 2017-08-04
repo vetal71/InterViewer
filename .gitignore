@@ -1,12 +1,6 @@
 __history/
-cache/
-log/
-temp/
-Win32/
-*.fdb
 *.dcu
 *.dproj
-*.groupproj
 *.dsk
 *.2007
 *.local
@@ -14,7 +8,6 @@ Win32/
 *.~dsk
 *.cbk
 *.stat
-*.otares
 *.exe
-*.exe*
 __recovery/
+Win32/

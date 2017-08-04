@@ -48,7 +48,6 @@ type
     edtFIO: TcxDBTextEdit;
     edtCity: TcxDBTextEdit;
     edtCelurar: TcxDBTextEdit;
-    edtRegion: TcxDBTextEdit;
     edtHomePhone: TcxDBTextEdit;
     edtCountAnketa: TcxDBTextEdit;
     edtPercentGood: TcxDBTextEdit;
@@ -57,6 +56,10 @@ type
     mCharacteristics: TcxDBMemo;
     mProjects: TcxDBMemo;
     cbSex: TcxDBComboBox;
+    lbl1: TLabel;
+    edtDateLast: TcxDBDateEdit;
+    edtRegion: TcxDBComboBox;
+    chkBlackList: TcxDBCheckBox;
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }

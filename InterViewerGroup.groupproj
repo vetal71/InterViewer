@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{749D9678-02FE-4F6A-A446-3E079653B2D6}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="InterViewer.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="InterViewer">
+        <MSBuild Projects="InterViewer.dproj"/>
+    </Target>
+    <Target Name="InterViewer:Clean">
+        <MSBuild Projects="InterViewer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="InterViewer:Make">
+        <MSBuild Projects="InterViewer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="InterViewer"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="InterViewer:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="InterViewer:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

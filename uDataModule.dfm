@@ -9,7 +9,7 @@ object dm: Tdm
   end
   object dbcFirebird: TpFIBDatabase
     AutoReconnect = True
-    DBName = 'D:\InterViewer\data\IVIEWER.FDB'
+    DBName = '192.168.254.217/3051:D:\DevProjects\InterViewer\data\IVIEWER.FDB'
     DBParams.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'
@@ -27,7 +27,6 @@ object dm: Tdm
     UpdateSQL.Strings = (
       'UPDATE CONTACTS'
       'SET '
-      '    CODE = :CODE,'
       '    FIO = :FIO,'
       '    SEX = :SEX,'
       '    CURRENTNOTES = :CURRENTNOTES,'
@@ -49,7 +48,8 @@ object dm: Tdm
       '    PERCENTGOOD = :PERCENTGOOD,'
       '    PERCENTBAD = :PERCENTBAD,'
       '    GENERALCHARACTERISTIC = :GENERALCHARACTERISTIC,'
-      '    ISSUPERVIZER = :ISSUPERVIZER'
+      '    ISSUPERVIZER = :ISSUPERVIZER,'
+      '    ISBLACKLIST = :ISBLACKLIST'
       'WHERE'
       '    CODE = :OLD_CODE'
       '    ')
@@ -83,7 +83,8 @@ object dm: Tdm
       '    PERCENTGOOD,'
       '    PERCENTBAD,'
       '    GENERALCHARACTERISTIC,'
-      '    ISSUPERVIZER'
+      '    ISSUPERVIZER,'
+      '    ISBLACKLIST'
       ')'
       'VALUES('
       '    :CODE,'
@@ -108,7 +109,8 @@ object dm: Tdm
       '    :PERCENTGOOD,'
       '    :PERCENTBAD,'
       '    :GENERALCHARACTERISTIC,'
-      '    :ISSUPERVIZER'
+      '    :ISSUPERVIZER,'
+      '    :ISBLACKLIST'
       ')')
     RefreshSQL.Strings = (
       'SELECT'
@@ -134,7 +136,8 @@ object dm: Tdm
       '    PERCENTGOOD,'
       '    PERCENTBAD,'
       '    GENERALCHARACTERISTIC,'
-      '    ISSUPERVIZER'
+      '    ISSUPERVIZER,'
+      '    ISBLACKLIST'
       'FROM'
       '    CONTACTS '
       ''
@@ -165,10 +168,10 @@ object dm: Tdm
       '    PERCENTGOOD,'
       '    PERCENTBAD,'
       '    GENERALCHARACTERISTIC,'
-      '    ISSUPERVIZER'
+      '    ISSUPERVIZER,'
+      '    ISBLACKLIST'
       'FROM'
-      '    CONTACTS '
-      'ORDER BY CODE')
+      '    CONTACTS ')
     AutoUpdateOptions.UpdateTableName = 'CONTACTS'
     AutoUpdateOptions.KeyFields = 'CODE'
     AutoUpdateOptions.GeneratorName = 'GEN_CONTACTS_ID'

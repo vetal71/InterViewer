@@ -3,7 +3,7 @@ object fEditContacts: TfEditContacts
   Top = 0
   BorderStyle = bsDialog
   Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103' '#1086' '#1082#1086#1085#1090#1072#1082#1090#1077
-  ClientHeight = 523
+  ClientHeight = 554
   ClientWidth = 946
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,27 +18,28 @@ object fEditContacts: TfEditContacts
   TextHeight = 13
   object dlgButtons: TRzDialogButtons
     Left = 0
-    Top = 487
+    Top = 518
     Width = 946
     CaptionCancel = #1054#1090#1084#1077#1085#1072
     HotTrack = True
     OKDefault = False
     ShowDivider = True
     TabOrder = 0
-    ExplicitTop = 490
+    ExplicitTop = 487
   end
   object pnlAddInfo: TRzPanel
     Left = 0
     Top = 0
     Width = 946
-    Height = 487
+    Height = 518
     Align = alClient
     BorderOuter = fsNone
     TabOrder = 1
-    ExplicitHeight = 490
+    ExplicitTop = -6
+    ExplicitHeight = 487
     DesignSize = (
       946
-      487)
+      518)
     object Label1: TLabel
       AlignWithMargins = True
       Left = 3
@@ -182,18 +183,25 @@ object fEditContacts: TfEditContacts
       Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1072#1085#1082#1077#1090':'
     end
     object Label20: TLabel
-      Left = 224
+      Left = 243
       Top = 463
       Width = 144
       Height = 13
       Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1093#1086#1088#1086#1096#1080#1093' '#1072#1085#1082#1077#1090':'
     end
     object Label21: TLabel
-      Left = 480
+      Left = 499
       Top = 463
       Width = 136
       Height = 13
       Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1087#1083#1086#1093#1080#1093' '#1072#1085#1082#1077#1090':'
+    end
+    object lbl1: TLabel
+      Left = 5
+      Top = 490
+      Width = 136
+      Height = 13
+      Caption = #1044#1072#1090#1072' '#1087#1086#1089#1083#1077#1076#1085#1077#1075#1086' '#1091#1095#1072#1089#1090#1080#1103':'
     end
     object edtSpecialization: TcxDBTextEdit
       Left = 128
@@ -250,7 +258,6 @@ object fEditContacts: TfEditContacts
       StyleHot.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.NativeStyle = False
       TabOrder = 8
-      Width = 97
     end
     object chbSpecialization: TcxCheckComboBox
       Left = 128
@@ -409,6 +416,14 @@ object fEditContacts: TfEditContacts
       Top = 59
       DataBinding.DataField = 'CITY'
       DataBinding.DataSource = dm.dsContacts
+      Style.LookAndFeel.Kind = lfFlat
+      Style.LookAndFeel.NativeStyle = False
+      StyleDisabled.LookAndFeel.Kind = lfFlat
+      StyleDisabled.LookAndFeel.NativeStyle = False
+      StyleFocused.LookAndFeel.Kind = lfFlat
+      StyleFocused.LookAndFeel.NativeStyle = False
+      StyleHot.LookAndFeel.Kind = lfFlat
+      StyleHot.LookAndFeel.NativeStyle = False
       TabOrder = 3
       Width = 148
     end
@@ -428,22 +443,6 @@ object fEditContacts: TfEditContacts
       TabOrder = 5
       Width = 257
     end
-    object edtRegion: TcxDBTextEdit
-      Left = 128
-      Top = 59
-      DataBinding.DataField = 'REGION'
-      DataBinding.DataSource = dm.dsContacts
-      Style.LookAndFeel.Kind = lfFlat
-      Style.LookAndFeel.NativeStyle = False
-      StyleDisabled.LookAndFeel.Kind = lfFlat
-      StyleDisabled.LookAndFeel.NativeStyle = False
-      StyleFocused.LookAndFeel.Kind = lfFlat
-      StyleFocused.LookAndFeel.NativeStyle = False
-      StyleHot.LookAndFeel.Kind = lfFlat
-      StyleHot.LookAndFeel.NativeStyle = False
-      TabOrder = 2
-      Width = 209
-    end
     object edtHomePhone: TcxDBTextEdit
       Left = 500
       Top = 86
@@ -461,7 +460,7 @@ object fEditContacts: TfEditContacts
       Width = 248
     end
     object edtCountAnketa: TcxDBTextEdit
-      Left = 128
+      Left = 147
       Top = 460
       DataBinding.DataField = 'COUNTANKETA'
       DataBinding.DataSource = dm.dsContacts
@@ -477,7 +476,7 @@ object fEditContacts: TfEditContacts
       Width = 89
     end
     object edtPercentGood: TcxDBTextEdit
-      Left = 374
+      Left = 393
       Top = 460
       DataBinding.DataField = 'PERCENTGOOD'
       DataBinding.DataSource = dm.dsContacts
@@ -493,7 +492,7 @@ object fEditContacts: TfEditContacts
       Width = 89
     end
     object edtPercentBad: TcxDBTextEdit
-      Left = 622
+      Left = 641
       Top = 460
       DataBinding.DataField = 'PERCENTBAD'
       DataBinding.DataSource = dm.dsContacts
@@ -569,6 +568,9 @@ object fEditContacts: TfEditContacts
       Top = 32
       DataBinding.DataField = 'SEX'
       DataBinding.DataSource = dm.dsContacts
+      Properties.Items.Strings = (
+        #1084#1091#1078#1089#1082#1086#1081
+        #1078#1077#1085#1089#1082#1080#1081)
       Style.LookAndFeel.Kind = lfFlat
       Style.LookAndFeel.NativeStyle = False
       StyleDisabled.LookAndFeel.Kind = lfFlat
@@ -579,6 +581,67 @@ object fEditContacts: TfEditContacts
       StyleHot.LookAndFeel.NativeStyle = False
       TabOrder = 1
       Width = 181
+    end
+    object edtDateLast: TcxDBDateEdit
+      Left = 147
+      Top = 487
+      DataBinding.DataField = 'DATELAST'
+      DataBinding.DataSource = dm.dsContacts
+      Style.LookAndFeel.Kind = lfFlat
+      Style.LookAndFeel.NativeStyle = False
+      Style.Shadow = False
+      StyleDisabled.LookAndFeel.Kind = lfFlat
+      StyleDisabled.LookAndFeel.NativeStyle = False
+      StyleFocused.LookAndFeel.Kind = lfFlat
+      StyleFocused.LookAndFeel.NativeStyle = False
+      StyleHot.LookAndFeel.Kind = lfFlat
+      StyleHot.LookAndFeel.NativeStyle = False
+      TabOrder = 22
+      Width = 120
+    end
+    object edtRegion: TcxDBComboBox
+      Left = 128
+      Top = 59
+      DataBinding.DataField = 'REGION'
+      DataBinding.DataSource = dm.dsContacts
+      Properties.Items.Strings = (
+        #1041#1088#1077#1089#1090#1082#1072#1103
+        #1042#1080#1090#1077#1073#1089#1082#1072#1103
+        #1043#1086#1084#1077#1083#1100#1089#1082#1072#1103
+        #1043#1088#1086#1076#1085#1077#1085#1089#1082#1072#1103
+        #1052#1080#1085#1089#1082#1072#1103
+        #1052#1086#1075#1080#1083#1077#1074#1089#1082#1072#1103)
+      Style.LookAndFeel.Kind = lfFlat
+      Style.LookAndFeel.NativeStyle = False
+      StyleDisabled.LookAndFeel.Kind = lfFlat
+      StyleDisabled.LookAndFeel.NativeStyle = False
+      StyleFocused.LookAndFeel.Kind = lfFlat
+      StyleFocused.LookAndFeel.NativeStyle = False
+      StyleHot.LookAndFeel.Kind = lfFlat
+      StyleHot.LookAndFeel.NativeStyle = False
+      TabOrder = 2
+      Width = 209
+    end
+    object chkBlackList: TcxDBCheckBox
+      Left = 244
+      Top = 153
+      Caption = #1042' '#1095#1077#1088#1085#1086#1084' '#1089#1087#1080#1089#1082#1077
+      DataBinding.DataField = 'ISBLACKLIST'
+      DataBinding.DataSource = dm.dsContacts
+      ParentFont = False
+      Properties.DisplayChecked = '1'
+      Properties.DisplayUnchecked = '0'
+      Properties.ValueChecked = '1'
+      Properties.ValueUnchecked = '0'
+      Style.LookAndFeel.Kind = lfFlat
+      Style.LookAndFeel.NativeStyle = False
+      StyleDisabled.LookAndFeel.Kind = lfFlat
+      StyleDisabled.LookAndFeel.NativeStyle = False
+      StyleFocused.LookAndFeel.Kind = lfFlat
+      StyleFocused.LookAndFeel.NativeStyle = False
+      StyleHot.LookAndFeel.Kind = lfFlat
+      StyleHot.LookAndFeel.NativeStyle = False
+      TabOrder = 23
     end
   end
 end

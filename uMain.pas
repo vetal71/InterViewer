@@ -109,6 +109,7 @@ type
     aEdit: TAction;
     aDelete: TAction;
     aPrint: TAction;
+    gdvContractsISBLACKLIST: TcxGridDBColumn;
     procedure aConvertExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnAddClick(Sender: TObject);
@@ -123,6 +124,8 @@ type
     procedure ButtonFilterDblClick(Sender: TObject);
     procedure btnPrintClick(Sender: TObject);
     procedure btnContractClick(Sender: TObject);
+    procedure gdvContractsFocusedItemChanged(Sender: TcxCustomGridTableView;
+      APrevFocusedItem, AFocusedItem: TcxCustomGridTableItem);
   private
     Options: TOptions;
     IsFirstRun: Boolean;
@@ -291,6 +294,12 @@ procedure TfMain.gdvContractsCellDblClick(Sender: TcxCustomGridTableView;
   AShift: TShiftState; var AHandled: Boolean);
 begin
   btnEditClick(nil);
+end;
+
+procedure TfMain.gdvContractsFocusedItemChanged(Sender: TcxCustomGridTableView;
+  APrevFocusedItem, AFocusedItem: TcxCustomGridTableItem);
+begin
+  Sender.OptionsBehavior.IncSearchItem := AFocusedItem;
 end;
 
 function TfMain.GetSQLFilter(aIndex: Integer): string;
