@@ -1,9 +1,15 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{749D9678-02FE-4F6A-A446-3E079653B2D6}</ProjectGuid>
+        <ProjectGuid>{F575EAA9-9F92-43C8-BE84-0F427C7D0E99}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
         <Projects Include="InterViewer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TestProject.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ConvertData.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -23,14 +29,32 @@
     <Target Name="InterViewer:Make">
         <MSBuild Projects="InterViewer.dproj" Targets="Make"/>
     </Target>
+    <Target Name="TestProject">
+        <MSBuild Projects="TestProject.dproj"/>
+    </Target>
+    <Target Name="TestProject:Clean">
+        <MSBuild Projects="TestProject.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestProject:Make">
+        <MSBuild Projects="TestProject.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ConvertData">
+        <MSBuild Projects="ConvertData.dproj"/>
+    </Target>
+    <Target Name="ConvertData:Clean">
+        <MSBuild Projects="ConvertData.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ConvertData:Make">
+        <MSBuild Projects="ConvertData.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="InterViewer"/>
+        <CallTarget Targets="InterViewer;TestProject;ConvertData"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="InterViewer:Clean"/>
+        <CallTarget Targets="InterViewer:Clean;TestProject:Clean;ConvertData:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="InterViewer:Make"/>
+        <CallTarget Targets="InterViewer:Make;TestProject:Make;ConvertData:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

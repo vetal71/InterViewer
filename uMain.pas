@@ -7,41 +7,56 @@ uses
   System.Variants, System.Classes, Vcl.Graphics, cxGraphics, cxControls,
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter,
   cxData, cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, System.Actions,
-  Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomTableView,
+  Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomTableView, pFIBDataSet,
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
   Vcl.Buttons, Vcl.ExtCtrls, RzPanel, RzStatus, Vcl.Controls, Vcl.Mask,
-  Vcl.DBCtrls, RzCommon, cxCheckBox, cxGridExportLink, WUpdate;
-
-type
-  TOptions = packed record
-    FBServerIP : string;
-    FBDBName   : string;
-    MADBName   : string;
-  end;
-
-  TDBType = (dbtFirebird, dbtMSAccess);
-
-  TDBMode = (dbmAppend, dbmEdit);
+  Vcl.DBCtrls, RzCommon, cxCheckBox, cxGridExportLink, WUpdate, pFIBQuery, uLogin,
+  System.StrUtils, pFIBProps, uFuncs, uDBFuncs, dxBarBuiltInMenu, cxPC;
 
 type
   TfMain = class(TForm)
     alActions: TActionList;
-    aConvert: TAction;
     sbMain: TRzStatusBar;
     spText: TRzStatusPane;
     RzClockStatus1: TRzClockStatus;
     spDBInfo: TRzStatusPane;
-    pnlMain: TRzPanel;
-    pnlGrid: TRzPanel;
-    splInfo: TSplitter;
-    pnlAddInfo: TRzPanel;
-    Label1: TLabel;
+    psMain: TRzPropertyStore;
+    rifMain: TRzRegIniFile;
+    pbsImport: TRzProgressStatus;
+    spProgress: TRzStatusPane;
+    RzVersionInfoStatus1: TRzVersionInfoStatus;
+    verInfo: TRzVersionInfo;
+    WebUpdate1: TWebUpdate;
+    aAdd: TAction;
+    aEdit: TAction;
+    aDelete: TAction;
+    aPrint: TAction;
     pnlButton: TRzPanel;
-    pnlData: TRzPanel;
+    btnAdd: TSpeedButton;
+    btnEdit: TSpeedButton;
+    btnDelete: TSpeedButton;
+    btnExit: TSpeedButton;
+    btnPrint: TSpeedButton;
+    pnlFilter: TRzPanel;
+    btnSuperVizer: TSpeedButton;
+    btnHidenBuyer: TSpeedButton;
+    btnOperator: TSpeedButton;
+    btnFocusGroup: TSpeedButton;
+    btnStreetInterview: TSpeedButton;
+    btnFlatInterview: TSpeedButton;
+    btnWriters: TSpeedButton;
+    btnOutSource: TSpeedButton;
+    pgcMain: TcxPageControl;
+    tsNew: TcxTabSheet;
+    tsOld: TcxTabSheet;
+    pnlMain: TRzPanel;
+    splInfo: TSplitter;
+    pnlGrid: TRzPanel;
     grdContracts: TcxGrid;
     gdvContracts: TcxGridDBTableView;
     gdvContractsCODE: TcxGridDBColumn;
     gdvContractsFIO: TcxGridDBColumn;
+    gdvContractsISSUPERVIZER: TcxGridDBColumn;
     gdvContractsSEX: TcxGridDBColumn;
     gdvContractsCURRENTNOTES: TcxGridDBColumn;
     gdvContractsREGION: TcxGridDBColumn;
@@ -56,61 +71,83 @@ type
     gdvContractsSPECIALIZATION: TcxGridDBColumn;
     gdvContractsTRANSFERTYPE: TcxGridDBColumn;
     gdvContractsNUMBERCARD: TcxGridDBColumn;
-    gdvContractsMEMBERPROJECTS: TcxGridDBColumn;
     gdvContractsDATELAST: TcxGridDBColumn;
+    gdvContractsMEMBERPROJECTS: TcxGridDBColumn;
     gdvContractsCOUNTANKETA: TcxGridDBColumn;
     gdvContractsPERCENTGOOD: TcxGridDBColumn;
     gdvContractsPERCENTBAD: TcxGridDBColumn;
     gdvContractsGENERALCHARACTERISTIC: TcxGridDBColumn;
-    gdvContractsISSUPERVIZER: TcxGridDBColumn;
-    gdlContracts: TcxGridLevel;
-    btnAdd: TSpeedButton;
-    btnImport: TSpeedButton;
-    btnEdit: TSpeedButton;
-    btnDelete: TSpeedButton;
-    Label2: TLabel;
-    DBMemo1: TDBMemo;
-    Label3: TLabel;
-    DBEdit1: TDBEdit;
-    Label4: TLabel;
-    DBEdit2: TDBEdit;
-    Label5: TLabel;
-    DBEdit3: TDBEdit;
-    Label6: TLabel;
-    DBEdit4: TDBEdit;
-    Label7: TLabel;
-    DBEdit5: TDBEdit;
-    Label8: TLabel;
-    DBEdit6: TDBEdit;
-    Label9: TLabel;
-    DBEdit7: TDBEdit;
-    Label10: TLabel;
-    DBMemo2: TDBMemo;
-    btnExit: TSpeedButton;
-    psMain: TRzPropertyStore;
-    rifMain: TRzRegIniFile;
-    pbsImport: TRzProgressStatus;
-    spProgress: TRzStatusPane;
-    pnlFilter: TRzPanel;
-    btnSuperVizer: TSpeedButton;
-    btnPrint: TSpeedButton;
-    btnHidenBuyer: TSpeedButton;
-    btnOperator: TSpeedButton;
-    btnFocusGroup: TSpeedButton;
-    btnStreetInterview: TSpeedButton;
-    btnFlatInterview: TSpeedButton;
-    btnWriters: TSpeedButton;
-    btnOutSource: TSpeedButton;
-    btnContract: TSpeedButton;
-    RzVersionInfoStatus1: TRzVersionInfoStatus;
-    verInfo: TRzVersionInfo;
-    WebUpdate1: TWebUpdate;
-    aAdd: TAction;
-    aEdit: TAction;
-    aDelete: TAction;
-    aPrint: TAction;
     gdvContractsISBLACKLIST: TcxGridDBColumn;
-    procedure aConvertExecute(Sender: TObject);
+    gdlContracts: TcxGridLevel;
+    pnlAddInfo: TRzPanel;
+    lbl1: TLabel;
+    lbl2: TLabel;
+    lbl3: TLabel;
+    lbl4: TLabel;
+    lbl5: TLabel;
+    lbl6: TLabel;
+    lbl7: TLabel;
+    lbl8: TLabel;
+    lbl9: TLabel;
+    lbl10: TLabel;
+    dbmmoCURRENTNOTES: TDBMemo;
+    edtEMAIL: TDBEdit;
+    edtOTHERTYPELINKS: TDBEdit;
+    edtADDRESS: TDBEdit;
+    edtPASSPORT: TDBEdit;
+    edtSPECIALIZATION: TDBEdit;
+    edtTRANSFERTYPE: TDBEdit;
+    edtNUMBERCARD: TDBEdit;
+    dbmmoGENERALCHARACTERISTIC: TDBMemo;
+    pnlMain_: TRzPanel;
+    pnlGrid_: TRzPanel;
+    splInfo_: TSplitter;
+    pnlInfo_: TRzPanel;
+    lbl11: TLabel;
+    btnContract: TSpeedButton;
+    grdVContacts: TcxGrid;
+    gdvVContacts: TcxGridDBTableView;
+    gdlVContacts: TcxGridLevel;
+    gdvVContactsBCONTACT_ID: TcxGridDBColumn;
+    gdvVContactsFIO: TcxGridDBColumn;
+    gdvVContactsGENDER: TcxGridDBColumn;
+    gdvVContactsNOTES: TcxGridDBColumn;
+    gdvVContactsBIRTHDAY: TcxGridDBColumn;
+    gdvVContactsPASSPORT: TcxGridDBColumn;
+    gdvVContactsSPECIALIZATION: TcxGridDBColumn;
+    gdvVContactsPROJECT_LIST: TcxGridDBColumn;
+    gdvVContactsLAST_DATE: TcxGridDBColumn;
+    gdvVContactsAMOUNT_FORMS: TcxGridDBColumn;
+    gdvVContactsPERCENT_GOOD_FORMS: TcxGridDBColumn;
+    gdvVContactsPERCENT_BAD_FORMS: TcxGridDBColumn;
+    gdvVContactsCHARACTERISTICS: TcxGridDBColumn;
+    gdvVContactsIS_SUPERVISER: TcxGridDBColumn;
+    gdvVContactsIS_IN_BLACK_LIST: TcxGridDBColumn;
+    gdvVContactsSOCIAL_NUMBER: TcxGridDBColumn;
+    gdvVContactsREGION_NAME: TcxGridDBColumn;
+    gdvVContactsCITY_NAME: TcxGridDBColumn;
+    gdvVContactsADDRESS: TcxGridDBColumn;
+    gdvVContactsCELURAR: TcxGridDBColumn;
+    gdvVContactsHOMEPHONE: TcxGridDBColumn;
+    gdvVContactsEMAIL: TcxGridDBColumn;
+    gdvVContactsSOCIALNET: TcxGridDBColumn;
+    gdvVContactsTRANSFERS: TcxGridDBColumn;
+    lbl12: TLabel;
+    edtEMAIL_: TDBEdit;
+    lbl13: TLabel;
+    edtSOCIALNET: TDBEdit;
+    edtPASSPORT_: TDBEdit;
+    lbl14: TLabel;
+    edtADDRESS_: TDBEdit;
+    lbl15: TLabel;
+    lbl16: TLabel;
+    edtSPECIALIZATION_: TDBEdit;
+    lbl17: TLabel;
+    edtTRANSFERS: TDBEdit;
+    lbl19: TLabel;
+    dbmmoGENERALCHARACTERISTIC_: TDBMemo;
+    lbl20: TLabel;
+    dbmmoCURRENTNOTES_: TDBMemo;
     procedure FormCreate(Sender: TObject);
     procedure btnAddClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
@@ -129,21 +166,19 @@ type
   private
     Options: TOptions;
     IsFirstRun: Boolean;
-    procedure ReadIni;
     procedure DBConnect;
-    procedure InitConnection(ADBType: TDBType);
-//    procedure ImportData;
     procedure OpenData;
     procedure ShowEditForm(AMode: TDBMode);
     procedure ApplyFilter(AFilterSQL: string; AIsApply: Boolean);
     function GetSQLFilter(aIndex: Integer): string;
+    function GetUser: string;
   public
     procedure AfterConstruction(Sender: TObject); overload;
   end;
 
 var
   fMain: TfMain;
-  AppDir: string;
+  AppDir, MainUser: string;
 
 implementation
 
@@ -151,12 +186,6 @@ uses
   IniFiles, uDataModule, uEditContacts, Winapi.ShellAPI, pingsend, uWhats;
 
 {$R *.dfm}
-
-procedure TfMain.aConvertExecute(Sender: TObject);
-begin
-  // Импортирование данных
-  //ImportData
-end;
 
 procedure TfMain.AfterConstruction(Sender: TObject);
 begin
@@ -237,7 +266,7 @@ end;
 procedure TfMain.DBConnect;
 const cMsgErrorConnect = 'Ошибка соединения с БД %s';
 begin
-  InitConnection(dbtFirebird);
+  InitConnection(dm.dbcFirebird, AppDir + 'config.ini');
   try
     dm.dbcFirebird.Connected := True;
     spDBInfo.Caption := 'Соединение с БД успешно';
@@ -252,15 +281,17 @@ var UpdateURL: string;
 begin
   AppDir := IncludeTrailingPathDelimiter( ExtractFilePath(ParamStr(0)) );
   // Читаем параметры
-  ReadIni;
-  // Коннектимся
   DBConnect;
+  // Получаем список пользователей
+//  MainUser := GetUser;
+//  if MainUser = 'admin' then
+//    Exit;
+
   // Открытие таблиц
   OpenData;
-  btnImport.Visible := IsFirstRun or (dm.tblContacts.RecordCount = 0);
+
   psMain.Load;
   gdvContracts.RestoreFromIniFile('gridconfig.ini');
-
 
   if PingHost(WebUpdate1.Host) <> -1 then
   begin
@@ -320,145 +351,18 @@ begin
     Free;
   end;
 end;
-(*
-procedure TfMain.ImportData;
+
+function TfMain.GetUser: string;
 var
   i: Integer;
 begin
-  // Импорт данных
-  if InputBox('Безопасность', 'Введите пароль:', '') <> '6486451' then
+  with TfLogin.Create(Application) do
   begin
-    Application.MessageBox('У вас нет прав для выполнения данной операции.',
-      'Нарушение прав доступа', MB_OK or MB_ICONERROR);
-    Exit;
-  end;
-
-  if MessageBox(0, 'Текущие данные будут удалены. Вы согласны ?', 'Импорт данных',
-    MB_ICONQUESTION or MB_OKCANCEL) <> mrOk then Exit;
-  // Импорт таблицы Контактные данные
-  try
-    with dm do
-    begin
-      if tblContacts.Active then tblContacts.Close;
-      // Копирование
-      tblAContacts.Active := True;
-      tblAContacts.First;
-      tblContacts.Open;
-      tblContacts.DisableControls;
-      // Удаление данных
-      dbcFirebird.ExecSQL('DELETE FROM CONTACTS');
-      // сброс генератора
-      dbcFirebird.ExecSQL('SET GENERATOR GEN_CONTACTS_ID TO 0');
-      i := 0;
-      while not tblAContacts.Eof do
-      begin
-        tblContacts.Insert;
-        try
-          spProgress.Caption := Format('Импорт: %s', [tblAContacts.FieldByName('ФИО').AsString]);
-          spProgress.Update;
-          tblContacts.FieldByName('FIO').AsString            := tblAContacts.FieldByName('ФИО').AsString;
-          tblContacts.FieldByName('CURRENTNOTES').AsString   := tblAContacts.FieldByName('Текущие пометки').AsString;
-          tblContacts.FieldByName('SEX').AsString            := tblAContacts.FieldByName('Пол').AsString;
-          tblContacts.FieldByName('REGION').AsString         := tblAContacts.FieldByName('Область').AsString;
-          tblContacts.FieldByName('CITY').AsString           := tblAContacts.FieldByName('Город').AsString;
-          tblContacts.FieldByName('BIRTHDATE').AsString      := tblAContacts.FieldByName('Дата рождения').AsString;
-          tblContacts.FieldByName('CELURARPHONE').AsString   := tblAContacts.FieldByName('Мобильный телефон').AsString;
-          tblContacts.FieldByName('HOMEPHONE').AsString      := tblAContacts.FieldByName('Домашний телефон').AsString;
-          tblContacts.FieldByName('EMAIL').AsString          := tblAContacts.FieldByName('Электронная почта').AsString;
-          tblContacts.FieldByName('OTHERTYPELINKS').AsString := tblAContacts.FieldByName('Другие способы связи').AsString;
-          tblContacts.FieldByName('ADDRESS').AsString        := tblAContacts.FieldByName('Адрес проживания').AsString;
-          tblContacts.FieldByName('PASSPORT').AsString       := tblAContacts.FieldByName('Паспортные данные').AsString;
-          tblContacts.FieldByName('SPECIALIZATION').AsString := tblAContacts.FieldByName('Специализация').AsString;
-          tblContacts.FieldByName('TRANSFERTYPE').AsString   := tblAContacts.FieldByName('Способ перевода').AsString;
-          tblContacts.FieldByName('NUMBERCARD').AsString     := tblAContacts.FieldByName('Номер банковской карты').AsString;
-          tblContacts.FieldByName('MEMBERPROJECTS').AsString := tblAContacts.FieldByName('Участие в проектах').AsString;
-          tblContacts.FieldByName('DATELAST').AsString       := tblAContacts.FieldByName('Дата последнего участия').AsString;
-          tblContacts.FieldByName('COUNTANKETA').AsString    := tblAContacts.FieldByName('Количество сделанных анкет').AsString;
-          tblContacts.FieldByName('PERCENTGOOD').AsString    := tblAContacts.FieldByName('Процент качественных').AsString;
-          tblContacts.FieldByName('PERCENTBAD').AsString     := tblAContacts.FieldByName('Процент брака').AsString;
-          tblContacts.FieldByName('GENERALCHARACTERISTIC').AsString := tblAContacts.FieldByName('Общая характеристика').AsString;
-          tblContacts.FieldByName('ISSUPERVIZER').AsInteger := 0;
-          tblContacts.Post;
-          Inc(i);
-        except
-          tblContacts.Cancel;
-        end;
-        tblAContacts.Next;
-      end;
-      // Супервайзеры
-      tblASuperVizer.Open;
-      tblASuperVizer.First;
-      while not tblASuperVizer.Eof do
-      begin
-        tblContacts.Insert;
-        try
-          spProgress.Caption := Format('Импорт: %s', [tblASuperVizer.FieldByName('ФИО').AsString]);
-          spProgress.Update;
-          tblContacts.FieldByName('FIO').AsString            := tblASuperVizer.FieldByName('ФИО').AsString;
-          tblContacts.FieldByName('CURRENTNOTES').AsString   := tblASuperVizer.FieldByName('Общая характеристика1').AsString;
-          //tblContacts.FieldByName('SEX').AsString            := tblASuperVizer.FieldByName('Пол').AsString;
-          tblContacts.FieldByName('REGION').AsString         := tblASuperVizer.FieldByName('Область').AsString;
-          tblContacts.FieldByName('CITY').AsString           := tblASuperVizer.FieldByName('Город').AsString;
-          tblContacts.FieldByName('BIRTHDATE').AsString      := tblASuperVizer.FieldByName('Дата рождения').AsString;
-          tblContacts.FieldByName('CELURARPHONE').AsString   := tblASuperVizer.FieldByName('Мобильный телефон').AsString;
-          tblContacts.FieldByName('HOMEPHONE').AsString      := tblASuperVizer.FieldByName('Домашний телефон').AsString;
-          tblContacts.FieldByName('EMAIL').AsString          := tblASuperVizer.FieldByName('Электронная почта').AsString;
-          tblContacts.FieldByName('OTHERTYPELINKS').AsString := tblASuperVizer.FieldByName('Другие способы связи').AsString;
-          tblContacts.FieldByName('ADDRESS').AsString        := tblASuperVizer.FieldByName('Адрес проживания').AsString;
-          tblContacts.FieldByName('PASSPORT').AsString       := tblASuperVizer.FieldByName('Паспортные данные').AsString;
-  //        tblContacts.FieldByName('SPECIALIZATION').AsString := tblASuperVizer.FieldByName('Специализация').AsString;
-          tblContacts.FieldByName('TRANSFERTYPE').AsString   := tblASuperVizer.FieldByName('Способ перевода').AsString;
-          tblContacts.FieldByName('NUMBERCARD').AsString     := Trim(tblASuperVizer.FieldByName('Номер банковской карты').AsString) + ',' +
-                                                                Trim(tblASuperVizer.FieldByName('Номер банковской карты1').AsString);
-          tblContacts.FieldByName('MEMBERPROJECTS').AsString := Trim(tblASuperVizer.FieldByName('Проекты').AsString) + ',' +
-                                                                Trim(tblASuperVizer.FieldByName('Участие в проектах').AsString);
-          tblContacts.FieldByName('DATELAST').AsString       := tblASuperVizer.FieldByName('Дата последнего участия').AsString;
-          tblContacts.FieldByName('COUNTANKETA').AsString    := tblASuperVizer.FieldByName('Количество сделанных анкет').AsString;
-          tblContacts.FieldByName('PERCENTGOOD').AsString    := tblASuperVizer.FieldByName('Процент качественных').AsString;
-          tblContacts.FieldByName('PERCENTBAD').AsString     := tblASuperVizer.FieldByName('Процент брака').AsString;
-          tblContacts.FieldByName('GENERALCHARACTERISTIC').AsString := tblASuperVizer.FieldByName('Общая характеристика').AsString;
-          tblContacts.FieldByName('ISSUPERVIZER').AsInteger := 1;
-          tblContacts.Post;
-          Inc(i);
-        except
-          tblContacts.Cancel;
-        end;
-        tblASuperVizer.Next;
-      end;
-      tblContacts.EnableControls;
-      spProgress.Caption := '';
-      ShowMessageFmt('Добавлено %d записей.', [ i ]);
-      // Изменим параметр IsFirstRun
-      TIniFile.Create(AppDir + 'config.ini').WriteBool('MAIN', 'FIRST_RUN', False);
-      btnImport.Visible := False;
-      tblContacts.First;
-    end;
-  except on E:Exception do
-    begin
-      E.Message := Format('Ошибка при импорте данных.'#10#13+'%s', [E.Message]);
-      Application.MessageBox(PWideChar(E.Message), 'Ошибка импорта', MB_OK or MB_ICONERROR);
-    end;
-  end;
-end;
-*)
-
-procedure TfMain.InitConnection(ADBType: TDBType);
-var
-  ConnectionStr: string;
-begin
-  with dm do
-  begin
-    case ADBType of
-    dbtFirebird:
-      begin
-        if Options.FBServerIP > '' then
-          ConnectionStr := Options.FBServerIP + ':';
-        if Options.FBDBName > '' then
-          ConnectionStr := ConnectionStr + Options.FBDBName;
-        dbcFirebird.DBName := ConnectionStr;
-        if ConnectionStr = '' then
-          raise Exception.Create('В файле настроек не указан путь к базе данных.');
-      end;
+    try
+      if ShowModal = mrOk then
+        Result := UserName;
+    finally
+      Free;
     end;
   end;
 end;
@@ -466,23 +370,11 @@ end;
 procedure TfMain.OpenData;
 begin
   try
-    dm.tblContacts.Open;
-    dm.tblContacts.First;
+    dm.tblVContacts.Open;
+    dm.tblVContacts.First;
   except
     Application.MessageBox('Не удалось открыть таблицу CONTACTS',
       'Ошибка открытия', MB_OK or MB_ICONERROR);
-  end;
-end;
-
-procedure TfMain.ReadIni;
-begin
-  // Чтение из ini
-  with TIniFile.Create(AppDir + 'config.ini') do
-  begin
-    Options.FBServerIP := ReadString('MAIN', 'FB_SERVER_IP', 'LOCALHOST');
-    Options.FBDBName   := ReadString('MAIN', 'FB_DBNAME', '');
-    Options.MADBName   := ReadString('MAIN', 'MA_DBNAME', '');
-    IsFirstRun         := ReadBool('MAIN', 'FIRST_RUN', False);
   end;
 end;
 

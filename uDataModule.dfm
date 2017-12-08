@@ -2,18 +2,20 @@ object dm: Tdm
   OldCreateOrder = False
   Height = 638
   Width = 941
-  object dsContacts: TUniDataSource
+  object dsContacts: TDataSource
     DataSet = tblContacts
     Left = 200
     Top = 24
   end
   object dbcFirebird: TpFIBDatabase
     AutoReconnect = True
-    DBName = '192.168.254.217/3051:D:\DevProjects\InterViewer\data\IVIEWER.FDB'
+    DBName = 
+      'localhost/3051:D:\GDriveIn\'#1056#1072#1079#1088#1072#1073#1086#1090#1082#1080'\Interviewer\data\IVIEWER.F' +
+      'DB'
     DBParams.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'
-      'lc_ctype=WIN1251')
+      'lc_ctype=UTF8')
     DefaultTransaction = trRead
     DefaultUpdateTransaction = trWrite
     SQLDialect = 3
@@ -192,5 +194,60 @@ object dm: Tdm
     DefaultDatabase = dbcFirebird
     Left = 344
     Top = 24
+  end
+  object tblVContacts: TpFIBDataSet
+    UpdateSQL.Strings = (
+      '')
+    DeleteSQL.Strings = (
+      ''
+      '')
+    InsertSQL.Strings = (
+      '')
+    RefreshSQL.Strings = (
+      'SELECT'
+      '    V_C.BCONTACT_ID,'
+      '    V_C.FIO,'
+      '    V_C.GENDER,'
+      '    V_C.NOTES,'
+      '    V_C.BIRTHDAY,'
+      '    V_C.PASSPORT,'
+      '    V_C.SPECIALIZATION,'
+      '    V_C.PROJECT_LIST,'
+      '    V_C.LAST_DATE,'
+      '    V_C.AMOUNT_FORMS,'
+      '    V_C.PERCENT_GOOD_FORMS,'
+      '    V_C.PERCENT_BAD_FORMS,'
+      '    V_C.CHARACTERISTICS,'
+      '    V_C.IS_SUPERVISER,'
+      '    V_C.IS_IN_BLACK_LIST,'
+      '    V_C.SOCIAL_NUMBER,'
+      '    V_C.PHOTO,'
+      '    V_C.REGION_NAME,'
+      '    V_C.CITY_NAME,'
+      '    V_C.ADDRESS,'
+      '    V_C.CELURAR,'
+      '    V_C.HOMEPHONE,'
+      '    V_C.EMAIL,'
+      '    V_C.SOCIALNET,'
+      '    V_C.TRANSFERS'
+      'FROM'
+      '    V_CONTACTS V_C'
+      ' ')
+    SelectSQL.Strings = (
+      'select * from v_contacts')
+    AutoUpdateOptions.UpdateTableName = 'V_CONTACTS'
+    AutoUpdateOptions.GeneratorName = 'GEN_V_CONTACTS_ID'
+    AutoUpdateOptions.WhenGetGenID = wgOnNewRecord
+    Transaction = trRead
+    Database = dbcFirebird
+    UpdateTransaction = trWrite
+    AutoCommit = True
+    Left = 120
+    Top = 80
+  end
+  object dsVContacts: TDataSource
+    DataSet = tblVContacts
+    Left = 200
+    Top = 80
   end
 end

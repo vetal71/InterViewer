@@ -4,15 +4,17 @@ interface
 
 uses
   FIBDatabase, pFIBDatabase, FIBDataSet,
-  pFIBDataSet, Data.DB, System.Classes, DBAccess, Uni;
+  pFIBDataSet, Data.DB, System.Classes, FIBSQLMonitor, FIBQuery, pFIBQuery;
 
 type
   Tdm = class(TDataModule)
-    dsContacts: TUniDataSource;
+    dsContacts: TDataSource;
     dbcFirebird: TpFIBDatabase;
     tblContacts: TpFIBDataSet;
     trRead: TpFIBTransaction;
     trWrite: TpFIBTransaction;
+    tblVContacts: TpFIBDataSet;
+    dsVContacts: TDataSource;
   private
     { Private declarations }
   public

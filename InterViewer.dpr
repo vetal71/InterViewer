@@ -5,7 +5,9 @@ uses
   uMain in 'uMain.pas' {fMain},
   uDataModule in 'uDataModule.pas' {dm: TDataModule},
   uEditContacts in 'uEditContacts.pas' {fEditContacts},
-  uWhats in 'uWhats.pas' {frmWhatsNew};
+  uWhats in 'uWhats.pas' {frmWhatsNew},
+  uLogin in 'uLogin.pas' {fLogin},
+  uFuncs in 'uFuncs.pas';
 
 {$R *.res}
 

@@ -1,0 +1,72 @@
+object fLogin: TfLogin
+  Left = 0
+  Top = 0
+  BorderStyle = bsDialog
+  Caption = #1040#1074#1090#1086#1088#1080#1079#1072#1094#1080#1103
+  ClientHeight = 113
+  ClientWidth = 367
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 14
+  object lbl1: TLabel
+    Left = 8
+    Top = 11
+    Width = 82
+    Height = 14
+    Caption = #1055#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1100':'
+  end
+  object lbl2: TLabel
+    Left = 8
+    Top = 44
+    Width = 45
+    Height = 14
+    Caption = #1055#1072#1088#1086#1083#1100':'
+  end
+  object dlgButtons: TRzDialogButtons
+    Left = 0
+    Top = 77
+    Width = 367
+    CaptionCancel = #1054#1090#1084#1077#1085#1072
+    HotTrack = True
+    ShowDivider = True
+    OnClickOk = dlgButtonsClickOk
+    TabOrder = 0
+  end
+  object cbbUsers: TcxComboBox
+    Left = 105
+    Top = 8
+    Style.LookAndFeel.Kind = lfFlat
+    Style.LookAndFeel.NativeStyle = False
+    StyleDisabled.LookAndFeel.Kind = lfFlat
+    StyleDisabled.LookAndFeel.NativeStyle = False
+    StyleFocused.LookAndFeel.Kind = lfFlat
+    StyleFocused.LookAndFeel.NativeStyle = False
+    StyleHot.LookAndFeel.Kind = lfFlat
+    StyleHot.LookAndFeel.NativeStyle = False
+    TabOrder = 1
+    Width = 250
+  end
+  object edtPassword: TcxTextEdit
+    Left = 105
+    Top = 41
+    Properties.PasswordChar = '*'
+    Style.LookAndFeel.Kind = lfFlat
+    Style.LookAndFeel.NativeStyle = False
+    StyleDisabled.LookAndFeel.Kind = lfFlat
+    StyleDisabled.LookAndFeel.NativeStyle = False
+    StyleFocused.LookAndFeel.Kind = lfFlat
+    StyleFocused.LookAndFeel.NativeStyle = False
+    StyleHot.LookAndFeel.Kind = lfFlat
+    StyleHot.LookAndFeel.NativeStyle = False
+    TabOrder = 2
+    Width = 250
+  end
+end
