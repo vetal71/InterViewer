@@ -3,7 +3,8 @@ unit uFuncs;
 interface
 
 uses
-  System.Classes, System.SysUtils, Vcl.Dialogs, System.Variants;
+  System.Classes, System.SysUtils, Vcl.Dialogs, System.Variants,
+  Winapi.Windows;
 
 function StrToStrL(Str : String; Delimeters: array of string): TStringList;
 
@@ -11,7 +12,27 @@ procedure ShowError(Msg: string);
 
 function VarToInt(const AVariant: Variant): integer;
 
+procedure SplitText(const aSource : string; aTarget : TStrings; aDelimiter : Char = ',');
+
 implementation
+
+procedure SplitText(const aSource : string; aTarget : TStrings; aDelimiter : Char = ',');
+var pS, pT : PChar;
+    fS : string;
+begin
+  aTarget.Clear;
+  pS := PChar(aSource);
+  while pS^ <> #0 do
+  begin
+    pT := pS;
+    while (pS^ <> #0) and (pS^ <> aDelimiter) do
+      pS := CharNext(pS);
+    SetString(fS, pT, pS - pT);
+    aTarget.Add(fS);
+    if pS^ = aDelimiter then
+      pS := CharNext(pS);
+  end;
+end;
 
 {-----------------------------------------------------------------------------}
 {Преобразует строку из слов, разделенных разделителем к TStringList}

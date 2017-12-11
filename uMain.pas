@@ -11,7 +11,7 @@ uses
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
   Vcl.Buttons, Vcl.ExtCtrls, RzPanel, RzStatus, Vcl.Controls, Vcl.Mask,
   Vcl.DBCtrls, RzCommon, cxCheckBox, cxGridExportLink, WUpdate, pFIBQuery, uLogin,
-  System.StrUtils, pFIBProps, uFuncs, uDBFuncs, dxBarBuiltInMenu, cxPC;
+  System.StrUtils, pFIBProps, uFuncs, uDBFuncs, dxBarBuiltInMenu, cxPC, RzTabs;
 
 type
   TfMain = class(TForm)
@@ -46,9 +46,58 @@ type
     btnFlatInterview: TSpeedButton;
     btnWriters: TSpeedButton;
     btnOutSource: TSpeedButton;
-    pgcMain: TcxPageControl;
-    tsNew: TcxTabSheet;
-    tsOld: TcxTabSheet;
+    btnContract: TSpeedButton;
+    pgcMain: TRzPageControl;
+    tsNew: TRzTabSheet;
+    tsOld: TRzTabSheet;
+    pnlMain_: TRzPanel;
+    splInfo_: TSplitter;
+    pnlGrid_: TRzPanel;
+    grdVContacts: TcxGrid;
+    gdvVContacts: TcxGridDBTableView;
+    gdvVContactsBCONTACT_ID: TcxGridDBColumn;
+    gdvVContactsFIO: TcxGridDBColumn;
+    gdvVContactsIS_SUPERVISER: TcxGridDBColumn;
+    gdvVContactsGENDER: TcxGridDBColumn;
+    gdvVContactsREGION_NAME: TcxGridDBColumn;
+    gdvVContactsCITY_NAME: TcxGridDBColumn;
+    gdvVContactsBIRTHDAY: TcxGridDBColumn;
+    gdvVContactsCELURAR: TcxGridDBColumn;
+    gdvVContactsHOMEPHONE: TcxGridDBColumn;
+    gdvVContactsPROJECT_LIST: TcxGridDBColumn;
+    gdvVContactsLAST_DATE: TcxGridDBColumn;
+    gdvVContactsIS_IN_BLACK_LIST: TcxGridDBColumn;
+    gdvVContactsNOTES: TcxGridDBColumn;
+    gdvVContactsPASSPORT: TcxGridDBColumn;
+    gdvVContactsSPECIALIZATION: TcxGridDBColumn;
+    gdvVContactsAMOUNT_FORMS: TcxGridDBColumn;
+    gdvVContactsPERCENT_GOOD_FORMS: TcxGridDBColumn;
+    gdvVContactsPERCENT_BAD_FORMS: TcxGridDBColumn;
+    gdvVContactsCHARACTERISTICS: TcxGridDBColumn;
+    gdvVContactsSOCIAL_NUMBER: TcxGridDBColumn;
+    gdvVContactsADDRESS: TcxGridDBColumn;
+    gdvVContactsEMAIL: TcxGridDBColumn;
+    gdvVContactsSOCIALNET: TcxGridDBColumn;
+    gdvVContactsTRANSFERS: TcxGridDBColumn;
+    gdlVContacts: TcxGridLevel;
+    pnlInfo_: TRzPanel;
+    lbl11: TLabel;
+    lbl12: TLabel;
+    lbl13: TLabel;
+    lbl14: TLabel;
+    lbl15: TLabel;
+    lbl16: TLabel;
+    lbl17: TLabel;
+    lbl19: TLabel;
+    lbl20: TLabel;
+    edtEMAIL_: TDBEdit;
+    edtSOCIALNET: TDBEdit;
+    edtPASSPORT_: TDBEdit;
+    edtADDRESS_: TDBEdit;
+    edtSPECIALIZATION_: TDBEdit;
+    edtTRANSFERS: TDBEdit;
+    dbmmoGENERALCHARACTERISTIC_: TDBMemo;
+    dbmmoCURRENTNOTES_: TDBMemo;
     pnlMain: TRzPanel;
     splInfo: TSplitter;
     pnlGrid: TRzPanel;
@@ -99,55 +148,7 @@ type
     edtTRANSFERTYPE: TDBEdit;
     edtNUMBERCARD: TDBEdit;
     dbmmoGENERALCHARACTERISTIC: TDBMemo;
-    pnlMain_: TRzPanel;
-    pnlGrid_: TRzPanel;
-    splInfo_: TSplitter;
-    pnlInfo_: TRzPanel;
-    lbl11: TLabel;
-    btnContract: TSpeedButton;
-    grdVContacts: TcxGrid;
-    gdvVContacts: TcxGridDBTableView;
-    gdlVContacts: TcxGridLevel;
-    gdvVContactsBCONTACT_ID: TcxGridDBColumn;
-    gdvVContactsFIO: TcxGridDBColumn;
-    gdvVContactsGENDER: TcxGridDBColumn;
-    gdvVContactsNOTES: TcxGridDBColumn;
-    gdvVContactsBIRTHDAY: TcxGridDBColumn;
-    gdvVContactsPASSPORT: TcxGridDBColumn;
-    gdvVContactsSPECIALIZATION: TcxGridDBColumn;
-    gdvVContactsPROJECT_LIST: TcxGridDBColumn;
-    gdvVContactsLAST_DATE: TcxGridDBColumn;
-    gdvVContactsAMOUNT_FORMS: TcxGridDBColumn;
-    gdvVContactsPERCENT_GOOD_FORMS: TcxGridDBColumn;
-    gdvVContactsPERCENT_BAD_FORMS: TcxGridDBColumn;
-    gdvVContactsCHARACTERISTICS: TcxGridDBColumn;
-    gdvVContactsIS_SUPERVISER: TcxGridDBColumn;
-    gdvVContactsIS_IN_BLACK_LIST: TcxGridDBColumn;
-    gdvVContactsSOCIAL_NUMBER: TcxGridDBColumn;
-    gdvVContactsREGION_NAME: TcxGridDBColumn;
-    gdvVContactsCITY_NAME: TcxGridDBColumn;
-    gdvVContactsADDRESS: TcxGridDBColumn;
-    gdvVContactsCELURAR: TcxGridDBColumn;
-    gdvVContactsHOMEPHONE: TcxGridDBColumn;
-    gdvVContactsEMAIL: TcxGridDBColumn;
-    gdvVContactsSOCIALNET: TcxGridDBColumn;
-    gdvVContactsTRANSFERS: TcxGridDBColumn;
-    lbl12: TLabel;
-    edtEMAIL_: TDBEdit;
-    lbl13: TLabel;
-    edtSOCIALNET: TDBEdit;
-    edtPASSPORT_: TDBEdit;
-    lbl14: TLabel;
-    edtADDRESS_: TDBEdit;
-    lbl15: TLabel;
-    lbl16: TLabel;
-    edtSPECIALIZATION_: TDBEdit;
-    lbl17: TLabel;
-    edtTRANSFERS: TDBEdit;
-    lbl19: TLabel;
-    dbmmoGENERALCHARACTERISTIC_: TDBMemo;
-    lbl20: TLabel;
-    dbmmoCURRENTNOTES_: TDBMemo;
+    btnView: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure btnAddClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
@@ -163,6 +164,7 @@ type
     procedure btnContractClick(Sender: TObject);
     procedure gdvContractsFocusedItemChanged(Sender: TcxCustomGridTableView;
       APrevFocusedItem, AFocusedItem: TcxCustomGridTableItem);
+    procedure btnViewClick(Sender: TObject);
   private
     Options: TOptions;
     IsFirstRun: Boolean;
@@ -172,6 +174,7 @@ type
     procedure ApplyFilter(AFilterSQL: string; AIsApply: Boolean);
     function GetSQLFilter(aIndex: Integer): string;
     function GetUser: string;
+    procedure SetEnableButtons;
   public
     procedure AfterConstruction(Sender: TObject); overload;
   end;
@@ -232,6 +235,21 @@ begin
   ExportGridToExcel(FileName, grdContracts, False, True, True);
   ShellExecute(0, Nil, PChar(FileName), Nil, Nil, sw_Show);
 
+end;
+
+procedure TfMain.btnViewClick(Sender: TObject);
+begin
+  if string(TSpeedButton(Sender).Caption).Equals('Старый вариант') then
+  begin
+    TSpeedButton(Sender).Caption := 'Новый вариант';
+    pgcMain.ActivePage := tsOld;
+  end
+  else
+  begin
+    TSpeedButton(Sender).Caption := 'Старый вариант';
+    pgcMain.ActivePage := tsNew;
+  end;
+  SetEnableButtons;
 end;
 
 procedure TfMain.ButtonFilterClick(Sender: TObject);
@@ -373,38 +391,62 @@ begin
     dm.tblVContacts.Open;
     dm.tblVContacts.First;
   except
+    Application.MessageBox('Не удалось открыть таблицу BOOK_CONTACTS',
+      'Ошибка открытия', MB_OK or MB_ICONERROR);
+  end;
+  try
+    dm.tblContacts.Open;
+    dm.tblContacts.First;
+  except
     Application.MessageBox('Не удалось открыть таблицу CONTACTS',
       'Ошибка открытия', MB_OK or MB_ICONERROR);
   end;
 end;
 
+procedure TfMain.SetEnableButtons;
+var
+  ViewType: Integer;
+begin
+  btnAdd.Enabled := pgcMain.ActivePageIndex = 0;
+  btnEdit.Enabled := pgcMain.ActivePageIndex = 0;
+  btnDelete.Enabled := pgcMain.ActivePageIndex = 0;
+end;
+
 procedure TfMain.ShowEditForm(AMode: TDBMode);
 var fEdit: TfEditContacts;
 var eBookmark: TBookmark;
+var FId: Integer;
 begin
   // Изменить запись
-  eBookmark := dm.tblContacts.GetBookmark;
+  eBookmark := dm.tblVContacts.GetBookmark;
+  dm.dtContactList.Open;
   fEdit := TfEditContacts.Create(Self);
   try
     dm.trWrite.StartTransaction;
-    if AMode = dbmAppend then dm.tblContacts.Append;
-    if AMode = dbmEdit then
+    if AMode = dbmAppend then
     begin
-      dm.tblContacts.Edit;
-      fEdit.chbSpecialization.EditValue := fEdit.edtSpecialization.Text;
+      dm.dtContactList.Append;
+    end
+    else if AMode = dbmEdit then
+    begin
+      FId := dm.tblVContacts.FieldValues['BCONTACT_ID'];
+      if dm.dtContactList.Locate('BCONTACT_ID', FId, [ loPartialKey, loCaseInsensitive ]) then
+        dm.dtContactList.Edit
+      else
+        raise Exception.CreateFmt('Запись с кодом %d не найдена.', [FId]);
     end;
     if fEdit.ShowModal = mrOk then
     begin
-      dm.tblContacts.FieldByName('SPECIALIZATION').AsString := fEdit.chbSpecialization.Text;
-      dm.tblContacts.Post;
+      dm.dtContactList.FieldByName('SPECIALIZATION').AsString := fEdit.chbSpecialization.Text;
+      dm.dtContactList.Post;
       dm.trWrite.Commit;
-      if AMode = dbmEdit then dm.tblContacts.GotoBookmark(eBookmark);
+      if AMode = dbmEdit then dm.tblVContacts.GotoBookmark(eBookmark);
     end
     else
     begin
-      dm.tblContacts.Cancel;
+      dm.dtContactList.Cancel;
       dm.trWrite.Rollback;
-      dm.tblContacts.GotoBookmark(eBookmark);
+      dm.tblVContacts.GotoBookmark(eBookmark);
     end;
   finally
     fEdit.Free;

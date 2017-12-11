@@ -8,61 +8,92 @@ uses
   Vcl.Mask, Vcl.DBCtrls, Vcl.StdCtrls, uDataModule, cxGraphics, cxControls,
   cxLookAndFeels, cxLookAndFeelPainters, cxContainer, cxEdit, cxTextEdit,
   cxMaskEdit, cxDropDownEdit, cxCalendar, cxDBEdit, cxCheckBox, cxCheckComboBox,
-  Vcl.CheckLst, cxButtonEdit, cxMemo;
+  Vcl.CheckLst, cxButtonEdit, cxMemo, Vcl.ComCtrls, dxCore, cxDateUtils, cxCalc,
+  RzTabs, Vcl.Buttons, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage,
+  cxNavigator, Data.DB, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid;
 
 type
   TfEditContacts = class(TForm)
     dlgButtons: TRzDialogButtons;
-    pnlAddInfo: TRzPanel;
-    Label1: TLabel;
+    pnlMainInfo: TRzPanel;
     Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
-    Label8: TLabel;
-    Label9: TLabel;
     Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
-    Label14: TLabel;
-    Label17: TLabel;
-    Label18: TLabel;
     Label19: TLabel;
-    edtDateBirthday: TcxDBDateEdit;
-    Label13: TLabel;
     Label15: TLabel;
     Label16: TLabel;
     Label20: TLabel;
     Label21: TLabel;
     chkSupervizer: TcxDBCheckBox;
     chbSpecialization: TcxCheckComboBox;
-    edtEMail: TcxDBTextEdit;
-    edtOtherLinks: TcxDBTextEdit;
-    edtAddress: TcxDBTextEdit;
-    edtPassport: TcxDBTextEdit;
-    edtSpecialization: TcxDBTextEdit;
-    edtTypeTransfer: TcxDBTextEdit;
-    edtCardNumbers: TcxDBTextEdit;
-    edtFIO: TcxDBTextEdit;
-    edtCity: TcxDBTextEdit;
-    edtCelurar: TcxDBTextEdit;
-    edtHomePhone: TcxDBTextEdit;
-    edtCountAnketa: TcxDBTextEdit;
-    edtPercentGood: TcxDBTextEdit;
-    edtPercentBad: TcxDBTextEdit;
-    mCurrentNotes: TcxDBMemo;
-    mCharacteristics: TcxDBMemo;
-    mProjects: TcxDBMemo;
-    cbSex: TcxDBComboBox;
     lbl1: TLabel;
-    edtDateLast: TcxDBDateEdit;
-    edtRegion: TcxDBComboBox;
     chkBlackList: TcxDBCheckBox;
+    edtFIO: TcxButtonEdit;
+    cbbSex: TcxComboBox;
+    mmoCharacteristics: TcxMemo;
+    mmoCurrentNotes: TcxMemo;
+    mmoProjects: TcxMemo;
+    edtCountAnketa: TcxCalcEdit;
+    edtDateBirthday: TcxDateEdit;
+    edtPassport: TcxButtonEdit;
+    edtDateLast: TcxDateEdit;
+    edtPercentGood: TcxCalcEdit;
+    edtPercentBad: TcxCalcEdit;
+    lbl2: TLabel;
+    pnlAddInfo: TRzPanel;
+    pnlButtons: TRzPanel;
+    btnAdd: TSpeedButton;
+    btnEdit: TSpeedButton;
+    btnDelete: TSpeedButton;
+    pgcInfo: TRzPageControl;
+    tsContactInfo: TRzTabSheet;
+    tsRegions: TRzTabSheet;
+    grdContactInfo: TcxGrid;
+    gdvContactInfo: TcxGridDBTableView;
+    gdlContactInfo: TcxGridLevel;
+    gdvContactInfoCI_ID: TcxGridDBColumn;
+    gdvContactInfoCIT_ID: TcxGridDBColumn;
+    gdvContactInfoCIT_NAME: TcxGridDBColumn;
+    gdvContactInfoCONTACT_ID: TcxGridDBColumn;
+    gdvContactInfoCONTACT_INFO_VALUE: TcxGridDBColumn;
+    tsTransferInfo: TRzTabSheet;
+    grdRegions: TcxGrid;
+    gdvRegions: TcxGridDBTableView;
+    gdlRegions: TcxGridLevel;
+    gdvRegionsWC_ID: TcxGridDBColumn;
+    gdvRegionsCONTACT_ID: TcxGridDBColumn;
+    gdvRegionsCITY_ID: TcxGridDBColumn;
+    gdvRegionsREGION_NAME: TcxGridDBColumn;
+    gdvRegionsCITY_NAME: TcxGridDBColumn;
+    gdvRegionsOLD_CITY: TcxGridDBColumn;
+    grdTransfer: TcxGrid;
+    gdvTransfer: TcxGridDBTableView;
+    gdlTransfer: TcxGridLevel;
+    gdvTransferTI_ID: TcxGridDBColumn;
+    gdvTransferTT_ID: TcxGridDBColumn;
+    gdvTransferCONTACT_ID: TcxGridDBColumn;
+    gdvTransferBANK_NAME: TcxGridDBColumn;
+    gdvTransferCARD_NAME: TcxGridDBColumn;
+    gdvTransferCARD_PERIOD: TcxGridDBColumn;
+    gdvTransferNOTES: TcxGridDBColumn;
+    gdvTransferTT_NAME: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
+    procedure edtFIOPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure edtPassportPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
   private
-    { Private declarations }
+    FId: Integer;
+  private
+    function GetId: Integer;
+    procedure SetId(const Value: Integer);
+
+    procedure Init;
+    procedure BeforeSave;
   public
     procedure FillCheckBox(cxCheckComboBox: TcxCheckComboBox; s: string);
   end;
@@ -72,26 +103,36 @@ var
 
 implementation
 
+uses
+  uEditFIO, uFuncs;
+
 {$R *.dfm}
 
 { TfEditContacts }
 
-procedure SplitText(const aSource : string; aTarget : TStrings; aDelimiter : Char = ',');
-var pS, pT : PChar;
-    fS : string;
+procedure TfEditContacts.BeforeSave;
 begin
-  aTarget.Clear;
-  pS := PChar(aSource);
-  while pS^ <> #0 do
-  begin
-    pT := pS;
-    while (pS^ <> #0) and (pS^ <> aDelimiter) do
-      pS := CharNext(pS);
-    SetString(fS, pT, pS - pT);
-    aTarget.Add(fS);
-    if pS^ = aDelimiter then
-      pS := CharNext(pS);
+  //
+end;
+
+procedure TfEditContacts.edtFIOPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  // вызов формы редактирования фамилии и имени
+  with TfEditFIO.Create(Application) do
+  try
+    FIO := edtFIO.Text;
+    if ShowModal = mrOk then
+      edtFIO.Text := FIO;
+  finally
+    Free;
   end;
+end;
+
+procedure TfEditContacts.edtPassportPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  // Форма редактирования паспорта
 end;
 
 procedure TfEditContacts.FillCheckBox(cxCheckComboBox: TcxCheckComboBox;
@@ -123,7 +164,45 @@ end;
 
 procedure TfEditContacts.FormShow(Sender: TObject);
 begin
-  FillCheckBox(chbSpecialization, edtSpecialization.Text);
+  Init;
+  FillCheckBox(chbSpecialization, chbSpecialization.EditValue);
+end;
+
+function TfEditContacts.GetId: Integer;
+begin
+  Result := FId;
+end;
+
+procedure TfEditContacts.Init;
+begin
+  with dm.dtContactList do
+  begin
+    edtFIO.Text := FieldByName('FIO').AsString;
+    cbbSex.Text := FieldByName('GENDER').AsString;
+    if VarIsNull(FieldValues['BIRTHDAY']) then
+      edtDateBirthday.Clear
+    else
+      edtDateBirthday.Date := FieldByname('BIRTHDAY').AsDateTime;
+    edtPassport.Text := FieldByName('PASSPORT').AsString;
+    chbSpecialization.EditValue := FieldByName('SPECIALIZATION').AsString;
+    mmoCharacteristics.Text := FieldByName('CHARACTERISTICS').AsString;
+    mmoCurrentNotes.Text := FieldByName('NOTES').AsString;
+    mmoProjects.Text := FieldByName('PROJECT_LIST').AsString;
+    if VarIsNull(FieldValues['LAST_DATE']) then
+      edtDateLast.Clear
+    else
+      edtDateLast.Date := FieldByName('LAST_DATE').AsDateTime;
+    edtCountAnketa.Value := FieldByName('AMOUNT_FORMS').AsInteger;
+    edtPercentGood.Value := FieldByName('PERCENT_GOOD_FORMS').AsInteger;
+    edtPercentBad.Value := FieldByName('PERCENT_BAD_FORMS').AsInteger;
+    chkSupervizer.Checked := Boolean(FieldByName('IS_SUPERVISER').AsInteger);
+    chkBlackList.Checked := Boolean(FieldByName('IS_IN_BLACK_LIST').AsInteger);
+  end;
+end;
+
+procedure TfEditContacts.SetId(const Value: Integer);
+begin
+  FId := Value;
 end;
 
 end.

@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Test'
-  ClientHeight = 298
-  ClientWidth = 526
+  ClientHeight = 54
+  ClientWidth = 497
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,28 +14,16 @@ object Form1: TForm1
   Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 14
-  object edt1: TEdit
-    Left = 16
+  object edtTest: TcxButtonEdit
+    Left = 24
     Top = 16
-    Width = 502
-    Height = 22
+    Properties.Buttons = <
+      item
+        Default = True
+        Kind = bkEllipsis
+      end>
+    Properties.OnButtonClick = edtTestPropertiesButtonClick
     TabOrder = 0
-    Text = #1052#1080#1085#1089#1082'/'#1043#1086#1088#1082#1080'/'#1052#1086#1075#1080#1083#1077#1074
-  end
-  object btnTest: TButton
-    Left = 16
-    Top = 48
-    Width = 150
-    Height = 25
-    Caption = 'Test'
-    TabOrder = 1
-    OnClick = btnTestClick
-  end
-  object mmoRes: TMemo
-    Left = 16
-    Top = 80
-    Width = 249
-    Height = 210
-    TabOrder = 2
+    Width = 457
   end
 end

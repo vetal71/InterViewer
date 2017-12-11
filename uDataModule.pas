@@ -15,6 +15,14 @@ type
     trWrite: TpFIBTransaction;
     tblVContacts: TpFIBDataSet;
     dsVContacts: TDataSource;
+    dtContactList: TpFIBDataSet;
+    dsContactList: TDataSource;
+    dtContactInfo: TpFIBDataSet;
+    dsContactInfo: TDataSource;
+    dtRegions: TpFIBDataSet;
+    dsRegions: TDataSource;
+    dtTransferInfo: TpFIBDataSet;
+    dsTransferInfo: TDataSource;
   private
     { Private declarations }
   public

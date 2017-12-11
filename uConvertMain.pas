@@ -10,12 +10,14 @@ uses
 
 type
   TfrmConvert = class(TForm)
-    lblCaption: TLabel;
-    pbMain: TProgressBar;
     dbcFirebird: TpFIBDatabase;
     btnConvert: TButton;
     trRead: TpFIBTransaction;
     trWrite: TpFIBTransaction;
+    lbl1: TLabel;
+    mmoError: TMemo;
+    lblCaption: TLabel;
+    pbMain: TProgressBar;
     procedure btnConvertClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure UpdateProgress(AMax, ACurrent: Integer);
@@ -63,142 +65,147 @@ begin
   // Конвертация данных
   lblCaption.Visible := True;
   pbMain.Visible     := True;
-  id := 1;
   // удаляем все данные из таблицы
   try
     dbcFirebird.Execute('delete from book_contacts');
   except on E: Exception do
-    ShowError('При удалении данных возникла ошибка' + #13#10 + E.Message);
+    mmoError.Lines.Add('При удалении данных возникла ошибка' + #13#10 + E.Message);
   end;
   q := TpFIBDataSet.Create(nil);
-    with q do
-    try
-      Database    := dbcFirebird;
-      Transaction := trRead;
-      SelectSQL.Text := SQLSelect;
-      Open;
-      q2 := TpFIBQuery.Create(nil);
-      q2.Database := dbcFirebird;
-      q2.Transaction := trWrite;
-      q2.Options := [qoStartTransaction, qoAutoCommit];
-      q2.SQL.Text := SQLInsert;
-      while not Eof do
-      begin
-        UpdateProgress(q.RecordCountFromSrv, q.RecNo);
-        // TODO Вставка записей
-        // поле ПОЛ
-        if Trim(VarToStr(FieldValues['sex'])) = 'мужской' then
-          str := 'М'
-        else
-          str := 'Ж';
-        // вставка записей в таблицу BOOK_CONTACTS
-        try
-          q2.ExecWP([
-            id,
-            VarToStr(FieldValues['fio']),
-            str,
-            VarToStr(FieldValues['currentnotes']),
-            FieldValues['birthdate'],
-            VarToStr(FieldValues['passport']),
-            VarToStr(FieldValues['specialization']),
-            VarToStr(FieldValues['memberprojects']),
-            FieldValues['datelast'],
-            VarToInt(FieldValues['countanketa']),
-            VarToInt(FieldValues['percentgood']),
-            VarToInt(FieldValues['percentbad']),
-            VarToStr(FieldValues['generalcharacteristic']),
-            VarToInt(FieldValues['issupervizer']),
-            VarToInt(FieldValues['isblacklist'])
-          ]);
-        except on E: Exception do
-          ShowError(Format('Попытка добавления записи с id=%d'#13#10'%s', [FieldValues['code'], E.Message]));
-        end;
-        // вставка записей в таблицу CITIES
-        // для этого необходимо выполнить подготовку поля CITY
-        str := VarToStr(FieldValues['city']);
-        if str > '' then
-        begin
-          CityList := TStringList.Create;
-          try
-            CityList := StrToStrL(str, [',', '/']);
-            with TpFIBQuery.Create(nil) do
-              try
-                Database := dbcFirebird;
-                Transaction := trWrite;
-                Options := [qoStartTransaction, qoAutoCommit];
-                SQL.Text := SQLInsertCity;
-                for j := 0 to CityList.Count - 1 do
-                begin
-                  CityId := VarToInt(dbcFirebird.QueryValue(Format( 'select city_id from cities where city_name = ''%s''', [ CityList[ j ] ] ), 0));
-                  //if CityId > 0 then
-                  try
-                    ExecWP([id, CityId, CityList[ j ]]);
-                  except on E: Exception do
-                    ShowError(Format('Не удалось сохранить место работы для контакта %s'#13#10'%s', [FieldValues['fio'], E.Message]));
-                  end;
-                end;
-              finally
-                Free;
-              end;
-          finally
-            CityList.Free;
-          end;
-        end;
-        // добавляем контактные данные
-        with TpFIBQuery.Create(nil) do
-          try
-            Database := dbcFirebird;
-            Transaction := trWrite;
-            Options := [qoStartTransaction, qoAutoCommit];
-            SQL.Text := SQLInsertContInfo;
-            try
-              str := VarToStr(FieldValues['address']);
-              if str > '' then
-                ExecWP([1, id, str]);
-              str := VarToStr(FieldValues['celurarphone']);
-              if str > '' then
-                ExecWP([2, id, str]);
-              str := VarToStr(FieldValues['homephone']);
-              if str > '' then
-                ExecWP([3, id, str]);
-              str := VarToStr(FieldValues['email']);
-              if str > '' then
-                ExecWP([4, id, str]);
-              str := VarToStr(FieldValues['othertypelinks']);
-              if str > '' then
-                ExecWP([5, id, str]);
-            except on E: Exception do
-              ShowError(Format('Не удалось сохранить контактные данные для контакта %s'#13#10'%s', [FieldValues['fio'], E.Message]));
-            end;
-          finally
-            Free;
-          end;
-        // добавляем финансовые данные
-        with TpFIBQuery.Create(nil) do
-          try
-            Database := dbcFirebird;
-            Transaction := trWrite;
-            Options := [qoStartTransaction, qoAutoCommit];
-            SQL.Text := SQLInsertTransInfo;
-            str := VarToStr(FieldValues['transfertype']);
-            if str > '' then
-              try
-                ExecWP([2, id, str, FieldValues['numbercard']]);
-              except on E: Exception do
-                ShowError(Format('Не удалось сохранить финансовые данные для контакта %s'#13#10'%s', [FieldValues['fio'], E.Message]));
-              end;
-          finally
-            Free;
-          end;
-
-        id := id + 1;
-        Next;
+  with q do
+  try
+    Database    := dbcFirebird;
+    Transaction := trRead;
+    SelectSQL.Text := SQLSelect;
+    Open;
+    q2 := TpFIBQuery.Create(nil);
+    q2.Database := dbcFirebird;
+    q2.Transaction := trWrite;
+    q2.Options := [qoStartTransaction, qoAutoCommit];
+    q2.SQL.Text := SQLInsert;
+    while not Eof do
+    begin
+      UpdateProgress(q.RecordCountFromSrv, q.RecNo);
+      // TODO Вставка записей
+      // поле ПОЛ
+      if Trim(VarToStr(FieldValues['sex'])) = 'мужской' then
+        str := 'М'
+      else
+        str := 'Ж';
+      id := VarToInt(FieldValues['code']);
+      // вставка записей в таблицу BOOK_CONTACTS
+      try
+        q2.ExecWP([
+          id,
+          VarToStr(FieldValues['fio']),
+          str,
+          VarToStr(FieldValues['currentnotes']),
+          FieldValues['birthdate'],
+          VarToStr(FieldValues['passport']),
+          VarToStr(FieldValues['specialization']),
+          VarToStr(FieldValues['memberprojects']),
+          FieldValues['datelast'],
+          VarToInt(FieldValues['countanketa']),
+          VarToInt(FieldValues['percentgood']),
+          VarToInt(FieldValues['percentbad']),
+          VarToStr(FieldValues['generalcharacteristic']),
+          VarToInt(FieldValues['issupervizer']),
+          VarToInt(FieldValues['isblacklist'])
+        ]);
+      except on E: Exception do
+        mmoError.Lines.Add(Format('Попытка добавления записи с id=%d'#13#10'%s', [FieldValues['code'], E.Message]));
       end;
-      q.Close;
-    finally
-      q.Free;
-      q2.Free;
+      // вставка записей в таблицу CITIES
+      // для этого необходимо выполнить подготовку поля CITY
+      str := VarToStr(FieldValues['city']);
+      if str > '' then
+      begin
+        CityList := TStringList.Create;
+        try
+          CityList := StrToStrL(str, [',', '/']);
+          with TpFIBQuery.Create(nil) do
+            try
+              Database := dbcFirebird;
+              Transaction := trWrite;
+              Options := [qoStartTransaction, qoAutoCommit];
+              SQL.Text := SQLInsertCity;
+              for j := 0 to CityList.Count - 1 do
+              begin
+                CityId := VarToInt(dbcFirebird.QueryValue(Format( 'select city_id from cities where city_name = ''%s''', [ CityList[ j ] ] ), 0));
+                //if CityId > 0 then
+                try
+                  ExecWP([id, CityId, CityList[ j ]]);
+                except on E: Exception do
+                  mmoError.Lines.Add(Format('Не удалось сохранить место работы для контакта %s'#13#10'%s', [FieldValues['fio'], E.Message]));
+                end;
+              end;
+            finally
+              Free;
+            end;
+        finally
+          CityList.Free;
+        end;
+      end;
+      // добавляем контактные данные
+      with TpFIBQuery.Create(nil) do
+        try
+          Database := dbcFirebird;
+          Transaction := trWrite;
+          Options := [qoStartTransaction, qoAutoCommit];
+          SQL.Text := SQLInsertContInfo;
+          try
+            str := VarToStr(FieldValues['address']);
+            if str > '' then
+              ExecWP([1, id, str]);
+            str := VarToStr(FieldValues['celurarphone']);
+            if str > '' then
+              ExecWP([2, id, str]);
+            str := VarToStr(FieldValues['homephone']);
+            if str > '' then
+              ExecWP([3, id, str]);
+            str := VarToStr(FieldValues['email']);
+            if str > '' then
+              ExecWP([4, id, str]);
+            str := VarToStr(FieldValues['othertypelinks']);
+            if str > '' then
+              ExecWP([5, id, str]);
+          except on E: Exception do
+            mmoError.Lines.Add(Format('Не удалось сохранить контактные данные для контакта %s'#13#10'%s', [FieldValues['fio'], E.Message]));
+          end;
+        finally
+          Free;
+        end;
+      // добавляем финансовые данные
+      with TpFIBQuery.Create(nil) do
+        try
+          Database := dbcFirebird;
+          Transaction := trWrite;
+          Options := [qoStartTransaction, qoAutoCommit];
+          SQL.Text := SQLInsertTransInfo;
+          str := VarToStr(FieldValues['transfertype']);
+          if str > '' then
+            try
+              ExecWP([2, id, str, FieldValues['numbercard']]);
+            except on E: Exception do
+              mmoError.Lines.Add(Format('Не удалось сохранить финансовые данные для контакта %s'#13#10'%s', [FieldValues['fio'], E.Message]));
+            end;
+        finally
+          Free;
+        end;
+
+      Next;
     end;
+    q.Close;
+  finally
+    q.Free;
+    q2.Free;
+    pbMain.Position := 0;
+    MessageDlg('Готово!', mtInformation, [ mbOK ], 0);
+    id := VarToInt( dbcFirebird.QueryValue('select max(bc.bcontact_id) + 1 from book_contacts bc', 0) );
+    dbcFirebird.Execute(Format( 'set generator gen_book_contacts_id to %d', [id] ));
+  end;
+  lblCaption.Visible := False;
+  pbMain.Visible     := False;
 end;
 
 procedure TfrmConvert.FormCreate(Sender: TObject);

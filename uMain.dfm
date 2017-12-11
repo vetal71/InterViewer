@@ -3,7 +3,7 @@ object fMain: TfMain
   Top = 0
   Caption = #1041#1072#1079#1072' '#1080#1085#1090#1077#1088#1074#1100#1102#1077#1088#1086#1074
   ClientHeight = 795
-  ClientWidth = 1063
+  ClientWidth = 1253
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -156,15 +156,14 @@ object fMain: TfMain
   object sbMain: TRzStatusBar
     Left = 0
     Top = 776
-    Width = 1063
+    Width = 1253
     Height = 19
     BorderInner = fsNone
     BorderOuter = fsNone
     BorderSides = [sdLeft, sdTop, sdRight, sdBottom]
     BorderWidth = 0
     TabOrder = 0
-    ExplicitTop = 764
-    ExplicitWidth = 1055
+    ExplicitWidth = 1063
     object spText: TRzStatusPane
       Left = 0
       Top = 0
@@ -206,7 +205,7 @@ object fMain: TfMain
     object spProgress: TRzStatusPane
       Left = 590
       Top = 0
-      Width = 473
+      Width = 663
       Height = 19
       Align = alClient
       Caption = ''
@@ -229,14 +228,14 @@ object fMain: TfMain
   object pnlButton: TRzPanel
     Left = 0
     Top = 0
-    Width = 1063
+    Width = 1253
     Height = 36
     Align = alTop
     BorderOuter = fsNone
     TabOrder = 1
-    ExplicitWidth = 1055
+    ExplicitWidth = 1063
     DesignSize = (
-      1063
+      1253
       36)
     object btnAdd: TSpeedButton
       Left = 5
@@ -485,7 +484,7 @@ object fMain: TfMain
       OnClick = btnDeleteClick
     end
     object btnExit: TSpeedButton
-      Left = 960
+      Left = 1150
       Top = 3
       Width = 100
       Height = 32
@@ -735,18 +734,26 @@ object fMain: TfMain
         152F000000000909090B00000000000000000000000000000000}
       OnClick = btnContractClick
     end
+    object btnView: TSpeedButton
+      Left = 1044
+      Top = 3
+      Width = 100
+      Height = 32
+      Hint = #1055#1077#1088#1077#1082#1083#1102#1095#1080#1090#1100' '#1074#1080#1076
+      Anchors = [akTop, akRight]
+      Caption = #1057#1090#1072#1088#1099#1081' '#1074#1072#1088#1080#1072#1085#1090
+      OnClick = btnViewClick
+    end
   end
   object pnlFilter: TRzPanel
     Left = 0
     Top = 36
-    Width = 1063
+    Width = 1253
     Height = 41
     Align = alTop
     BorderOuter = fsNone
     TabOrder = 2
-    ExplicitLeft = -106
-    ExplicitTop = 41
-    ExplicitWidth = 1161
+    ExplicitWidth = 1063
     object btnSuperVizer: TSpeedButton
       Tag = 1
       Left = 5
@@ -836,44 +843,39 @@ object fMain: TfMain
       Caption = #1040#1091#1090#1089#1086#1088#1089
     end
   end
-  object pgcMain: TcxPageControl
+  object pgcMain: TRzPageControl
     Left = 0
     Top = 77
-    Width = 1063
+    Width = 1253
     Height = 699
+    Hint = ''
+    ActivePage = tsNew
+    ActivePageDefault = tsNew
     Align = alClient
+    ShowShadow = False
     TabOrder = 3
-    Properties.ActivePage = tsNew
-    Properties.CustomButtons.Buttons = <>
-    ExplicitLeft = -106
-    ExplicitTop = 82
-    ExplicitWidth = 1161
-    ExplicitHeight = 680
-    ClientRectBottom = 695
-    ClientRectLeft = 4
-    ClientRectRight = 1059
-    ClientRectTop = 24
-    object tsNew: TcxTabSheet
+    ExplicitWidth = 1063
+    FixedDimension = 19
+    object tsNew: TRzTabSheet
+      TabVisible = False
       Caption = 'tsNew'
-      ImageIndex = 1
-      ExplicitWidth = 1153
-      ExplicitHeight = 652
+      ExplicitTop = 20
+      ExplicitWidth = 1061
+      ExplicitHeight = 678
       object pnlMain_: TRzPanel
         Left = 0
         Top = 0
-        Width = 1055
-        Height = 671
+        Width = 1251
+        Height = 697
         Align = alClient
         BorderOuter = fsNone
         TabOrder = 0
-        ExplicitLeft = 288
-        ExplicitTop = 56
-        ExplicitWidth = 185
-        ExplicitHeight = 41
+        ExplicitWidth = 1061
+        ExplicitHeight = 678
         object splInfo_: TSplitter
           Left = 0
-          Top = 371
-          Width = 1055
+          Top = 397
+          Width = 1251
           Height = 5
           Cursor = crVSplit
           Align = alBottom
@@ -883,27 +885,25 @@ object fMain: TfMain
         object pnlGrid_: TRzPanel
           Left = 0
           Top = 0
-          Width = 1055
-          Height = 371
+          Width = 1251
+          Height = 397
           Align = alClient
           BorderOuter = fsNone
           TabOrder = 0
-          ExplicitWidth = 1047
-          ExplicitHeight = 297
+          ExplicitWidth = 1061
+          ExplicitHeight = 378
           object grdVContacts: TcxGrid
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 1049
-            Height = 365
+            Width = 1245
+            Height = 391
             Align = alClient
             TabOrder = 0
             LookAndFeel.Kind = lfFlat
             LookAndFeel.NativeStyle = False
-            ExplicitLeft = 6
-            ExplicitTop = 6
-            ExplicitWidth = 1041
-            ExplicitHeight = 290
+            ExplicitWidth = 1055
+            ExplicitHeight = 372
             object gdvVContacts: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               FindPanel.DisplayMode = fpdmManual
@@ -1102,21 +1102,22 @@ object fMain: TfMain
         end
         object pnlInfo_: TRzPanel
           Left = 0
-          Top = 376
-          Width = 1055
+          Top = 402
+          Width = 1251
           Height = 295
           Align = alBottom
           BorderOuter = fsNone
           TabOrder = 1
-          ExplicitWidth = 1047
+          ExplicitTop = 383
+          ExplicitWidth = 1061
           DesignSize = (
-            1055
+            1251
             295)
           object lbl11: TLabel
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 1049
+            Width = 1245
             Height = 23
             Align = alTop
             Alignment = taCenter
@@ -1210,26 +1211,24 @@ object fMain: TfMain
           object edtSOCIALNET: TDBEdit
             Left = 682
             Top = 44
-            Width = 358
+            Width = 558
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'F_SOCIALNET'
             DataSource = dm.dsVContacts
             ReadOnly = True
             TabOrder = 1
-            ExplicitWidth = 350
           end
           object edtPASSPORT_: TDBEdit
             Left = 682
             Top = 71
-            Width = 358
+            Width = 558
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'PASSPORT'
             DataSource = dm.dsVContacts
             ReadOnly = True
             TabOrder = 2
-            ExplicitWidth = 350
           end
           object edtADDRESS_: TDBEdit
             Left = 136
@@ -1244,7 +1243,7 @@ object fMain: TfMain
           object edtSPECIALIZATION_: TDBEdit
             Left = 136
             Top = 98
-            Width = 904
+            Width = 1104
             Height = 21
             Hint = #1057#1087#1077#1094#1080#1072#1083#1080#1079#1072#1094#1080#1103' ('#1080#1089#1087#1086#1083#1100#1079#1091#1077#1090#1089#1103' '#1087#1088#1080' '#1092#1080#1083#1100#1090#1088#1072#1094#1080#1080')'
             Anchors = [akLeft, akTop, akRight]
@@ -1258,37 +1257,34 @@ object fMain: TfMain
             ParentFont = False
             ReadOnly = True
             TabOrder = 4
-            ExplicitWidth = 896
           end
           object edtTRANSFERS: TDBEdit
             Left = 136
             Top = 125
-            Width = 904
+            Width = 1104
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'F_TRANSFERS'
             DataSource = dm.dsVContacts
             ReadOnly = True
             TabOrder = 5
-            ExplicitWidth = 899
           end
           object dbmmoGENERALCHARACTERISTIC_: TDBMemo
             Left = 13
             Top = 169
-            Width = 1027
+            Width = 1227
             Height = 45
             Anchors = [akLeft, akTop, akRight]
             DataField = 'CHARACTERISTICS'
             DataSource = dm.dsVContacts
             ReadOnly = True
             TabOrder = 6
-            ExplicitWidth = 1022
           end
           object dbmmoCURRENTNOTES_: TDBMemo
             AlignWithMargins = True
             Left = 13
             Top = 239
-            Width = 1027
+            Width = 1227
             Height = 45
             Anchors = [akLeft, akTop, akRight]
             DataField = 'NOTES'
@@ -1301,31 +1297,31 @@ object fMain: TfMain
             ParentFont = False
             ReadOnly = True
             TabOrder = 7
-            ExplicitWidth = 1019
           end
         end
       end
     end
-    object tsOld: TcxTabSheet
+    object tsOld: TRzTabSheet
+      TabVisible = False
       Caption = 'tsOld'
-      ImageIndex = 0
-      ExplicitWidth = 1047
-      ExplicitHeight = 654
+      ExplicitTop = 20
+      ExplicitWidth = 1061
+      ExplicitHeight = 678
       object pnlMain: TRzPanel
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 1049
-        Height = 665
+        Width = 1245
+        Height = 691
         Align = alClient
         BorderOuter = fsNone
         TabOrder = 0
-        ExplicitWidth = 1041
-        ExplicitHeight = 648
+        ExplicitWidth = 1055
+        ExplicitHeight = 672
         object splInfo: TSplitter
           Left = 0
-          Top = 380
-          Width = 1049
+          Top = 406
+          Width = 1245
           Height = 5
           Cursor = crVSplit
           Align = alBottom
@@ -1335,25 +1331,25 @@ object fMain: TfMain
         object pnlGrid: TRzPanel
           Left = 0
           Top = 0
-          Width = 1049
-          Height = 380
+          Width = 1245
+          Height = 406
           Align = alClient
           BorderOuter = fsNone
           TabOrder = 0
-          ExplicitWidth = 1041
-          ExplicitHeight = 361
+          ExplicitWidth = 1055
+          ExplicitHeight = 387
           object grdContracts: TcxGrid
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 1043
-            Height = 374
+            Width = 1239
+            Height = 400
             Align = alClient
             TabOrder = 0
             LookAndFeel.Kind = lfFlat
             LookAndFeel.NativeStyle = False
-            ExplicitWidth = 1035
-            ExplicitHeight = 355
+            ExplicitWidth = 1049
+            ExplicitHeight = 381
             object gdvContracts: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               FindPanel.DisplayMode = fpdmManual
@@ -1537,22 +1533,22 @@ object fMain: TfMain
         end
         object pnlAddInfo: TRzPanel
           Left = 0
-          Top = 385
-          Width = 1049
+          Top = 411
+          Width = 1245
           Height = 280
           Align = alBottom
           BorderOuter = fsNone
           TabOrder = 1
-          ExplicitTop = 380
-          ExplicitWidth = 1041
+          ExplicitTop = 392
+          ExplicitWidth = 1055
           DesignSize = (
-            1049
+            1245
             280)
           object lbl1: TLabel
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 1043
+            Width = 1239
             Height = 23
             Align = alTop
             Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103' '#1086' '#1082#1086#1085#1090#1072#1082#1090#1077
@@ -1562,8 +1558,7 @@ object fMain: TfMain
             Font.Name = 'Tahoma'
             Font.Style = [fsBold, fsUnderline]
             ParentFont = False
-            ExplicitTop = -5
-            ExplicitWidth = 1035
+            ExplicitWidth = 241
           end
           object lbl2: TLabel
             Left = 3
@@ -1642,9 +1637,9 @@ object fMain: TfMain
           end
           object dbmmoCURRENTNOTES: TDBMemo
             AlignWithMargins = True
-            Left = 3
+            Left = 5
             Top = 231
-            Width = 945
+            Width = 1237
             Height = 45
             Anchors = [akLeft, akTop, akRight]
             DataField = 'CURRENTNOTES'
@@ -1657,7 +1652,6 @@ object fMain: TfMain
             ParentFont = False
             ReadOnly = True
             TabOrder = 0
-            ExplicitWidth = 937
           end
           object edtEMAIL: TDBEdit
             Left = 128
@@ -1672,14 +1666,13 @@ object fMain: TfMain
           object edtOTHERTYPELINKS: TDBEdit
             Left = 696
             Top = 36
-            Width = 252
+            Width = 546
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'OTHERTYPELINKS'
             DataSource = dm.dsContacts
             ReadOnly = True
             TabOrder = 2
-            ExplicitWidth = 244
           end
           object edtADDRESS: TDBEdit
             Left = 128
@@ -1694,19 +1687,18 @@ object fMain: TfMain
           object edtPASSPORT: TDBEdit
             Left = 696
             Top = 63
-            Width = 252
+            Width = 546
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'PASSPORT'
             DataSource = dm.dsContacts
             ReadOnly = True
             TabOrder = 4
-            ExplicitWidth = 244
           end
           object edtSPECIALIZATION: TDBEdit
             Left = 128
             Top = 90
-            Width = 820
+            Width = 1114
             Height = 21
             Hint = #1057#1087#1077#1094#1080#1072#1083#1080#1079#1072#1094#1080#1103' ('#1080#1089#1087#1086#1083#1100#1079#1091#1077#1090#1089#1103' '#1087#1088#1080' '#1092#1080#1083#1100#1090#1088#1072#1094#1080#1080')'
             Anchors = [akLeft, akTop, akRight]
@@ -1720,7 +1712,6 @@ object fMain: TfMain
             ParentFont = False
             ReadOnly = True
             TabOrder = 5
-            ExplicitWidth = 812
           end
           object edtTRANSFERTYPE: TDBEdit
             Left = 128
@@ -1735,26 +1726,24 @@ object fMain: TfMain
           object edtNUMBERCARD: TDBEdit
             Left = 696
             Top = 117
-            Width = 252
+            Width = 546
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'NUMBERCARD'
             DataSource = dm.dsContacts
             ReadOnly = True
             TabOrder = 7
-            ExplicitWidth = 244
           end
           object dbmmoGENERALCHARACTERISTIC: TDBMemo
             Left = 5
             Top = 161
-            Width = 943
+            Width = 1237
             Height = 45
             Anchors = [akLeft, akTop, akRight]
             DataField = 'GENERALCHARACTERISTIC'
             DataSource = dm.dsContacts
             ReadOnly = True
             TabOrder = 8
-            ExplicitWidth = 935
           end
         end
       end
@@ -1791,7 +1780,7 @@ object fMain: TfMain
         PropertyName = 'Height'
       end
       item
-        Component = pnlMain
+        Component = pnlMain_
         PropertyName = 'Height'
       end>
     RegIniFile = rifMain
