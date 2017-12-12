@@ -437,8 +437,15 @@ begin
     end;
     if fEdit.ShowModal = mrOk then
     begin
-      dm.dtContactList.FieldByName('SPECIALIZATION').AsString := fEdit.chbSpecialization.Text;
-      dm.dtContactList.Post;
+      if dm.dtContactList.State in [dsEdit, dsInsert] then
+        dm.dtContactList.Post;
+      if dm.dtContactInfo.State in [dsEdit, dsInsert] then
+        dm.dtContactInfo.Post;
+      if dm.dtRegions.State in [dsEdit, dsInsert] then
+        dm.dtRegions.Post;
+      if dm.dtTransferInfo.State in [dsEdit, dsInsert] then
+        dm.dtTransferInfo.Post;
+
       dm.trWrite.Commit;
       if AMode = dbmEdit then dm.tblVContacts.GotoBookmark(eBookmark);
     end

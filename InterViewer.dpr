@@ -10,7 +10,10 @@ uses
   uFuncs in 'uFuncs.pas',
   uTDialog in 'uTDialog.pas' {fTDialog},
   uEditFIO in 'uEditFIO.pas' {fEditFIO},
-  uEditPassport in 'uEditPassport.pas' {fTDialog1};
+  uEditPassport in 'uEditPassport.pas' {fEditPassport},
+  uEditContactInfo in 'uEditContactInfo.pas' {fEditContactInfo},
+  uEditRegions in 'uEditRegions.pas' {fEditRegions},
+  uEditTransferInfo in 'uEditTransferInfo.pas' {fEditTransferInfo};
 
 {$R *.res}
 
@@ -22,6 +25,9 @@ begin
   Application.CreateForm(TfMain, fMain);
   Application.CreateForm(TfTDialog, fTDialog);
   Application.CreateForm(TfEditFIO, fEditFIO);
-  Application.CreateForm(TfTDialog1, fTDialog1);
+  Application.CreateForm(TfEditPassport, fEditPassport);
+  Application.CreateForm(TfEditContactInfo, fEditContactInfo);
+  Application.CreateForm(TfEditRegions, fEditRegions);
+  Application.CreateForm(TfEditTransferInfo, fEditTransferInfo);
   Application.Run;
 end.

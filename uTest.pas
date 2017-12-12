@@ -25,18 +25,18 @@ var
 implementation
 
 uses
-  uEditFIO;
+  uEditPassport;
 
 {$R *.dfm}
 
 procedure TForm1.edtTestPropertiesButtonClick(Sender: TObject;
   AButtonIndex: Integer);
 begin
-  with TfEditFIO.Create(Application) do
+  with TfEditPassport.Create(Application) do
   try
-    FIO := edtTest.Text;
+    Passport := edtTest.Text;
     if ShowModal = mrOk then
-      edtTest.Text := FIO;
+      edtTest.Text := Passport;
   finally
     Free;
   end;

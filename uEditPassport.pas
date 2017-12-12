@@ -7,29 +7,60 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTDialog, Vcl.ExtCtrls, RzPanel,
   RzDlgBtn, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
   cxContainer, cxEdit, cxTextEdit, Vcl.StdCtrls, Vcl.ComCtrls, dxCore,
-  cxDateUtils, cxMaskEdit, cxDropDownEdit, cxCalendar;
+  cxDateUtils, cxMaskEdit, cxDropDownEdit, cxCalendar, System.AnsiStrings;
 
 type
-  TfTDialog1 = class(TfTDialog)
+  TfEditPassport = class(TfTDialog)
     lbl2: TLabel;
-    edtSecondName: TcxTextEdit;
+    edtSiries: TcxTextEdit;
     lbl1: TLabel;
-    edt1: TcxTextEdit;
+    edtNumber: TcxTextEdit;
     lbl3: TLabel;
-    edtDate: TcxDateEdit;
+    edtDateGive: TcxDateEdit;
     lbl4: TLabel;
-    edt2: TcxTextEdit;
+    edtWhoGive: TcxTextEdit;
+    edtPassport: TcxTextEdit;
   private
-    { Private declarations }
+    FPassport: string;
+    procedure ChangePassportData;
+    procedure SetPassport(const Value: string);
   public
-    { Public declarations }
+    property Passport: string read FPassport write SetPassport;
   end;
 
 var
-  fTDialog1: TfTDialog1;
+  fEditPassport: TfEditPassport;
 
 implementation
 
+uses
+  synautil;
+
 {$R *.dfm}
+
+{ TfEditPassport }
+
+procedure TfEditPassport.ChangePassportData;
+begin
+  FPassport := Format('Паспорт %s%s выдан %s дата выдачи %s', [ edtSiries.Text, edtNumber.Text, edtWhoGive.Text, DateToStr( edtDateGive.Date ) ]);
+end;
+
+procedure TfEditPassport.SetPassport(const Value: string);
+var
+  SerNum: string;
+begin
+  FPassport := Value;
+  edtPassport.Text := FPassport;
+
+  if Pos('Паспорт', Value) > 0 then
+  begin
+    SerNum := Trim( GetBetween('Паспорт', 'выдан', Value) );
+    edtSiries.Text := LeftStr(SerNum, 2);
+    edtNumber.Text := MidStr(SerNum, 3, 8);
+    edtWhoGive.Text := Trim( GetBetween('выдан', 'дата', Value ) );
+
+    edtDateGive.Date := StrToDateDef( Trim( MidStr(Value, Pos('чи', Value) + 3, 12 ) ), Now );
+  end;
+end;
 
 end.

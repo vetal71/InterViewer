@@ -368,6 +368,7 @@ object dm: Tdm
     AutoUpdateOptions.KeyFields = 'BCONTACT_ID'
     AutoUpdateOptions.GeneratorName = 'GEN_BOOK_CONTACTS_ID'
     AutoUpdateOptions.WhenGetGenID = wgOnNewRecord
+    BeforePost = dtContactListBeforePost
     Transaction = trRead
     Database = dbcFirebird
     UpdateTransaction = trWrite
@@ -461,7 +462,7 @@ object dm: Tdm
     UpdateSQL.Strings = (
       'UPDATE WORK_CITIES'
       'SET '
-      '    CONTACT_ID = :BCONTACT_ID,'
+      '    CONTACT_ID = :CONTACT_ID,'
       '    CITY_ID = :CITY_ID'
       'WHERE'
       '    WC_ID = :OLD_WC_ID'
@@ -480,7 +481,7 @@ object dm: Tdm
       ')'
       'VALUES('
       '    :WC_ID,'
-      '    :BCONTACT_ID,'
+      '    :CONTACT_ID,'
       '    :CITY_ID'
       ')')
     RefreshSQL.Strings = (
@@ -488,6 +489,7 @@ object dm: Tdm
       '    WC.WC_ID,'
       '    WC.CONTACT_ID,'
       '    WC.CITY_ID,'
+      '    R.REGION_ID,'
       '    R.REGION_NAME,'
       '    C.CITY_NAME,'
       '    WC.CITY_NAME AS OLD_CITY'
@@ -504,6 +506,7 @@ object dm: Tdm
       '    WC.WC_ID,'
       '    WC.CONTACT_ID,'
       '    WC.CITY_ID,'
+      '    R.REGION_ID,'
       '    R.REGION_NAME,'
       '    C.CITY_NAME,'
       '    WC.CITY_NAME AS OLD_CITY'

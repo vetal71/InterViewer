@@ -163,7 +163,6 @@ object fMain: TfMain
     BorderSides = [sdLeft, sdTop, sdRight, sdBottom]
     BorderWidth = 0
     TabOrder = 0
-    ExplicitWidth = 1063
     object spText: TRzStatusPane
       Left = 0
       Top = 0
@@ -233,7 +232,6 @@ object fMain: TfMain
     Align = alTop
     BorderOuter = fsNone
     TabOrder = 1
-    ExplicitWidth = 1063
     DesignSize = (
       1253
       36)
@@ -753,7 +751,6 @@ object fMain: TfMain
     Align = alTop
     BorderOuter = fsNone
     TabOrder = 2
-    ExplicitWidth = 1063
     object btnSuperVizer: TSpeedButton
       Tag = 1
       Left = 5
@@ -854,14 +851,10 @@ object fMain: TfMain
     Align = alClient
     ShowShadow = False
     TabOrder = 3
-    ExplicitWidth = 1063
     FixedDimension = 19
     object tsNew: TRzTabSheet
       TabVisible = False
       Caption = 'tsNew'
-      ExplicitTop = 20
-      ExplicitWidth = 1061
-      ExplicitHeight = 678
       object pnlMain_: TRzPanel
         Left = 0
         Top = 0
@@ -870,8 +863,6 @@ object fMain: TfMain
         Align = alClient
         BorderOuter = fsNone
         TabOrder = 0
-        ExplicitWidth = 1061
-        ExplicitHeight = 678
         object splInfo_: TSplitter
           Left = 0
           Top = 397
@@ -890,8 +881,6 @@ object fMain: TfMain
           Align = alClient
           BorderOuter = fsNone
           TabOrder = 0
-          ExplicitWidth = 1061
-          ExplicitHeight = 378
           object grdVContacts: TcxGrid
             AlignWithMargins = True
             Left = 3
@@ -902,8 +891,6 @@ object fMain: TfMain
             TabOrder = 0
             LookAndFeel.Kind = lfFlat
             LookAndFeel.NativeStyle = False
-            ExplicitWidth = 1055
-            ExplicitHeight = 372
             object gdvVContacts: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               FindPanel.DisplayMode = fpdmManual
@@ -1062,7 +1049,6 @@ object fMain: TfMain
               object gdvVContactsSOCIAL_NUMBER: TcxGridDBColumn
                 Caption = #1051#1048#1063#1053#1067#1049' '#1053#1054#1052#1045#1056
                 DataBinding.FieldName = 'SOCIAL_NUMBER'
-                Visible = False
                 HeaderAlignmentHorz = taCenter
                 Width = 120
               end
@@ -1108,8 +1094,6 @@ object fMain: TfMain
           Align = alBottom
           BorderOuter = fsNone
           TabOrder = 1
-          ExplicitTop = 383
-          ExplicitWidth = 1061
           DesignSize = (
             1251
             295)
@@ -1304,9 +1288,6 @@ object fMain: TfMain
     object tsOld: TRzTabSheet
       TabVisible = False
       Caption = 'tsOld'
-      ExplicitTop = 20
-      ExplicitWidth = 1061
-      ExplicitHeight = 678
       object pnlMain: TRzPanel
         AlignWithMargins = True
         Left = 3
@@ -1316,8 +1297,6 @@ object fMain: TfMain
         Align = alClient
         BorderOuter = fsNone
         TabOrder = 0
-        ExplicitWidth = 1055
-        ExplicitHeight = 672
         object splInfo: TSplitter
           Left = 0
           Top = 406
@@ -1539,8 +1518,6 @@ object fMain: TfMain
           Align = alBottom
           BorderOuter = fsNone
           TabOrder = 1
-          ExplicitTop = 392
-          ExplicitWidth = 1055
           DesignSize = (
             1245
             280)

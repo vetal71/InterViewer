@@ -23,10 +23,11 @@ type
     dsRegions: TDataSource;
     dtTransferInfo: TpFIBDataSet;
     dsTransferInfo: TDataSource;
+    procedure dtContactListBeforePost(DataSet: TDataSet);
   private
-    { Private declarations }
+    FOnBeforePost: TDataSetNotifyEvent;
   public
-    { Public declarations }
+    property ContactBeforePost: TDataSetNotifyEvent write FOnBeforePost;
   end;
 
 var
@@ -37,5 +38,11 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+
+procedure Tdm.dtContactListBeforePost(DataSet: TDataSet);
+begin
+  if Assigned(FOnBeforePost) then
+    FOnBeforePost(DataSet);
+end;
 
 end.

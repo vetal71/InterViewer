@@ -3,7 +3,8 @@ unit uEditContacts;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, RzPanel, RzDlgBtn,
   Vcl.Mask, Vcl.DBCtrls, Vcl.StdCtrls, uDataModule, cxGraphics, cxControls,
   cxLookAndFeels, cxLookAndFeelPainters, cxContainer, cxEdit, cxTextEdit,
@@ -11,7 +12,8 @@ uses
   Vcl.CheckLst, cxButtonEdit, cxMemo, Vcl.ComCtrls, dxCore, cxDateUtils, cxCalc,
   RzTabs, Vcl.Buttons, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage,
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
-  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid;
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, cxImage,
+  Vcl.ExtDlgs, Vcl.Imaging.jpeg, uDBFuncs, uFuncs;
 
 type
   TfEditContacts = class(TForm)
@@ -28,10 +30,8 @@ type
     Label16: TLabel;
     Label20: TLabel;
     Label21: TLabel;
-    chkSupervizer: TcxDBCheckBox;
     chbSpecialization: TcxCheckComboBox;
     lbl1: TLabel;
-    chkBlackList: TcxDBCheckBox;
     edtFIO: TcxButtonEdit;
     cbbSex: TcxComboBox;
     mmoCharacteristics: TcxMemo;
@@ -81,19 +81,29 @@ type
     gdvTransferCARD_PERIOD: TcxGridDBColumn;
     gdvTransferNOTES: TcxGridDBColumn;
     gdvTransferTT_NAME: TcxGridDBColumn;
+    imgPhoto: TcxImage;
+    chkSupervizer: TcxCheckBox;
+    chkBlackList: TcxCheckBox;
+    lbl3: TLabel;
+    edtSocialNumber: TcxTextEdit;
+    dlgOpenPicture: TOpenPictureDialog;
     procedure FormShow(Sender: TObject);
     procedure edtFIOPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure edtPassportPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
+    procedure imgPhotoClick(Sender: TObject);
+    procedure btnAddClick(Sender: TObject);
+    procedure btnEditClick(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
   private
     FId: Integer;
   private
-    function GetId: Integer;
-    procedure SetId(const Value: Integer);
-
     procedure Init;
     procedure BeforeSave;
+    procedure LoadPhotoFromDatabase;
+    procedure SavePhotoToDatabase(DataSet: TDataSet);
+    procedure EditContactInfo(AMode: TDBMode);
   public
     procedure FillCheckBox(cxCheckComboBox: TcxCheckComboBox; s: string);
   end;
@@ -104,7 +114,7 @@ var
 implementation
 
 uses
-  uEditFIO, uFuncs;
+  uEditFIO, uTDialog, uEditContactInfo, uEditRegions, uEditTransferInfo;
 
 {$R *.dfm}
 
@@ -112,7 +122,86 @@ uses
 
 procedure TfEditContacts.BeforeSave;
 begin
-  //
+  // Save
+  with dm.dtContactList do
+  begin
+    FieldByName('FIO').AsString                 := edtFIO.Text;
+    FieldByName('GENDER').AsString              := cbbSex.Text;
+    FieldByName('BIRTHDAY').AsDateTime          := edtDateBirthday.Date;
+    FieldByName('PASSPORT').AsString            := edtPassport.Text;
+    FieldByName('SPECIALIZATION').AsString      := chbSpecialization.Text;
+    FieldByName('CHARACTERISTICS').AsString     := mmoCharacteristics.Text;
+    FieldByName('NOTES').AsString               := mmoCurrentNotes.Text;
+    FieldByName('PROJECT_LIST').AsString        := mmoProjects.Text;
+    FieldByName('LAST_DATE').AsDateTime         := edtDateLast.Date;
+    FieldByName('AMOUNT_FORMS').AsInteger       := Trunc(edtCountAnketa.Value);
+    FieldByName('PERCENT_GOOD_FORMS').AsInteger := Trunc(edtPercentGood.Value);
+    FieldByName('PERCENT_BAD_FORMS').AsInteger  := Trunc(edtPercentBad.Value);
+    FieldByName('SOCIAL_NUMBER').AsString       := edtSocialNumber.Text;
+    FieldByName('IS_SUPERVISER').AsInteger      := Integer( chkSupervizer.Checked );
+    FieldByName('IS_IN_BLACK_LIST').AsInteger   := Integer( chkBlackList.Checked );
+  end;
+end;
+
+procedure TfEditContacts.btnAddClick(Sender: TObject);
+begin
+  // Append Record;
+  EditContactInfo(dbmAppend);
+end;
+
+procedure TfEditContacts.btnDeleteClick(Sender: TObject);
+var
+  DataSet: TDataSet;
+begin
+  if pgcInfo.ActivePageIndex = 0 then            // контактная информация
+  begin
+    DataSet := dm.dtContactInfo;
+  end else if pgcInfo.ActivePageIndex = 1 then   // зона обслуживания
+  begin
+    DataSet := dm.dtRegions;
+  end else if pgcInfo.ActivePageIndex = 2 then   // финансы
+  begin
+    DataSet := dm.dtTransferInfo;
+  end;
+  if MessageDlg('Удалить текущую запись ?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    DataSet.Delete;
+end;
+
+procedure TfEditContacts.btnEditClick(Sender: TObject);
+begin
+  // Edit Record
+  EditContactInfo(dbmEdit);
+end;
+
+procedure TfEditContacts.EditContactInfo(AMode: TDBMode);
+var
+  EditDlg: TfTDialog;
+  DataSet: TDataSet;
+begin
+  if pgcInfo.ActivePageIndex = 0 then            // контактная информация
+  begin
+    EditDlg := TfEditContactInfo.Create(Application);
+    DataSet := dm.dtContactInfo;
+  end else if pgcInfo.ActivePageIndex = 1 then   // зона обслуживания
+  begin
+    EditDlg := TfEditRegions.Create(Application);
+    DataSet := dm.dtRegions;
+  end else if pgcInfo.ActivePageIndex = 2 then   // финансы
+  begin
+    EditDlg := TfEditTransferInfo.Create(Application);
+    DataSet := dm.dtTransferInfo;
+  end;
+  try
+    if AMode = dbmAppend then
+      DataSet.Append
+    else if AMode = dbmEdit then
+      DataSet.Edit;
+    if EditDlg.ShowModal <> mrOk then
+      if DataSet.State in [dsEdit, dsInsert] then
+        DataSet.Cancel;
+  finally
+    EditDlg.Free;
+  end;
 end;
 
 procedure TfEditContacts.edtFIOPropertiesButtonClick(Sender: TObject;
@@ -168,15 +257,19 @@ begin
   FillCheckBox(chbSpecialization, chbSpecialization.EditValue);
 end;
 
-function TfEditContacts.GetId: Integer;
+procedure TfEditContacts.imgPhotoClick(Sender: TObject);
 begin
-  Result := FId;
+  //загрузка из файла
+  if dlgOpenPicture.Execute then
+    imgPhoto.Picture.LoadFromFile(dlgOpenPicture.FileName);
 end;
 
 procedure TfEditContacts.Init;
 begin
   with dm.dtContactList do
   begin
+    dm.ContactBeforePost := SavePhotoToDatabase;
+    FId := FieldByName('BCONTACT_ID').AsInteger;
     edtFIO.Text := FieldByName('FIO').AsString;
     cbbSex.Text := FieldByName('GENDER').AsString;
     if VarIsNull(FieldValues['BIRTHDAY']) then
@@ -195,14 +288,53 @@ begin
     edtCountAnketa.Value := FieldByName('AMOUNT_FORMS').AsInteger;
     edtPercentGood.Value := FieldByName('PERCENT_GOOD_FORMS').AsInteger;
     edtPercentBad.Value := FieldByName('PERCENT_BAD_FORMS').AsInteger;
+    edtSocialNumber.Text := FieldByName('SOCIAL_NUMBER').AsString;
     chkSupervizer.Checked := Boolean(FieldByName('IS_SUPERVISER').AsInteger);
     chkBlackList.Checked := Boolean(FieldByName('IS_IN_BLACK_LIST').AsInteger);
+
+    if not TBlobField(FieldByName('PHOTO')).IsNull then
+      LoadPhotoFromDatabase;
   end;
 end;
 
-procedure TfEditContacts.SetId(const Value: Integer);
+procedure TfEditContacts.LoadPhotoFromDatabase;
+var
+  BLOB: TStream;
+  Code: Word;
 begin
-  FId := Value;
+  //считывание картинки из базы
+  BLOB := dm.dtContactList.CreateBlobStream(dm.dtContactList.FieldByName('PHOTO'), bmRead);
+  try
+    BLOB.Read(Code, SizeOf(Code));
+    BLOB.Seek(0, 0);
+    case Code of
+      $4D42:
+        begin
+          imgPhoto.Picture.Graphic := TBitmap.Create;
+          imgPhoto.Picture.Graphic.LoadFromStream( BLOB );
+        end;
+      $D8FF:
+        begin
+          imgPhoto.Picture.Graphic := TJPEGImage.Create;
+          imgPhoto.Picture.Graphic.LoadFromStream( BLOB );
+        end;
+    end;
+  finally
+    BLOB.Free;
+  end;
+end;
+
+procedure TfEditContacts.SavePhotoToDatabase(DataSet: TDataSet);
+var
+  BLOB:TStream;
+begin
+  //сохранение картинки в базе
+  BLOB := DataSet.CreateBlobStream( DataSet.FieldByName('PHOTO'), bmWrite );
+  try
+    imgPhoto.Picture.Graphic.SaveToStream( BLOB );
+  finally
+    BLOB.Free;
+  end;
 end;
 
 end.
