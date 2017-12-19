@@ -4,25 +4,25 @@ interface
 
 uses
   FIBDatabase, pFIBDatabase, FIBDataSet,
-  pFIBDataSet, Data.DB, System.Classes, FIBSQLMonitor, FIBQuery, pFIBQuery;
+  pFIBDataSet, Data.DB, System.Classes, FIBSQLMonitor, FIBQuery, pFIBQuery,
+  UniProvider, InterBaseUniProvider, DBAccess, Uni, MemDS;
 
 type
   Tdm = class(TDataModule)
-    dsContacts: TDataSource;
-    dbcFirebird: TpFIBDatabase;
-    tblContacts: TpFIBDataSet;
-    trRead: TpFIBTransaction;
-    trWrite: TpFIBTransaction;
-    tblVContacts: TpFIBDataSet;
-    dsVContacts: TDataSource;
-    dtContactList: TpFIBDataSet;
-    dsContactList: TDataSource;
-    dtContactInfo: TpFIBDataSet;
-    dsContactInfo: TDataSource;
-    dtRegions: TpFIBDataSet;
-    dsRegions: TDataSource;
-    dtTransferInfo: TpFIBDataSet;
-    dsTransferInfo: TDataSource;
+    dbFirebird: TUniConnection;
+    qryContacts: TUniQuery;
+    udsContacts: TUniDataSource;
+    FirebirdProvider: TInterBaseUniProvider;
+    qryContactList: TUniQuery;
+    udsContactList: TUniDataSource;
+    qryContactInfo: TUniQuery;
+    udsContactInfo: TUniDataSource;
+    qryRegions: TUniQuery;
+    udsRegions: TUniDataSource;
+    qryTransferInfo: TUniQuery;
+    udsTransferInfo: TUniDataSource;
+    tblContacts: TUniQuery;
+    dsContacts: TUniDataSource;
     procedure dtContactListBeforePost(DataSet: TDataSet);
   private
     FOnBeforePost: TDataSetNotifyEvent;

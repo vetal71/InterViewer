@@ -19,13 +19,15 @@ type
     edtDateGive: TcxDateEdit;
     lbl4: TLabel;
     edtWhoGive: TcxTextEdit;
-    edtPassport: TcxTextEdit;
+    edtFullPassport: TcxTextEdit;
+    procedure edtSiriesPropertiesChange(Sender: TObject);
   private
     FPassport: string;
     procedure ChangePassportData;
     procedure SetPassport(const Value: string);
+    function GetPassport: string;
   public
-    property Passport: string read FPassport write SetPassport;
+    property Passport: string read GetPassport write SetPassport;
   end;
 
 var
@@ -43,6 +45,17 @@ uses
 procedure TfEditPassport.ChangePassportData;
 begin
   FPassport := Format('Паспорт %s%s выдан %s дата выдачи %s', [ edtSiries.Text, edtNumber.Text, edtWhoGive.Text, DateToStr( edtDateGive.Date ) ]);
+  edtFullPassport.Text := FPassport;
+end;
+
+procedure TfEditPassport.edtSiriesPropertiesChange(Sender: TObject);
+begin
+  ChangePassportData
+end;
+
+function TfEditPassport.GetPassport: string;
+begin
+  Result := FPassport;
 end;
 
 procedure TfEditPassport.SetPassport(const Value: string);
@@ -50,7 +63,7 @@ var
   SerNum: string;
 begin
   FPassport := Value;
-  edtPassport.Text := FPassport;
+  edtFullPassport.Text := FPassport;
 
   if Pos('Паспорт', Value) > 0 then
   begin

@@ -25,19 +25,20 @@ inherited fEditContactInfo: TfEditContactInfo
     Top = 75
     Width = 474
     ExplicitLeft = 0
-    ExplicitTop = 185
-    ExplicitWidth = 415
+    ExplicitTop = 75
+    ExplicitWidth = 474
   end
   object cbbContactInfoType: TcxDBLookupComboBox
     Left = 192
     Top = 11
     DataBinding.DataField = 'CIT_ID'
-    DataBinding.DataSource = dm.dsContactInfo
+    DataBinding.DataSource = dm.udsContactInfo
     Properties.KeyFieldNames = 'CIT_ID'
     Properties.ListColumns = <
       item
         FieldName = 'CIT_NAME'
       end>
+    Properties.ListOptions.ShowHeader = False
     Properties.ListSource = dsContactInfoType
     Style.BorderStyle = ebsFlat
     Style.LookAndFeel.Kind = lfFlat
@@ -56,7 +57,7 @@ inherited fEditContactInfo: TfEditContactInfo
     Left = 192
     Top = 42
     DataBinding.DataField = 'CONTACT_INFO_VALUE'
-    DataBinding.DataSource = dm.dsContactInfo
+    DataBinding.DataSource = dm.udsContactInfo
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     StyleDisabled.LookAndFeel.Kind = lfFlat
@@ -68,58 +69,14 @@ inherited fEditContactInfo: TfEditContactInfo
     TabOrder = 2
     Width = 273
   end
-  object dtContactInfoType: TpFIBDataSet
-    UpdateSQL.Strings = (
-      'UPDATE CONTACT_INFO_TYPES'
-      'SET '
-      '    CIT_NAME = :CIT_NAME,'
-      '    CIT_TEMPLATE = :CIT_TEMPLATE'
-      'WHERE'
-      '    CIT_ID = :OLD_CIT_ID'
-      '    ')
-    DeleteSQL.Strings = (
-      'DELETE FROM'
-      '    CONTACT_INFO_TYPES'
-      'WHERE'
-      '        CIT_ID = :OLD_CIT_ID'
-      '    ')
-    InsertSQL.Strings = (
-      'INSERT INTO CONTACT_INFO_TYPES('
-      '    CIT_ID,'
-      '    CIT_NAME,'
-      '    CIT_TEMPLATE'
-      ')'
-      'VALUES('
-      '    :CIT_ID,'
-      '    :CIT_NAME,'
-      '    :CIT_TEMPLATE'
-      ')')
-    RefreshSQL.Strings = (
-      'SELECT'
-      '    CIT.CIT_ID,'
-      '    CIT.CIT_NAME,'
-      '    CIT.CIT_TEMPLATE'
-      'FROM'
-      '    CONTACT_INFO_TYPES CIT'
-      ''
-      ' WHERE '
-      '        CIT.CIT_ID = :OLD_CIT_ID'
-      '    ')
-    SelectSQL.Strings = (
-      'SELECT'
-      '    CIT.CIT_ID,'
-      '    CIT.CIT_NAME,'
-      '    CIT.CIT_TEMPLATE'
-      'FROM'
-      '    CONTACT_INFO_TYPES CIT')
-    Transaction = dm.trRead
-    Database = dm.dbcFirebird
-    UpdateTransaction = dm.trWrite
-    AutoCommit = True
+  object dtContactInfoType: TUniQuery
+    Connection = dm.dbFirebird
+    SQL.Strings = (
+      'select * from contact_info_types')
     Left = 160
     Top = 8
   end
-  object dsContactInfoType: TDataSource
+  object dsContactInfoType: TUniDataSource
     DataSet = dtContactInfoType
     Left = 248
     Top = 8

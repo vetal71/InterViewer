@@ -4,7 +4,7 @@ interface
 
 uses
   System.IniFiles, System.SysUtils,
-  pFIBDatabase;
+  Uni;
 
 type
   TOptions = packed record
@@ -19,26 +19,26 @@ type
   TDBMode = (dbmAppend, dbmEdit);
 
   procedure ReadConfig(AFileName: string);
-  procedure InitConnection(ADatabase: TpFIBDatabase; AFileConfig: string);
+  procedure InitConnection(ADatabase: TUniConnection; AFileConfig: string);
 
 implementation
 
 var
-  Options: TOptions;
+  vOptions: TOptions;
 
 procedure ReadConfig(AFileName: string);
 begin
   // Чтение из ini
   with TIniFile.Create(AFileName) do
   begin
-    Options.FBServerIP := ReadString('MAIN', 'FB_SERVER_IP', 'LOCALHOST');
-    Options.FBDBName   := ReadString('MAIN', 'FB_DBNAME', '');
-    Options.MADBName   := ReadString('MAIN', 'MA_DBNAME', '');
-    Options.IsFirstRun := ReadBool('MAIN', 'FIRST_RUN', False);
+    vOptions.FBServerIP := ReadString('MAIN', 'FB_SERVER_IP', 'LOCALHOST');
+    vOptions.FBDBName   := ReadString('MAIN', 'FB_DBNAME', '');
+    vOptions.MADBName   := ReadString('MAIN', 'MA_DBNAME', '');
+    vOptions.IsFirstRun := ReadBool('MAIN', 'FIRST_RUN', False);
   end;
 end;
 
-procedure InitConnection(ADatabase: TpFIBDatabase; AFileConfig: string);
+procedure InitConnection(ADatabase: TUniConnection; AFileConfig: string);
 var
   ConnectionStr: string;
 begin
@@ -46,13 +46,10 @@ begin
   with ADatabase do
   begin
     begin
-      if Options.FBServerIP > '' then
-        ConnectionStr := Options.FBServerIP + ':';
-      if Options.FBDBName > '' then
-        ConnectionStr := ConnectionStr + Options.FBDBName;
-      DBName := ConnectionStr;
-      if ConnectionStr = '' then
-        raise Exception.Create('В файле настроек не указан путь к базе данных.');
+      if vOptions.FBServerIP > '' then
+        Server := vOptions.FBServerIP;
+      if vOptions.FBDBName > '' then
+        Database := vOptions.FBDBName;
     end;
   end;
 end;

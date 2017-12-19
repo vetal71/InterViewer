@@ -45,19 +45,20 @@ inherited fEditTransferInfo: TfEditTransferInfo
     Top = 167
     Width = 458
     ExplicitLeft = 0
-    ExplicitTop = 185
-    ExplicitWidth = 415
+    ExplicitTop = 167
+    ExplicitWidth = 458
   end
   object cbbTransferInfoType: TcxDBLookupComboBox
     Left = 104
     Top = 11
     DataBinding.DataField = 'TT_ID'
-    DataBinding.DataSource = dm.dsTransferInfo
+    DataBinding.DataSource = dsTransferType
     Properties.KeyFieldNames = 'TT_ID'
     Properties.ListColumns = <
       item
         FieldName = 'TT_NAME'
       end>
+    Properties.ListOptions.ShowHeader = False
     Properties.ListSource = dsTransferType
     Style.BorderStyle = ebsFlat
     Style.LookAndFeel.Kind = lfFlat
@@ -76,7 +77,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     Left = 104
     Top = 42
     DataBinding.DataField = 'BANK_NAME'
-    DataBinding.DataSource = dm.dsTransferInfo
+    DataBinding.DataSource = dm.udsTransferInfo
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     StyleDisabled.LookAndFeel.Kind = lfFlat
@@ -92,7 +93,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     Left = 104
     Top = 73
     DataBinding.DataField = 'CARD_NAME'
-    DataBinding.DataSource = dm.dsTransferInfo
+    DataBinding.DataSource = dm.udsTransferInfo
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     StyleDisabled.LookAndFeel.Kind = lfFlat
@@ -108,7 +109,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     Left = 104
     Top = 102
     DataBinding.DataField = 'CARD_PERIOD'
-    DataBinding.DataSource = dm.dsTransferInfo
+    DataBinding.DataSource = dm.udsTransferInfo
     Properties.MaskKind = emkRegExpr
     Properties.EditMask = '([0]{1}[1-9]{1}|([1]{1}[12]{1}))\/(\d{2})'
     Style.LookAndFeel.Kind = lfFlat
@@ -126,7 +127,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     Left = 104
     Top = 132
     DataBinding.DataField = 'NOTES'
-    DataBinding.DataSource = dm.dsTransferInfo
+    DataBinding.DataSource = dm.udsTransferInfo
     Properties.EditMask = '!9999-9999-9999-9999;1;_'
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
@@ -139,55 +140,78 @@ inherited fEditTransferInfo: TfEditTransferInfo
     TabOrder = 4
     Width = 346
   end
-  object dtTransferType: TpFIBDataSet
-    UpdateSQL.Strings = (
-      'UPDATE TRANSFER_TYPES'
-      'SET '
-      '    TT_NAME = :TT_NAME'
+  object tblTransferType: TUniQuery
+    SQLInsert.Strings = (
+      'INSERT INTO V_CONTACTS'
+      
+        '  (BCONTACT_ID, FIO, GENDER, NOTES, BIRTHDAY, PASSPORT, SPECIALI' +
+        'ZATION, PROJECT_LIST, LAST_DATE, AMOUNT_FORMS, PERCENT_GOOD_FORM' +
+        'S, PERCENT_BAD_FORMS, CHARACTERISTICS, IS_SUPERVISER, IS_IN_BLAC' +
+        'K_LIST, SOCIAL_NUMBER, PHOTO, REGION_NAME, CITY_NAME, F_ADDRESS,' +
+        ' F_CELURAR, F_HOMEPHONE, F_EMAIL, F_SOCIALNET, F_TRANSFERS, REC_' +
+        'ID)'
+      'VALUES'
+      
+        '  (:BCONTACT_ID, :FIO, :GENDER, :NOTES, :BIRTHDAY, :PASSPORT, :S' +
+        'PECIALIZATION, :PROJECT_LIST, :LAST_DATE, :AMOUNT_FORMS, :PERCEN' +
+        'T_GOOD_FORMS, :PERCENT_BAD_FORMS, :CHARACTERISTICS, :IS_SUPERVIS' +
+        'ER, :IS_IN_BLACK_LIST, :SOCIAL_NUMBER, :PHOTO, :REGION_NAME, :CI' +
+        'TY_NAME, :F_ADDRESS, :F_CELURAR, :F_HOMEPHONE, :F_EMAIL, :F_SOCI' +
+        'ALNET, :F_TRANSFERS, :REC_ID)')
+    SQLDelete.Strings = (
+      'DELETE FROM V_CONTACTS'
       'WHERE'
-      '    TT_ID = :OLD_TT_ID'
-      '    ')
-    DeleteSQL.Strings = (
-      'DELETE FROM'
-      '    TRANSFER_TYPES'
+      '  REC_ID = :Old_REC_ID')
+    SQLUpdate.Strings = (
+      'UPDATE V_CONTACTS'
+      'SET'
+      
+        '  BCONTACT_ID = :BCONTACT_ID, FIO = :FIO, GENDER = :GENDER, NOTE' +
+        'S = :NOTES, BIRTHDAY = :BIRTHDAY, PASSPORT = :PASSPORT, SPECIALI' +
+        'ZATION = :SPECIALIZATION, PROJECT_LIST = :PROJECT_LIST, LAST_DAT' +
+        'E = :LAST_DATE, AMOUNT_FORMS = :AMOUNT_FORMS, PERCENT_GOOD_FORMS' +
+        ' = :PERCENT_GOOD_FORMS, PERCENT_BAD_FORMS = :PERCENT_BAD_FORMS, ' +
+        'CHARACTERISTICS = :CHARACTERISTICS, IS_SUPERVISER = :IS_SUPERVIS' +
+        'ER, IS_IN_BLACK_LIST = :IS_IN_BLACK_LIST, SOCIAL_NUMBER = :SOCIA' +
+        'L_NUMBER, PHOTO = :PHOTO, REGION_NAME = :REGION_NAME, CITY_NAME ' +
+        '= :CITY_NAME, F_ADDRESS = :F_ADDRESS, F_CELURAR = :F_CELURAR, F_' +
+        'HOMEPHONE = :F_HOMEPHONE, F_EMAIL = :F_EMAIL, F_SOCIALNET = :F_S' +
+        'OCIALNET, F_TRANSFERS = :F_TRANSFERS, REC_ID = :REC_ID'
       'WHERE'
-      '        TT_ID = :OLD_TT_ID'
-      '    ')
-    InsertSQL.Strings = (
-      'INSERT INTO TRANSFER_TYPES('
-      '    TT_ID,'
-      '    TT_NAME'
-      ')'
-      'VALUES('
-      '    :TT_ID,'
-      '    :TT_NAME'
-      ')')
-    RefreshSQL.Strings = (
-      'SELECT'
-      '    TRA.TT_ID,'
-      '    TRA.TT_NAME'
-      'FROM'
-      '    TRANSFER_TYPES TRA'
+      '  REC_ID = :Old_REC_ID')
+    SQLLock.Strings = (
+      'SELECT NULL FROM V_CONTACTS'
+      'WHERE'
+      'REC_ID = :Old_REC_ID'
+      'FOR UPDATE WITH LOCK')
+    SQLRefresh.Strings = (
+      
+        'SELECT BCONTACT_ID, FIO, GENDER, NOTES, BIRTHDAY, PASSPORT, SPEC' +
+        'IALIZATION, PROJECT_LIST, LAST_DATE, AMOUNT_FORMS, PERCENT_GOOD_' +
+        'FORMS, PERCENT_BAD_FORMS, CHARACTERISTICS, IS_SUPERVISER, IS_IN_' +
+        'BLACK_LIST, SOCIAL_NUMBER, PHOTO, REGION_NAME, CITY_NAME, F_ADDR' +
+        'ESS, F_CELURAR, F_HOMEPHONE, F_EMAIL, F_SOCIALNET, F_TRANSFERS, ' +
+        'REC_ID FROM V_CONTACTS'
+      'WHERE'
+      '  REC_ID = :REC_ID')
+    SQLRecCount.Strings = (
+      'SELECT COUNT(*) FROM ('
+      'SELECT 1 AS C  FROM V_CONTACTS'
       ''
-      ' WHERE '
-      '        TRA.TT_ID = :OLD_TT_ID'
-      '    ')
-    SelectSQL.Strings = (
+      ') q')
+    Connection = dm.dbFirebird
+    SQL.Strings = (
       'SELECT'
       '    TRA.TT_ID,'
       '    TRA.TT_NAME'
       'FROM'
       '    TRANSFER_TYPES TRA')
-    Transaction = dm.trRead
-    Database = dm.dbcFirebird
-    UpdateTransaction = dm.trWrite
-    AutoCommit = True
-    Left = 191
-    Top = 52
+    Left = 304
+    Top = 79
   end
-  object dsTransferType: TDataSource
-    DataSet = dtTransferType
-    Left = 257
-    Top = 52
+  object dsTransferType: TUniDataSource
+    DataSet = tblTransferType
+    Left = 390
+    Top = 79
   end
 end

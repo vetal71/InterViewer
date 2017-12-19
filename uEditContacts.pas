@@ -13,7 +13,7 @@ uses
   RzTabs, Vcl.Buttons, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage,
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, cxImage,
-  Vcl.ExtDlgs, Vcl.Imaging.jpeg, uDBFuncs, uFuncs;
+  Vcl.ExtDlgs, Vcl.Imaging.jpeg, uDBFuncs, uFuncs, FIBDataSet;
 
 type
   TfEditContacts = class(TForm)
@@ -96,6 +96,7 @@ type
     procedure btnAddClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
+    procedure dlgButtonsClickOk(Sender: TObject);
   private
     FId: Integer;
   private
@@ -114,7 +115,7 @@ var
 implementation
 
 uses
-  uEditFIO, uTDialog, uEditContactInfo, uEditRegions, uEditTransferInfo;
+  uEditFIO, uTDialog, uEditContactInfo, uEditRegions, uEditTransferInfo, uEditPassport;
 
 {$R *.dfm}
 
@@ -123,17 +124,19 @@ uses
 procedure TfEditContacts.BeforeSave;
 begin
   // Save
-  with dm.dtContactList do
+  with dm.qryContactList do
   begin
     FieldByName('FIO').AsString                 := edtFIO.Text;
     FieldByName('GENDER').AsString              := cbbSex.Text;
-    FieldByName('BIRTHDAY').AsDateTime          := edtDateBirthday.Date;
+    if edtDateBirthday.Date > 0 then
+      FieldByName('BIRTHDAY').AsDateTime        := edtDateBirthday.Date;
     FieldByName('PASSPORT').AsString            := edtPassport.Text;
     FieldByName('SPECIALIZATION').AsString      := chbSpecialization.Text;
     FieldByName('CHARACTERISTICS').AsString     := mmoCharacteristics.Text;
     FieldByName('NOTES').AsString               := mmoCurrentNotes.Text;
     FieldByName('PROJECT_LIST').AsString        := mmoProjects.Text;
-    FieldByName('LAST_DATE').AsDateTime         := edtDateLast.Date;
+    if edtDateLast.Date > 0 then
+      FieldByName('LAST_DATE').AsDateTime       := edtDateLast.Date;
     FieldByName('AMOUNT_FORMS').AsInteger       := Trunc(edtCountAnketa.Value);
     FieldByName('PERCENT_GOOD_FORMS').AsInteger := Trunc(edtPercentGood.Value);
     FieldByName('PERCENT_BAD_FORMS').AsInteger  := Trunc(edtPercentBad.Value);
@@ -155,13 +158,13 @@ var
 begin
   if pgcInfo.ActivePageIndex = 0 then            // контактная информация
   begin
-    DataSet := dm.dtContactInfo;
+    DataSet := dm.qryContactInfo;
   end else if pgcInfo.ActivePageIndex = 1 then   // зона обслуживания
   begin
-    DataSet := dm.dtRegions;
+    DataSet := dm.qryRegions;
   end else if pgcInfo.ActivePageIndex = 2 then   // финансы
   begin
-    DataSet := dm.dtTransferInfo;
+    DataSet := dm.qryTransferInfo;
   end;
   if MessageDlg('Удалить текущую запись ?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     DataSet.Delete;
@@ -173,6 +176,12 @@ begin
   EditContactInfo(dbmEdit);
 end;
 
+procedure TfEditContacts.dlgButtonsClickOk(Sender: TObject);
+begin
+  // Сохранение
+  BeforeSave;
+end;
+
 procedure TfEditContacts.EditContactInfo(AMode: TDBMode);
 var
   EditDlg: TfTDialog;
@@ -181,15 +190,15 @@ begin
   if pgcInfo.ActivePageIndex = 0 then            // контактная информация
   begin
     EditDlg := TfEditContactInfo.Create(Application);
-    DataSet := dm.dtContactInfo;
+    DataSet := dm.qryContactInfo;
   end else if pgcInfo.ActivePageIndex = 1 then   // зона обслуживания
   begin
     EditDlg := TfEditRegions.Create(Application);
-    DataSet := dm.dtRegions;
+    DataSet := dm.qryRegions;
   end else if pgcInfo.ActivePageIndex = 2 then   // финансы
   begin
     EditDlg := TfEditTransferInfo.Create(Application);
-    DataSet := dm.dtTransferInfo;
+    DataSet := dm.qryTransferInfo;
   end;
   try
     if AMode = dbmAppend then
@@ -197,8 +206,15 @@ begin
     else if AMode = dbmEdit then
       DataSet.Edit;
     if EditDlg.ShowModal <> mrOk then
+    begin
       if DataSet.State in [dsEdit, dsInsert] then
         DataSet.Cancel;
+    end
+    else
+    begin
+      if ( DataSet.State in [dsEdit, dsInsert] ) and ( dm.qryContactList.State in [ dsEdit ] ) then
+        TFibDataSet( DataSet ).Post;
+    end;
   finally
     EditDlg.Free;
   end;
@@ -222,6 +238,14 @@ procedure TfEditContacts.edtPassportPropertiesButtonClick(Sender: TObject;
   AButtonIndex: Integer);
 begin
   // Форма редактирования паспорта
+  with TfEditPassport.Create(Application) do
+  try
+    Passport := edtPassport.Text;
+    if ShowModal = mrOk then
+      edtPassport.Text := Passport;
+  finally
+    Free;
+  end;
 end;
 
 procedure TfEditContacts.FillCheckBox(cxCheckComboBox: TcxCheckComboBox;
@@ -266,7 +290,7 @@ end;
 
 procedure TfEditContacts.Init;
 begin
-  with dm.dtContactList do
+  with dm.qryContactList do
   begin
     dm.ContactBeforePost := SavePhotoToDatabase;
     FId := FieldByName('BCONTACT_ID').AsInteger;
@@ -295,6 +319,13 @@ begin
     if not TBlobField(FieldByName('PHOTO')).IsNull then
       LoadPhotoFromDatabase;
   end;
+  try
+    dm.qryContactInfo.Open;
+    dm.qryRegions.Open;
+    dm.qryTransferInfo.Open;
+  except
+
+  end;
 end;
 
 procedure TfEditContacts.LoadPhotoFromDatabase;
@@ -303,7 +334,7 @@ var
   Code: Word;
 begin
   //считывание картинки из базы
-  BLOB := dm.dtContactList.CreateBlobStream(dm.dtContactList.FieldByName('PHOTO'), bmRead);
+  BLOB := dm.qryContactList.CreateBlobStream(dm.qryContactList.FieldByName('PHOTO'), bmRead);
   try
     BLOB.Read(Code, SizeOf(Code));
     BLOB.Seek(0, 0);
@@ -329,6 +360,8 @@ var
   BLOB:TStream;
 begin
   //сохранение картинки в базе
+  if not Assigned( imgPhoto.Picture.Graphic ) then Exit;
+
   BLOB := DataSet.CreateBlobStream( DataSet.FieldByName('PHOTO'), bmWrite );
   try
     imgPhoto.Picture.Graphic.SaveToStream( BLOB );

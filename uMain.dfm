@@ -894,7 +894,7 @@ object fMain: TfMain
             object gdvVContacts: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               FindPanel.DisplayMode = fpdmManual
-              DataController.DataSource = dm.dsVContacts
+              DataController.DataSource = dm.udsContacts
               DataController.KeyFieldNames = 'BCONTACT_ID'
               DataController.Summary.DefaultGroupSummaryItems = <>
               DataController.Summary.FooterSummaryItems = <>
@@ -1188,7 +1188,6 @@ object fMain: TfMain
             Width = 435
             Height = 21
             DataField = 'F_EMAIL'
-            DataSource = dm.dsVContacts
             ReadOnly = True
             TabOrder = 0
           end
@@ -1199,7 +1198,6 @@ object fMain: TfMain
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'F_SOCIALNET'
-            DataSource = dm.dsVContacts
             ReadOnly = True
             TabOrder = 1
           end
@@ -1210,7 +1208,6 @@ object fMain: TfMain
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'PASSPORT'
-            DataSource = dm.dsVContacts
             ReadOnly = True
             TabOrder = 2
           end
@@ -1220,7 +1217,6 @@ object fMain: TfMain
             Width = 435
             Height = 21
             DataField = 'F_ADDRESS'
-            DataSource = dm.dsVContacts
             ReadOnly = True
             TabOrder = 3
           end
@@ -1232,7 +1228,6 @@ object fMain: TfMain
             Hint = #1057#1087#1077#1094#1080#1072#1083#1080#1079#1072#1094#1080#1103' ('#1080#1089#1087#1086#1083#1100#1079#1091#1077#1090#1089#1103' '#1087#1088#1080' '#1092#1080#1083#1100#1090#1088#1072#1094#1080#1080')'
             Anchors = [akLeft, akTop, akRight]
             DataField = 'SPECIALIZATION'
-            DataSource = dm.dsVContacts
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clGreen
             Font.Height = -11
@@ -1249,7 +1244,6 @@ object fMain: TfMain
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'F_TRANSFERS'
-            DataSource = dm.dsVContacts
             ReadOnly = True
             TabOrder = 5
           end
@@ -1260,7 +1254,6 @@ object fMain: TfMain
             Height = 45
             Anchors = [akLeft, akTop, akRight]
             DataField = 'CHARACTERISTICS'
-            DataSource = dm.dsVContacts
             ReadOnly = True
             TabOrder = 6
           end
@@ -1272,7 +1265,6 @@ object fMain: TfMain
             Height = 45
             Anchors = [akLeft, akTop, akRight]
             DataField = 'NOTES'
-            DataSource = dm.dsVContacts
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clGreen
             Font.Height = -11
@@ -1315,8 +1307,6 @@ object fMain: TfMain
           Align = alClient
           BorderOuter = fsNone
           TabOrder = 0
-          ExplicitWidth = 1055
-          ExplicitHeight = 387
           object grdContracts: TcxGrid
             AlignWithMargins = True
             Left = 3
@@ -1327,12 +1317,9 @@ object fMain: TfMain
             TabOrder = 0
             LookAndFeel.Kind = lfFlat
             LookAndFeel.NativeStyle = False
-            ExplicitWidth = 1049
-            ExplicitHeight = 381
             object gdvContracts: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               FindPanel.DisplayMode = fpdmManual
-              DataController.DataSource = dm.dsContacts
               DataController.KeyFieldNames = 'CODE'
               DataController.Summary.DefaultGroupSummaryItems = <>
               DataController.Summary.FooterSummaryItems = <>
@@ -1620,7 +1607,6 @@ object fMain: TfMain
             Height = 45
             Anchors = [akLeft, akTop, akRight]
             DataField = 'CURRENTNOTES'
-            DataSource = dm.dsContacts
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clGreen
             Font.Height = -11
@@ -1636,7 +1622,6 @@ object fMain: TfMain
             Width = 435
             Height = 21
             DataField = 'EMAIL'
-            DataSource = dm.dsContacts
             ReadOnly = True
             TabOrder = 1
           end
@@ -1647,7 +1632,6 @@ object fMain: TfMain
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'OTHERTYPELINKS'
-            DataSource = dm.dsContacts
             ReadOnly = True
             TabOrder = 2
           end
@@ -1657,7 +1641,6 @@ object fMain: TfMain
             Width = 435
             Height = 21
             DataField = 'ADDRESS'
-            DataSource = dm.dsContacts
             ReadOnly = True
             TabOrder = 3
           end
@@ -1668,7 +1651,6 @@ object fMain: TfMain
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'PASSPORT'
-            DataSource = dm.dsContacts
             ReadOnly = True
             TabOrder = 4
           end
@@ -1680,7 +1662,6 @@ object fMain: TfMain
             Hint = #1057#1087#1077#1094#1080#1072#1083#1080#1079#1072#1094#1080#1103' ('#1080#1089#1087#1086#1083#1100#1079#1091#1077#1090#1089#1103' '#1087#1088#1080' '#1092#1080#1083#1100#1090#1088#1072#1094#1080#1080')'
             Anchors = [akLeft, akTop, akRight]
             DataField = 'SPECIALIZATION'
-            DataSource = dm.dsContacts
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clGreen
             Font.Height = -11
@@ -1696,7 +1677,6 @@ object fMain: TfMain
             Width = 435
             Height = 21
             DataField = 'TRANSFERTYPE'
-            DataSource = dm.dsContacts
             ReadOnly = True
             TabOrder = 6
           end
@@ -1707,7 +1687,6 @@ object fMain: TfMain
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'NUMBERCARD'
-            DataSource = dm.dsContacts
             ReadOnly = True
             TabOrder = 7
           end
@@ -1718,7 +1697,6 @@ object fMain: TfMain
             Height = 45
             Anchors = [akLeft, akTop, akRight]
             DataField = 'GENERALCHARACTERISTIC'
-            DataSource = dm.dsContacts
             ReadOnly = True
             TabOrder = 8
           end
@@ -1767,7 +1745,7 @@ object fMain: TfMain
   end
   object rifMain: TRzRegIniFile
     Path = 'forms.ini'
-    Left = 627
+    Left = 632
     Top = 228
   end
   object verInfo: TRzVersionInfo

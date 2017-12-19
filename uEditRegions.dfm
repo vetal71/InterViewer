@@ -24,19 +24,20 @@ inherited fEditRegions: TfEditRegions
     Top = 72
     Width = 356
     ExplicitLeft = 0
-    ExplicitTop = 185
-    ExplicitWidth = 415
+    ExplicitTop = 72
+    ExplicitWidth = 356
   end
   object cbbRegions: TcxDBLookupComboBox
     Left = 72
     Top = 11
     DataBinding.DataField = 'REGION_ID'
-    DataBinding.DataSource = dm.dsRegions
+    DataBinding.DataSource = dsRegions
     Properties.KeyFieldNames = 'REGION_ID'
     Properties.ListColumns = <
       item
         FieldName = 'REGION_NAME'
       end>
+    Properties.ListOptions.ShowHeader = False
     Properties.ListSource = dsRegions
     Style.BorderStyle = ebsFlat
     Style.LookAndFeel.Kind = lfFlat
@@ -55,12 +56,13 @@ inherited fEditRegions: TfEditRegions
     Left = 72
     Top = 42
     DataBinding.DataField = 'CITY_ID'
-    DataBinding.DataSource = dm.dsRegions
+    DataBinding.DataSource = dsCities
     Properties.KeyFieldNames = 'CITY_ID'
     Properties.ListColumns = <
       item
         FieldName = 'CITY_NAME'
       end>
+    Properties.ListOptions.ShowHeader = False
     Properties.ListSource = dsCities
     Style.BorderStyle = ebsFlat
     Style.LookAndFeel.Kind = lfFlat
@@ -75,109 +77,95 @@ inherited fEditRegions: TfEditRegions
     TabOrder = 2
     Width = 273
   end
-  object dtRegions: TpFIBDataSet
-    UpdateSQL.Strings = (
+  object dtRegions: TUniQuery
+    SQLInsert.Strings = (
+      'INSERT INTO REGIONS'
+      '  (REGION_ID, REGION_NAME)'
+      'VALUES'
+      '  (:REGION_ID, :REGION_NAME)')
+    SQLDelete.Strings = (
+      'DELETE FROM REGIONS'
+      'WHERE'
+      '  REGION_ID = :Old_REGION_ID')
+    SQLUpdate.Strings = (
       'UPDATE REGIONS'
-      'SET '
-      '    REGION_NAME = :REGION_NAME'
+      'SET'
+      '  REGION_ID = :REGION_ID, REGION_NAME = :REGION_NAME'
       'WHERE'
-      '    REGION_ID = :OLD_REGION_ID'
-      '    ')
-    DeleteSQL.Strings = (
-      'DELETE FROM'
-      '    REGIONS'
+      '  REGION_ID = :Old_REGION_ID')
+    SQLLock.Strings = (
+      'SELECT NULL FROM REGIONS'
       'WHERE'
-      '        REGION_ID = :OLD_REGION_ID'
-      '    ')
-    InsertSQL.Strings = (
-      'INSERT INTO REGIONS('
-      '    REGION_ID,'
-      '    REGION_NAME'
-      ')'
-      'VALUES('
-      '    :REGION_ID,'
-      '    :REGION_NAME'
-      ')')
-    RefreshSQL.Strings = (
-      'SELECT'
-      '    REG.REGION_ID,'
-      '    REG.REGION_NAME'
-      'FROM'
-      '    REGIONS REG'
+      'REGION_ID = :Old_REGION_ID'
+      'FOR UPDATE WITH LOCK')
+    SQLRefresh.Strings = (
+      'SELECT REGION_ID, REGION_NAME FROM REGIONS'
+      'WHERE'
+      '  REGION_ID = :REGION_ID')
+    SQLRecCount.Strings = (
+      'SELECT COUNT(*) FROM ('
+      'SELECT 1 AS C  FROM REGIONS'
       ''
-      ' WHERE '
-      '        REG.REGION_ID = :OLD_REGION_ID'
-      '    ')
-    SelectSQL.Strings = (
-      'SELECT'
-      '    REG.REGION_ID,'
-      '    REG.REGION_NAME'
-      'FROM'
-      '    REGIONS REG')
-    Transaction = dm.trRead
-    Database = dm.dbcFirebird
-    UpdateTransaction = dm.trWrite
-    AutoCommit = True
+      ') q')
+    Connection = dm.dbFirebird
+    SQL.Strings = (
+      'select * from regions')
     Left = 15
     Top = 12
   end
-  object dsRegions: TDataSource
-    DataSet = dtRegions
-    Left = 81
-    Top = 12
-  end
-  object dtCities: TpFIBDataSet
-    UpdateSQL.Strings = (
+  object dtCities: TUniQuery
+    SQLInsert.Strings = (
+      'INSERT INTO CITIES'
+      '  (CITY_ID, CITY_NAME, REGION_ID)'
+      'VALUES'
+      '  (:CITY_ID, :CITY_NAME, :REGION_ID)')
+    SQLDelete.Strings = (
+      'DELETE FROM CITIES'
+      'WHERE'
+      '  CITY_ID = :Old_CITY_ID')
+    SQLUpdate.Strings = (
       'UPDATE CITIES'
-      'SET '
-      '    CITY_NAME = :CITY_NAME,'
-      '    REGION_ID = :REGION_ID'
+      'SET'
+      
+        '  CITY_ID = :CITY_ID, CITY_NAME = :CITY_NAME, REGION_ID = :REGIO' +
+        'N_ID'
       'WHERE'
-      '    CITY_ID = :OLD_CITY_ID'
-      '    ')
-    DeleteSQL.Strings = (
-      'DELETE FROM'
-      '    CITIES'
+      '  CITY_ID = :Old_CITY_ID')
+    SQLLock.Strings = (
+      'SELECT NULL FROM CITIES'
       'WHERE'
-      '        CITY_ID = :OLD_CITY_ID'
-      '    ')
-    InsertSQL.Strings = (
-      'INSERT INTO CITIES('
-      '    CITY_ID,'
-      '    CITY_NAME,'
-      '    REGION_ID'
-      ')'
-      'VALUES('
-      '    :CITY_ID,'
-      '    :CITY_NAME,'
-      '    :REGION_ID'
-      ')')
-    RefreshSQL.Strings = (
-      'SELECT'
-      '    CIT.CITY_ID,'
-      '    CIT.CITY_NAME,'
-      '    CIT.REGION_ID'
-      'FROM'
-      '    CITIES CIT'
+      'CITY_ID = :Old_CITY_ID'
+      'FOR UPDATE WITH LOCK')
+    SQLRefresh.Strings = (
+      'SELECT CITY_ID, CITY_NAME, REGION_ID FROM CITIES'
+      'WHERE'
+      '  CITY_ID = :CITY_ID')
+    SQLRecCount.Strings = (
+      'SELECT COUNT(*) FROM ('
+      'SELECT 1 AS C  FROM CITIES'
       ''
-      ' WHERE '
-      '        CIT.CITY_ID = :OLD_CITY_ID'
-      '    ')
-    SelectSQL.Strings = (
-      'SELECT'
-      '    CIT.CITY_ID,'
-      '    CIT.CITY_NAME,'
-      '    CIT.REGION_ID'
-      'FROM'
-      '    CITIES CIT')
-    Transaction = dm.trRead
-    Database = dm.dbcFirebird
-    UpdateTransaction = dm.trWrite
-    AutoCommit = True
+      ') q')
+    Connection = dm.dbFirebird
+    SQL.Strings = (
+      'select * from cities')
+    MasterSource = dsRegions
+    MasterFields = 'REGION_ID'
+    DetailFields = 'REGION_ID'
     Left = 192
     Top = 16
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'REGION_ID'
+        Value = nil
+      end>
   end
-  object dsCities: TDataSource
+  object dsRegions: TUniDataSource
+    DataSet = dtRegions
+    Left = 96
+    Top = 16
+  end
+  object dsCities: TUniDataSource
     DataSet = dtCities
     Left = 237
     Top = 16

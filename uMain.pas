@@ -198,12 +198,12 @@ end;
 procedure TfMain.ApplyFilter(AFilterSQL: string; AIsApply: Boolean);
 var eFilter: string;
 begin
-  dm.tblContacts.Close;
+  dm.qryContacts.Close;
   if AIsApply then
-    dm.tblContacts.MainWhereClause := AFilterSQL
-  else dm.tblContacts.MainWhereClause := '';
-  dm.tblContacts.Open;
-  dm.tblContacts.First;
+    dm.qryContacts.FilterSQL := AFilterSQL
+  else dm.qryContacts.FilterSQL := '';
+  dm.qryContacts.Open;
+  dm.qryContacts.First;
 end;
 
 procedure TfMain.btnAddClick(Sender: TObject);
@@ -284,12 +284,12 @@ end;
 procedure TfMain.DBConnect;
 const cMsgErrorConnect = 'Ошибка соединения с БД %s';
 begin
-  InitConnection(dm.dbcFirebird, AppDir + 'config.ini');
+  InitConnection(dm.dbFirebird, AppDir + 'config.ini');
   try
-    dm.dbcFirebird.Connected := True;
+    dm.dbFirebird.Connected := True;
     spDBInfo.Caption := 'Соединение с БД успешно';
   except
-    Application.MessageBox(PWideChar(Format(cMsgErrorConnect, [dm.dbcFirebird.DBName])),
+    Application.MessageBox(PWideChar(Format(cMsgErrorConnect, [dm.dbFirebird.Database])),
       'Ошибка соединения', MB_OK or MB_ICONERROR);
   end;
 end;
@@ -300,11 +300,6 @@ begin
   AppDir := IncludeTrailingPathDelimiter( ExtractFilePath(ParamStr(0)) );
   // Читаем параметры
   DBConnect;
-  // Получаем список пользователей
-//  MainUser := GetUser;
-//  if MainUser = 'admin' then
-//    Exit;
-
   // Открытие таблиц
   OpenData;
 
@@ -388,8 +383,8 @@ end;
 procedure TfMain.OpenData;
 begin
   try
-    dm.tblVContacts.Open;
-    dm.tblVContacts.First;
+    dm.qryContacts.Open;
+    dm.qryContacts.First;
   except
     Application.MessageBox('Не удалось открыть таблицу BOOK_CONTACTS',
       'Ошибка открытия', MB_OK or MB_ICONERROR);
@@ -414,46 +409,49 @@ end;
 
 procedure TfMain.ShowEditForm(AMode: TDBMode);
 var fEdit: TfEditContacts;
-var eBookmark: TBookmark;
-var FId: Integer;
+var FId, FRecId: Integer;
 begin
   // Изменить запись
-  eBookmark := dm.tblVContacts.GetBookmark;
-  dm.dtContactList.Open;
+  dm.qryContactList.Open;
   fEdit := TfEditContacts.Create(Self);
   try
-    dm.trWrite.StartTransaction;
     if AMode = dbmAppend then
     begin
-      dm.dtContactList.Append;
+      dm.qryContactList.Append;
     end
     else if AMode = dbmEdit then
     begin
-      FId := dm.tblVContacts.FieldValues['BCONTACT_ID'];
-      if dm.dtContactList.Locate('BCONTACT_ID', FId, [ loPartialKey, loCaseInsensitive ]) then
-        dm.dtContactList.Edit
+      FId := dm.qryContacts.FieldValues['BCONTACT_ID'];
+      FRecId := dm.qryContacts.FieldValues['REC_ID'];
+      if dm.qryContactList.Locate('BCONTACT_ID', FId, [ loPartialKey, loCaseInsensitive ]) then
+        dm.qryContactList.Edit
       else
         raise Exception.CreateFmt('Запись с кодом %d не найдена.', [FId]);
     end;
     if fEdit.ShowModal = mrOk then
     begin
-      if dm.dtContactList.State in [dsEdit, dsInsert] then
-        dm.dtContactList.Post;
-      if dm.dtContactInfo.State in [dsEdit, dsInsert] then
-        dm.dtContactInfo.Post;
-      if dm.dtRegions.State in [dsEdit, dsInsert] then
-        dm.dtRegions.Post;
-      if dm.dtTransferInfo.State in [dsEdit, dsInsert] then
-        dm.dtTransferInfo.Post;
+      if dm.qryContactList.State in [dsEdit, dsInsert] then
+        dm.qryContactList.Post;
 
-      dm.trWrite.Commit;
-      if AMode = dbmEdit then dm.tblVContacts.GotoBookmark(eBookmark);
+      if AMode = dbmAppend then
+      begin
+        if dm.qryContactInfo.State in [dsInsert] then
+          dm.qryContactInfo.Post;
+        if dm.qryRegions.State in [dsInsert] then
+          dm.qryRegions.Post;
+        if dm.qryTransferInfo.State in [dsInsert] then
+          dm.qryTransferInfo.Post;
+      end;
+
+      dm.qryContacts.Refresh;
+
+      if AMode = dbmEdit then
+        dm.qryContacts.Locate('REC_ID', FRecId, [ loPartialKey, loCaseInsensitive ]);
     end
     else
     begin
-      dm.dtContactList.Cancel;
-      dm.trWrite.Rollback;
-      dm.tblVContacts.GotoBookmark(eBookmark);
+      dm.qryContactList.Cancel;
+      dm.qryContacts.Locate('REC_ID', FRecId, [ loPartialKey, loCaseInsensitive ]);
     end;
   finally
     fEdit.Free;
@@ -471,12 +469,10 @@ begin
   // Удаление записи
   if MessageBox(0, 'Текущая запись будет удалена. Вы согласны ?', 'Запрос на удаление',
     MB_ICONQUESTION or MB_OKCANCEL) <> mrOk then Exit;
-  dm.trWrite.StartTransaction;
   try
-    dm.tblContacts.Delete;
-    dm.trWrite.Commit;
+    dm.qryContacts.Delete;
   except
-    dm.trWrite.Rollback;
+    dm.qryContacts.Cancel;
   end;
 end;
 

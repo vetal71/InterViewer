@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, RzPanel, RzDlgBtn,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer,
   cxEdit, cxDBEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit, Vcl.StdCtrls,
-  pFIBDataSet;
+  pFIBDataSet, Uni;
 
 type
   TfLogin = class(TForm)
@@ -45,7 +45,7 @@ begin
     cbbUsers.SetFocus;
     ModalResult := mrCancel;
   end;
-  pwd := dm.dbcFirebird.QueryValue('select user_pwd from users where user_name = :param', 0, [cbbUsers.Text]);
+  pwd := dm.dbFirebird.ExecSQLEx( 'select user_pwd from users where user_name = :param', [ cbbUsers.Text ] );
   if pwd <> edtPassword.Text then
   begin
     MessageDlg('Пароль не верный.', mtWarning, [mbOK], 0);
@@ -61,13 +61,13 @@ end;
 
 procedure TfLogin.SetUserList;
 var
-  qList: TpFIBDataSet;
+  qList: TUniQuery;
 begin
-  qList := TpFIBDataSet.Create(nil);
+  qList := TUniQuery.Create(nil);
   with qList do
   begin
-    Database := dm.dbcFirebird;
-    SelectSQL.Text := 'select user_name from users order by user_name';
+    Connection := dm.dbFirebird;
+    SQL.Text := 'select user_name from users order by user_name';
     try
       Open;
       while not Eof do

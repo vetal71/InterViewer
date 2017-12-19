@@ -8,7 +8,7 @@ uses
   RzDlgBtn, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
   cxContainer, cxEdit, cxDBEdit, Vcl.StdCtrls, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, Data.DB,
-  FIBDataSet, pFIBDataSet;
+  FIBDataSet, pFIBDataSet, DBAccess, Uni, MemDS;
 
 type
   TfEditTransferInfo = class(TfTDialog)
@@ -22,8 +22,8 @@ type
     lbl5: TLabel;
     edtPeriodCard: TcxDBMaskEdit;
     edtNote: TcxDBMaskEdit;
-    dtTransferType: TpFIBDataSet;
-    dsTransferType: TDataSource;
+    tblTransferType: TUniQuery;
+    dsTransferType: TUniDataSource;
   private
     { Private declarations }
   public

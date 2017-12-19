@@ -7,18 +7,19 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTDialog, Vcl.ExtCtrls, RzPanel,
   RzDlgBtn, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
   cxContainer, cxEdit, Data.DB, FIBDataSet, pFIBDataSet, cxTextEdit, cxMaskEdit,
-  cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, Vcl.StdCtrls;
+  cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, Vcl.StdCtrls,
+  DBAccess, Uni, MemDS;
 
 type
   TfEditRegions = class(TfTDialog)
     lbl2: TLabel;
     cbbRegions: TcxDBLookupComboBox;
     lbl1: TLabel;
-    dtRegions: TpFIBDataSet;
-    dsRegions: TDataSource;
     cbbCities: TcxDBLookupComboBox;
-    dtCities: TpFIBDataSet;
-    dsCities: TDataSource;
+    dtRegions: TUniQuery;
+    dtCities: TUniQuery;
+    dsRegions: TUniDataSource;
+    dsCities: TUniDataSource;
   private
     { Private declarations }
   public

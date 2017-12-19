@@ -38,12 +38,13 @@ inherited fEditPassport: TfEditPassport
     Top = 104
     Width = 656
     ExplicitLeft = 0
-    ExplicitTop = 80
-    ExplicitWidth = 473
+    ExplicitTop = 104
+    ExplicitWidth = 656
   end
   object edtSiries: TcxTextEdit
     Left = 59
     Top = 39
+    Properties.OnChange = edtSiriesPropertiesChange
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     StyleDisabled.LookAndFeel.Kind = lfFlat
@@ -59,6 +60,7 @@ inherited fEditPassport: TfEditPassport
   object edtNumber: TcxTextEdit
     Left = 156
     Top = 39
+    Properties.OnChange = edtSiriesPropertiesChange
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     StyleDisabled.LookAndFeel.Kind = lfFlat
@@ -74,6 +76,7 @@ inherited fEditPassport: TfEditPassport
     Left = 343
     Top = 39
     Properties.UseNullString = True
+    Properties.OnChange = edtSiriesPropertiesChange
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     Style.Shadow = False
@@ -89,6 +92,7 @@ inherited fEditPassport: TfEditPassport
   object edtWhoGive: TcxTextEdit
     Left = 59
     Top = 71
+    Properties.OnChange = edtSiriesPropertiesChange
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     StyleDisabled.LookAndFeel.Kind = lfFlat
@@ -100,7 +104,7 @@ inherited fEditPassport: TfEditPassport
     TabOrder = 4
     Width = 590
   end
-  object edtPassport: TcxTextEdit
+  object edtFullPassport: TcxTextEdit
     Left = 9
     Top = 7
     Enabled = False

@@ -3,7 +3,7 @@ object fEditContacts: TfEditContacts
   Top = 0
   BorderStyle = bsDialog
   Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103' '#1086' '#1082#1086#1085#1090#1072#1082#1090#1077
-  ClientHeight = 753
+  ClientHeight = 707
   ClientWidth = 866
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -29,21 +29,20 @@ object fEditContacts: TfEditContacts
     Font.Color = clBlue
     Font.Height = -19
     Font.Name = 'Tahoma'
-    Font.Style = []
+    Font.Style = [fsBold]
     ParentFont = False
-    ExplicitWidth = 212
+    ExplicitWidth = 241
   end
   object dlgButtons: TRzDialogButtons
     Left = 0
-    Top = 717
+    Top = 671
     Width = 866
     CaptionCancel = #1054#1090#1084#1077#1085#1072
     HotTrack = True
     OKDefault = False
     ShowDivider = True
+    OnClickOk = dlgButtonsClickOk
     TabOrder = 0
-    ExplicitTop = 709
-    ExplicitWidth = 875
   end
   object pnlMainInfo: TRzPanel
     Left = 0
@@ -148,7 +147,7 @@ object fEditContacts: TfEditContacts
     end
     object lbl3: TLabel
       Left = 11
-      Top = 125
+      Top = 123
       Width = 88
       Height = 14
       Caption = #1051#1080#1095#1085#1099#1081' '#1085#1086#1084#1077#1088':'
@@ -740,15 +739,12 @@ object fEditContacts: TfEditContacts
     Left = 0
     Top = 415
     Width = 866
-    Height = 302
+    Height = 256
     Align = alClient
     BorderInner = fsFlat
     BorderOuter = fsNone
     BorderSides = [sdTop]
     TabOrder = 2
-    ExplicitTop = 389
-    ExplicitWidth = 875
-    ExplicitHeight = 320
     object pnlButtons: TRzPanel
       Left = 0
       Top = 1
@@ -757,7 +753,6 @@ object fEditContacts: TfEditContacts
       Align = alTop
       BorderOuter = fsNone
       TabOrder = 0
-      ExplicitWidth = 875
       object btnAdd: TSpeedButton
         Left = 5
         Top = 4
@@ -892,36 +887,30 @@ object fEditContacts: TfEditContacts
       Left = 0
       Top = 42
       Width = 866
-      Height = 260
+      Height = 214
       Hint = ''
       ActivePage = tsContactInfo
       ActivePageDefault = tsContactInfo
       Align = alClient
       TabIndex = 0
       TabOrder = 1
-      ExplicitWidth = 875
-      ExplicitHeight = 278
       FixedDimension = 19
       object tsContactInfo: TRzTabSheet
         Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1072#1103' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1103
-        ExplicitWidth = 871
-        ExplicitHeight = 255
         object grdContactInfo: TcxGrid
           AlignWithMargins = True
           Left = 3
           Top = 3
           Width = 856
-          Height = 231
+          Height = 185
           Align = alClient
           TabOrder = 0
           LookAndFeel.Kind = lfFlat
           LookAndFeel.NativeStyle = False
-          ExplicitWidth = 865
-          ExplicitHeight = 249
           object gdvContactInfo: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             FindPanel.DisplayMode = fpdmManual
-            DataController.DataSource = dm.dsContactInfo
+            DataController.DataSource = dm.udsContactInfo
             DataController.Summary.DefaultGroupSummaryItems = <>
             DataController.Summary.FooterSummaryItems = <>
             DataController.Summary.SummaryGroups = <>
@@ -980,24 +969,20 @@ object fEditContacts: TfEditContacts
       end
       object tsRegions: TRzTabSheet
         Caption = #1047#1086#1085#1072' '#1086#1073#1089#1083#1091#1078#1080#1074#1072#1085#1080#1103
-        ExplicitWidth = 871
-        ExplicitHeight = 255
         object grdRegions: TcxGrid
           AlignWithMargins = True
           Left = 3
           Top = 3
           Width = 856
-          Height = 231
+          Height = 185
           Align = alClient
           TabOrder = 0
           LookAndFeel.Kind = lfFlat
           LookAndFeel.NativeStyle = False
-          ExplicitWidth = 865
-          ExplicitHeight = 249
           object gdvRegions: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             FindPanel.DisplayMode = fpdmManual
-            DataController.DataSource = dm.dsRegions
+            DataController.DataSource = dm.udsRegions
             DataController.Summary.DefaultGroupSummaryItems = <>
             DataController.Summary.FooterSummaryItems = <>
             DataController.Summary.SummaryGroups = <>
@@ -1062,24 +1047,20 @@ object fEditContacts: TfEditContacts
       end
       object tsTransferInfo: TRzTabSheet
         Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103' '#1086#1073' '#1086#1087#1083#1072#1090#1077
-        ExplicitWidth = 871
-        ExplicitHeight = 255
         object grdTransfer: TcxGrid
           AlignWithMargins = True
           Left = 3
           Top = 3
           Width = 856
-          Height = 231
+          Height = 185
           Align = alClient
           TabOrder = 0
           LookAndFeel.Kind = lfFlat
           LookAndFeel.NativeStyle = False
-          ExplicitWidth = 865
-          ExplicitHeight = 249
           object gdvTransfer: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             FindPanel.DisplayMode = fpdmManual
-            DataController.DataSource = dm.dsTransferInfo
+            DataController.DataSource = dm.udsTransferInfo
             DataController.Summary.DefaultGroupSummaryItems = <>
             DataController.Summary.FooterSummaryItems = <>
             DataController.Summary.SummaryGroups = <>
