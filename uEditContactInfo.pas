@@ -8,16 +8,16 @@ uses
   RzDlgBtn, Vcl.StdCtrls, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxContainer, cxEdit, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, Data.DB,
-  FIBDataSet, pFIBDataSet, cxDBEdit, DBAccess, Uni, MemDS;
+  cxDBEdit, DBAccess, Uni, MemDS;
 
 type
   TfEditContactInfo = class(TfTDialog)
     lbl2: TLabel;
     cbbContactInfoType: TcxDBLookupComboBox;
     lbl1: TLabel;
-    edtValue: TcxDBTextEdit;
     dtContactInfoType: TUniQuery;
     dsContactInfoType: TUniDataSource;
+    edtValue: TcxDBMaskEdit;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

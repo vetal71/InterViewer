@@ -44,6 +44,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
   inherited dlgButtons: TRzDialogButtons
     Top = 167
     Width = 458
+    TabOrder = 5
     ExplicitLeft = 0
     ExplicitTop = 167
     ExplicitWidth = 458
@@ -70,7 +71,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     StyleFocused.LookAndFeel.NativeStyle = False
     StyleHot.LookAndFeel.Kind = lfFlat
     StyleHot.LookAndFeel.NativeStyle = False
-    TabOrder = 1
+    TabOrder = 0
     Width = 346
   end
   object edtBank: TcxDBTextEdit
@@ -86,7 +87,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     StyleFocused.LookAndFeel.NativeStyle = False
     StyleHot.LookAndFeel.Kind = lfFlat
     StyleHot.LookAndFeel.NativeStyle = False
-    TabOrder = 2
+    TabOrder = 1
     Width = 346
   end
   object edtCard: TcxDBTextEdit
@@ -102,7 +103,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     StyleFocused.LookAndFeel.NativeStyle = False
     StyleHot.LookAndFeel.Kind = lfFlat
     StyleHot.LookAndFeel.NativeStyle = False
-    TabOrder = 3
+    TabOrder = 2
     Width = 346
   end
   object edtPeriodCard: TcxDBMaskEdit
@@ -120,7 +121,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     StyleFocused.LookAndFeel.NativeStyle = False
     StyleHot.LookAndFeel.Kind = lfFlat
     StyleHot.LookAndFeel.NativeStyle = False
-    TabOrder = 5
+    TabOrder = 3
     Width = 105
   end
   object edtNote: TcxDBMaskEdit

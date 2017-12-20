@@ -34,7 +34,8 @@ object dm: Tdm
         'T_GOOD_FORMS, :PERCENT_BAD_FORMS, :CHARACTERISTICS, :IS_SUPERVIS' +
         'ER, :IS_IN_BLACK_LIST, :SOCIAL_NUMBER, :PHOTO, :REGION_NAME, :CI' +
         'TY_NAME, :F_ADDRESS, :F_CELURAR, :F_HOMEPHONE, :F_EMAIL, :F_SOCI' +
-        'ALNET, :F_TRANSFERS, :REC_ID)')
+        'ALNET, :F_TRANSFERS, :REC_ID)'
+      'RETURNING BCONTACT_ID')
     SQLDelete.Strings = (
       'DELETE FROM V_CONTACTS'
       'WHERE'
@@ -107,6 +108,7 @@ object dm: Tdm
       '    F_TRANSFERS'
       'from'
       '    V_CONTACTS')
+    Options.ReturnParams = True
     Left = 304
     Top = 79
   end
@@ -120,6 +122,8 @@ object dm: Tdm
     Top = 25
   end
   object qryContactList: TUniQuery
+    UpdatingTable = 'BOOK_CONTACTS'
+    KeyFields = 'BCONTACT_ID'
     SQLInsert.Strings = (
       'INSERT INTO BOOK_CONTACTS'
       
@@ -201,6 +205,8 @@ object dm: Tdm
     Top = 135
   end
   object qryContactInfo: TUniQuery
+    UpdatingTable = 'CONTACT_INFO'
+    KeyFields = 'CI_ID'
     SQLInsert.Strings = (
       'INSERT INTO CONTACT_INFO'
       '  (CI_ID, CIT_ID, CONTACT_ID, CONTACT_INFO_VALUE)'
@@ -250,6 +256,8 @@ object dm: Tdm
     MasterSource = udsContactList
     MasterFields = 'BCONTACT_ID'
     DetailFields = 'CONTACT_ID'
+    SpecificOptions.Strings = (
+      'InterBase.KeyGenerator=GEN_CONTACT_INFO_ID')
     Left = 304
     Top = 191
     ParamData = <
@@ -265,6 +273,8 @@ object dm: Tdm
     Top = 191
   end
   object qryRegions: TUniQuery
+    UpdatingTable = 'WORK_CITIES'
+    KeyFields = 'WC_ID'
     SQLInsert.Strings = (
       'INSERT INTO WORK_CITIES'
       '  (WC_ID, CONTACT_ID, CITY_ID, CITY_NAME)'
@@ -313,6 +323,8 @@ object dm: Tdm
     MasterSource = udsContactList
     MasterFields = 'BCONTACT_ID'
     DetailFields = 'CONTACT_ID'
+    SpecificOptions.Strings = (
+      'InterBase.KeyGenerator=GEN_WORK_CITIES_ID')
     Left = 304
     Top = 247
     ParamData = <
@@ -328,6 +340,8 @@ object dm: Tdm
     Top = 247
   end
   object qryTransferInfo: TUniQuery
+    UpdatingTable = 'TRANSFER_INFO'
+    KeyFields = 'TI_ID'
     SQLInsert.Strings = (
       'INSERT INTO TRANSFER_INFO'
       
@@ -384,6 +398,8 @@ object dm: Tdm
     MasterSource = udsContactList
     MasterFields = 'BCONTACT_ID'
     DetailFields = 'CONTACT_ID'
+    SpecificOptions.Strings = (
+      'InterBase.KeyGenerator=GEN_TRANSFER_INFO_ID')
     Left = 304
     Top = 311
     ParamData = <
@@ -489,5 +505,9 @@ object dm: Tdm
     DataSet = tblContacts
     Left = 206
     Top = 23
+  end
+  object dbMonitor: TUniSQLMonitor
+    Left = 640
+    Top = 96
   end
 end

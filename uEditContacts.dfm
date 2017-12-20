@@ -969,6 +969,10 @@ object fEditContacts: TfEditContacts
       end
       object tsRegions: TRzTabSheet
         Caption = #1047#1086#1085#1072' '#1086#1073#1089#1083#1091#1078#1080#1074#1072#1085#1080#1103
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object grdRegions: TcxGrid
           AlignWithMargins = True
           Left = 3
@@ -1047,6 +1051,10 @@ object fEditContacts: TfEditContacts
       end
       object tsTransferInfo: TRzTabSheet
         Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103' '#1086#1073' '#1086#1087#1083#1072#1090#1077
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object grdTransfer: TcxGrid
           AlignWithMargins = True
           Left = 3

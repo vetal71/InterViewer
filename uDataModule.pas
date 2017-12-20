@@ -3,9 +3,9 @@ unit uDataModule;
 interface
 
 uses
-  FIBDatabase, pFIBDatabase, FIBDataSet,
-  pFIBDataSet, Data.DB, System.Classes, FIBSQLMonitor, FIBQuery, pFIBQuery,
-  UniProvider, InterBaseUniProvider, DBAccess, Uni, MemDS;
+  Data.DB, System.Classes,
+  UniProvider, InterBaseUniProvider, DBAccess, Uni, MemDS, DASQLMonitor,
+  UniSQLMonitor;
 
 type
   Tdm = class(TDataModule)
@@ -23,6 +23,7 @@ type
     udsTransferInfo: TUniDataSource;
     tblContacts: TUniQuery;
     dsContacts: TUniDataSource;
+    dbMonitor: TUniSQLMonitor;
     procedure dtContactListBeforePost(DataSet: TDataSet);
   private
     FOnBeforePost: TDataSetNotifyEvent;

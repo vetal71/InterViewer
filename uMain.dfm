@@ -761,6 +761,8 @@ object fMain: TfMain
       AllowAllUp = True
       GroupIndex = 1
       Caption = #1057#1091#1087#1077#1088#1074#1072#1081#1079#1077#1088#1099
+      OnClick = ButtonFilterClick
+      OnDblClick = ButtonFilterDblClick
     end
     object btnHidenBuyer: TSpeedButton
       Tag = 2
@@ -772,6 +774,8 @@ object fMain: TfMain
       AllowAllUp = True
       GroupIndex = 1
       Caption = #1058#1072#1081#1085#1099#1081' '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1100
+      OnClick = ButtonFilterClick
+      OnDblClick = ButtonFilterDblClick
     end
     object btnOperator: TSpeedButton
       Tag = 3
@@ -783,6 +787,8 @@ object fMain: TfMain
       AllowAllUp = True
       GroupIndex = 1
       Caption = #1054#1087#1077#1088#1072#1090#1086#1088' call-'#1094#1077#1085#1090#1088#1072
+      OnClick = ButtonFilterClick
+      OnDblClick = ButtonFilterDblClick
     end
     object btnFocusGroup: TSpeedButton
       Tag = 4
@@ -794,6 +800,8 @@ object fMain: TfMain
       AllowAllUp = True
       GroupIndex = 1
       Caption = #1060#1086#1082#1091#1089'-'#1075#1088#1091#1087#1087#1072
+      OnClick = ButtonFilterClick
+      OnDblClick = ButtonFilterDblClick
     end
     object btnStreetInterview: TSpeedButton
       Tag = 5
@@ -805,6 +813,8 @@ object fMain: TfMain
       AllowAllUp = True
       GroupIndex = 1
       Caption = #1059#1083#1080#1095#1085#1099#1081' '#1086#1087#1088#1086#1089
+      OnClick = ButtonFilterClick
+      OnDblClick = ButtonFilterDblClick
     end
     object btnFlatInterview: TSpeedButton
       Tag = 6
@@ -816,6 +826,8 @@ object fMain: TfMain
       AllowAllUp = True
       GroupIndex = 1
       Caption = #1055#1086#1082#1074#1072#1088#1090#1080#1088#1085#1099#1081' '#1086#1087#1088#1086#1089
+      OnClick = ButtonFilterClick
+      OnDblClick = ButtonFilterDblClick
     end
     object btnWriters: TSpeedButton
       Tag = 7
@@ -827,6 +839,8 @@ object fMain: TfMain
       AllowAllUp = True
       GroupIndex = 1
       Caption = #1042#1073#1080#1074#1097#1080#1082#1080
+      OnClick = ButtonFilterClick
+      OnDblClick = ButtonFilterDblClick
     end
     object btnOutSource: TSpeedButton
       Tag = 8
@@ -838,6 +852,8 @@ object fMain: TfMain
       AllowAllUp = True
       GroupIndex = 1
       Caption = #1040#1091#1090#1089#1086#1088#1089
+      OnClick = ButtonFilterClick
+      OnDblClick = ButtonFilterDblClick
     end
   end
   object pgcMain: TRzPageControl

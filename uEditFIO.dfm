@@ -30,15 +30,16 @@ inherited fEditFIO: TfEditFIO
   inherited dlgButtons: TRzDialogButtons
     Top = 131
     Width = 539
+    TabOrder = 4
     ExplicitLeft = 0
-    ExplicitTop = 103
-    ExplicitWidth = 386
+    ExplicitTop = 131
+    ExplicitWidth = 539
   end
   object edtSecondName: TcxTextEdit
     Left = 128
     Top = 40
     Anchors = [akLeft, akTop, akRight]
-    Properties.OnEditValueChanged = edtSecondNamePropertiesEditValueChanged
+    Properties.OnChange = edtSecondNamePropertiesChange
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     StyleDisabled.LookAndFeel.Kind = lfFlat
@@ -54,22 +55,7 @@ inherited fEditFIO: TfEditFIO
     Left = 128
     Top = 99
     Anchors = [akLeft, akTop, akRight]
-    Style.LookAndFeel.Kind = lfFlat
-    Style.LookAndFeel.NativeStyle = False
-    StyleDisabled.LookAndFeel.Kind = lfFlat
-    StyleDisabled.LookAndFeel.NativeStyle = False
-    StyleFocused.LookAndFeel.Kind = lfFlat
-    StyleFocused.LookAndFeel.NativeStyle = False
-    StyleHot.LookAndFeel.Kind = lfFlat
-    StyleHot.LookAndFeel.NativeStyle = False
-    TabOrder = 2
-    Width = 403
-  end
-  object edtName: TcxTextEdit
-    Left = 128
-    Top = 70
-    Anchors = [akLeft, akTop, akRight]
-    Properties.OnEditValueChanged = edtSecondNamePropertiesEditValueChanged
+    Properties.OnChange = edtSecondNamePropertiesChange
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     StyleDisabled.LookAndFeel.Kind = lfFlat
@@ -79,6 +65,22 @@ inherited fEditFIO: TfEditFIO
     StyleHot.LookAndFeel.Kind = lfFlat
     StyleHot.LookAndFeel.NativeStyle = False
     TabOrder = 3
+    Width = 403
+  end
+  object edtName: TcxTextEdit
+    Left = 128
+    Top = 70
+    Anchors = [akLeft, akTop, akRight]
+    Properties.OnChange = edtSecondNamePropertiesChange
+    Style.LookAndFeel.Kind = lfFlat
+    Style.LookAndFeel.NativeStyle = False
+    StyleDisabled.LookAndFeel.Kind = lfFlat
+    StyleDisabled.LookAndFeel.NativeStyle = False
+    StyleFocused.LookAndFeel.Kind = lfFlat
+    StyleFocused.LookAndFeel.NativeStyle = False
+    StyleHot.LookAndFeel.Kind = lfFlat
+    StyleHot.LookAndFeel.NativeStyle = False
+    TabOrder = 2
     Width = 403
   end
   object edtFullFIO: TcxTextEdit
@@ -94,7 +96,7 @@ inherited fEditFIO: TfEditFIO
     StyleFocused.LookAndFeel.NativeStyle = False
     StyleHot.LookAndFeel.Kind = lfFlat
     StyleHot.LookAndFeel.NativeStyle = False
-    TabOrder = 4
+    TabOrder = 0
     Width = 523
   end
 end

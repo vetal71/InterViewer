@@ -1,9 +1,9 @@
 inherited fEditContactInfo: TfEditContactInfo
   Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1072#1103' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1103
   ClientHeight = 111
-  ClientWidth = 474
+  ClientWidth = 577
   OnCreate = FormCreate
-  ExplicitWidth = 480
+  ExplicitWidth = 583
   ExplicitHeight = 140
   PixelsPerInch = 96
   TextHeight = 14
@@ -23,7 +23,7 @@ inherited fEditContactInfo: TfEditContactInfo
   end
   inherited dlgButtons: TRzDialogButtons
     Top = 75
-    Width = 474
+    Width = 577
     ExplicitLeft = 0
     ExplicitTop = 75
     ExplicitWidth = 474
@@ -51,9 +51,9 @@ inherited fEditContactInfo: TfEditContactInfo
     StyleHot.LookAndFeel.Kind = lfFlat
     StyleHot.LookAndFeel.NativeStyle = False
     TabOrder = 1
-    Width = 273
+    Width = 377
   end
-  object edtValue: TcxDBTextEdit
+  object edtValue: TcxDBMaskEdit
     Left = 192
     Top = 42
     DataBinding.DataField = 'CONTACT_INFO_VALUE'
@@ -67,7 +67,7 @@ inherited fEditContactInfo: TfEditContactInfo
     StyleHot.LookAndFeel.Kind = lfFlat
     StyleHot.LookAndFeel.NativeStyle = False
     TabOrder = 2
-    Width = 273
+    Width = 377
   end
   object dtContactInfoType: TUniQuery
     Connection = dm.dbFirebird

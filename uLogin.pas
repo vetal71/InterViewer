@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, RzPanel, RzDlgBtn,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer,
   cxEdit, cxDBEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit, Vcl.StdCtrls,
-  pFIBDataSet, Uni;
+  Uni;
 
 type
   TfLogin = class(TForm)

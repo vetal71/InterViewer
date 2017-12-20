@@ -7,11 +7,11 @@ uses
   System.Variants, System.Classes, Vcl.Graphics, cxGraphics, cxControls,
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter,
   cxData, cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, System.Actions,
-  Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomTableView, pFIBDataSet,
+  Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomTableView, Uni,
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
   Vcl.Buttons, Vcl.ExtCtrls, RzPanel, RzStatus, Vcl.Controls, Vcl.Mask,
-  Vcl.DBCtrls, RzCommon, cxCheckBox, cxGridExportLink, WUpdate, pFIBQuery, uLogin,
-  System.StrUtils, pFIBProps, uFuncs, uDBFuncs, dxBarBuiltInMenu, cxPC, RzTabs;
+  Vcl.DBCtrls, RzCommon, cxCheckBox, cxGridExportLink, WUpdate, uLogin,
+  System.StrUtils, uFuncs, uDBFuncs, dxBarBuiltInMenu, cxPC, RzTabs;
 
 type
   TfMain = class(TForm)
@@ -175,6 +175,7 @@ type
     function GetSQLFilter(aIndex: Integer): string;
     function GetUser: string;
     procedure SetEnableButtons;
+    function GenerateID: Integer;
   public
     procedure AfterConstruction(Sender: TObject); overload;
   end;
@@ -259,7 +260,7 @@ begin
   if not (Sender is TSpeedButton) then Exit;
 
   case TSpeedButton(Sender).Tag of
-    1: SQLFilter := 'ISSUPERVIZER=1';                                           // Фильтр по супервайзерам
+    1: SQLFilter := 'IS_SUPERVISER=1';                                           // Фильтр по супервайзерам
     2..8: SQLFilter := 'SPECIALIZATION CONTAINING ''' + GetSQLFilter(TSpeedButton(Sender).Tag) + '''';
   end;
   ApplyFilter(SQLFilter, TSpeedButton(Sender).Down);
@@ -346,6 +347,21 @@ begin
   Sender.OptionsBehavior.IncSearchItem := AFocusedItem;
 end;
 
+function TfMain.GenerateID: Integer;
+begin
+  Result := 0;
+  with TUniQuery.Create(nil) do
+  try
+    Connection := dm.dbFirebird;
+    SQL.Text := 'select coalesce(max(bcontact_id) + 1, 1) from book_contacts';
+    Open;
+    if not IsEmpty then
+      Result := Fields[ 0 ].AsInteger;
+  finally
+    Free;
+  end;
+end;
+
 function TfMain.GetSQLFilter(aIndex: Integer): string;
 var sSQLFilterDef: string;
 begin
@@ -415,44 +431,43 @@ begin
   dm.qryContactList.Open;
   fEdit := TfEditContacts.Create(Self);
   try
-    if AMode = dbmAppend then
-    begin
-      dm.qryContactList.Append;
-    end
-    else if AMode = dbmEdit then
-    begin
-      FId := dm.qryContacts.FieldValues['BCONTACT_ID'];
-      FRecId := dm.qryContacts.FieldValues['REC_ID'];
-      if dm.qryContactList.Locate('BCONTACT_ID', FId, [ loPartialKey, loCaseInsensitive ]) then
-        dm.qryContactList.Edit
-      else
-        raise Exception.CreateFmt('Запись с кодом %d не найдена.', [FId]);
-    end;
-    if fEdit.ShowModal = mrOk then
-    begin
-      if dm.qryContactList.State in [dsEdit, dsInsert] then
-        dm.qryContactList.Post;
-
+    dm.dbFirebird.Savepoint('BeforeEdit');
+    try
       if AMode = dbmAppend then
       begin
-        if dm.qryContactInfo.State in [dsInsert] then
-          dm.qryContactInfo.Post;
-        if dm.qryRegions.State in [dsInsert] then
-          dm.qryRegions.Post;
-        if dm.qryTransferInfo.State in [dsInsert] then
-          dm.qryTransferInfo.Post;
+        dm.qryContactList.Append;
+        fEdit.ContactID := GenerateID;
+      end
+      else if AMode = dbmEdit then
+      begin
+        FId := dm.qryContacts.FieldValues['BCONTACT_ID'];
+        fEdit.ContactID := FId;
+        FRecId := dm.qryContacts.FieldValues['REC_ID'];
+        if dm.qryContactList.Locate('BCONTACT_ID', FId, [ loPartialKey, loCaseInsensitive ]) then
+          dm.qryContactList.Edit
+        else
+          raise Exception.CreateFmt('Запись с кодом %d не найдена.', [FId]);
       end;
+      if fEdit.ShowModal = mrOk then
+      begin
+        if dm.qryContactList.State in [dsEdit, dsInsert] then
+          dm.qryContactList.Post;
 
-      dm.qryContacts.Refresh;
+        dm.qryContacts.Refresh;
 
-      if AMode = dbmEdit then
+        if AMode = dbmEdit then
+          dm.qryContacts.Locate('REC_ID', FRecId, [ loPartialKey, loCaseInsensitive ]);
+        dm.dbFirebird.Commit;
+      end
+      else
+      begin
+        dm.qryContactList.Cancel;
         dm.qryContacts.Locate('REC_ID', FRecId, [ loPartialKey, loCaseInsensitive ]);
-    end
-    else
-    begin
-      dm.qryContactList.Cancel;
-      dm.qryContacts.Locate('REC_ID', FRecId, [ loPartialKey, loCaseInsensitive ]);
+      end;
+    except
+      dm.dbFirebird.RollbackToSavepoint('BeforeEdit');
     end;
+
   finally
     fEdit.Free;
   end;

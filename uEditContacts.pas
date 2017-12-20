@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics,
+  Vcl.Graphics, Uni,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, RzPanel, RzDlgBtn,
   Vcl.Mask, Vcl.DBCtrls, Vcl.StdCtrls, uDataModule, cxGraphics, cxControls,
   cxLookAndFeels, cxLookAndFeelPainters, cxContainer, cxEdit, cxTextEdit,
@@ -13,7 +13,7 @@ uses
   RzTabs, Vcl.Buttons, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage,
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, cxImage,
-  Vcl.ExtDlgs, Vcl.Imaging.jpeg, uDBFuncs, uFuncs, FIBDataSet;
+  Vcl.ExtDlgs, Vcl.Imaging.jpeg, uDBFuncs, uFuncs;
 
 type
   TfEditContacts = class(TForm)
@@ -107,6 +107,7 @@ type
     procedure EditContactInfo(AMode: TDBMode);
   public
     procedure FillCheckBox(cxCheckComboBox: TcxCheckComboBox; s: string);
+    property ContactID: Integer read FId write FId;
   end;
 
 var
@@ -126,6 +127,7 @@ begin
   // Save
   with dm.qryContactList do
   begin
+    FieldByName('BCONTACT_ID').AsInteger        := ContactID;
     FieldByName('FIO').AsString                 := edtFIO.Text;
     FieldByName('GENDER').AsString              := cbbSex.Text;
     if edtDateBirthday.Date > 0 then
@@ -205,6 +207,7 @@ begin
       DataSet.Append
     else if AMode = dbmEdit then
       DataSet.Edit;
+    DataSet.FieldByName('CONTACT_ID').AsInteger := ContactID;
     if EditDlg.ShowModal <> mrOk then
     begin
       if DataSet.State in [dsEdit, dsInsert] then
@@ -212,8 +215,7 @@ begin
     end
     else
     begin
-      if ( DataSet.State in [dsEdit, dsInsert] ) and ( dm.qryContactList.State in [ dsEdit ] ) then
-        TFibDataSet( DataSet ).Post;
+      DataSet.Post;
     end;
   finally
     EditDlg.Free;

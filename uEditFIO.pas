@@ -17,7 +17,7 @@ type
     lbl1: TLabel;
     edtName: TcxTextEdit;
     edtFullFIO: TcxTextEdit;
-    procedure edtSecondNamePropertiesEditValueChanged(Sender: TObject);
+    procedure edtSecondNamePropertiesChange(Sender: TObject);
   private
     FFIO: string;
     procedure SetFIO(AValue: string);
@@ -40,6 +40,11 @@ procedure TfEditFIO.ChangeFIO;
 begin
   FFIO := Format('%s %s %s', [ edtSecondName.Text, edtName.Text, edtSeName.Text ]);
   edtFullFIO.Text := FFIO;
+end;
+
+procedure TfEditFIO.edtSecondNamePropertiesChange(Sender: TObject);
+begin
+  ChangeFIO;
 end;
 
 function TfEditFIO.GetFIO: string;
@@ -71,11 +76,6 @@ begin
   finally
     NameList.Free;
   end;
-end;
-
-procedure TfEditFIO.edtSecondNamePropertiesEditValueChanged(Sender: TObject);
-begin
-  ChangeFIO
 end;
 
 end.
