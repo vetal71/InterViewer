@@ -96,14 +96,16 @@ type
     procedure btnAddClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
-    procedure dlgButtonsClickOk(Sender: TObject);
+    procedure edtFIOExit(Sender: TObject);
+    procedure edtFIOPropertiesValidate(Sender: TObject;
+      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
   private
     FId: Integer;
   private
     procedure Init;
     procedure BeforeSave;
     procedure LoadPhotoFromDatabase;
-    procedure SavePhotoToDatabase(DataSet: TDataSet);
+    procedure SaveContactToDatabase(DataSet: TDataSet);
     procedure EditContactInfo(AMode: TDBMode);
   public
     procedure FillCheckBox(cxCheckComboBox: TcxCheckComboBox; s: string);
@@ -127,7 +129,6 @@ begin
   // Save
   with dm.qryContactList do
   begin
-    FieldByName('BCONTACT_ID').AsInteger        := ContactID;
     FieldByName('FIO').AsString                 := edtFIO.Text;
     FieldByName('GENDER').AsString              := cbbSex.Text;
     if edtDateBirthday.Date > 0 then
@@ -178,12 +179,6 @@ begin
   EditContactInfo(dbmEdit);
 end;
 
-procedure TfEditContacts.dlgButtonsClickOk(Sender: TObject);
-begin
-  // —охранение
-  BeforeSave;
-end;
-
 procedure TfEditContacts.EditContactInfo(AMode: TDBMode);
 var
   EditDlg: TfTDialog;
@@ -207,7 +202,7 @@ begin
       DataSet.Append
     else if AMode = dbmEdit then
       DataSet.Edit;
-    DataSet.FieldByName('CONTACT_ID').AsInteger := ContactID;
+    DataSet.FieldByName('CONTACT_ID').AsInteger := FId;
     if EditDlg.ShowModal <> mrOk then
     begin
       if DataSet.State in [dsEdit, dsInsert] then
@@ -215,11 +210,23 @@ begin
     end
     else
     begin
-      DataSet.Post;
+      // перед сохранением св€занной информации сохран€ем родительскую запись
+      try
+        if dm.qryContactList.State in [ dsInsert ] then
+          dm.qryContactList.Post;
+        DataSet.Post;
+      except on E: Exception do
+        ShowError('Ќе удалось сохранить данные контакта.'#13#10 + E.Message);
+      end;
     end;
   finally
     EditDlg.Free;
   end;
+end;
+
+procedure TfEditContacts.edtFIOExit(Sender: TObject);
+begin
+  edtFIO.ValidateEdit( True );
 end;
 
 procedure TfEditContacts.edtFIOPropertiesButtonClick(Sender: TObject;
@@ -233,6 +240,16 @@ begin
       edtFIO.Text := FIO;
   finally
     Free;
+  end;
+end;
+
+procedure TfEditContacts.edtFIOPropertiesValidate(Sender: TObject;
+  var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+begin
+  if edtFIO.Text = EmptyStr then
+  begin
+    Error := True;
+    ErrorText := 'ѕоле не может быть пустым.';
   end;
 end;
 
@@ -294,39 +311,44 @@ procedure TfEditContacts.Init;
 begin
   with dm.qryContactList do
   begin
-    dm.ContactBeforePost := SavePhotoToDatabase;
-    FId := FieldByName('BCONTACT_ID').AsInteger;
-    edtFIO.Text := FieldByName('FIO').AsString;
-    cbbSex.Text := FieldByName('GENDER').AsString;
-    if VarIsNull(FieldValues['BIRTHDAY']) then
-      edtDateBirthday.Clear
-    else
-      edtDateBirthday.Date := FieldByname('BIRTHDAY').AsDateTime;
-    edtPassport.Text := FieldByName('PASSPORT').AsString;
-    chbSpecialization.EditValue := FieldByName('SPECIALIZATION').AsString;
-    mmoCharacteristics.Text := FieldByName('CHARACTERISTICS').AsString;
-    mmoCurrentNotes.Text := FieldByName('NOTES').AsString;
-    mmoProjects.Text := FieldByName('PROJECT_LIST').AsString;
-    if VarIsNull(FieldValues['LAST_DATE']) then
-      edtDateLast.Clear
-    else
-      edtDateLast.Date := FieldByName('LAST_DATE').AsDateTime;
-    edtCountAnketa.Value := FieldByName('AMOUNT_FORMS').AsInteger;
-    edtPercentGood.Value := FieldByName('PERCENT_GOOD_FORMS').AsInteger;
-    edtPercentBad.Value := FieldByName('PERCENT_BAD_FORMS').AsInteger;
-    edtSocialNumber.Text := FieldByName('SOCIAL_NUMBER').AsString;
-    chkSupervizer.Checked := Boolean(FieldByName('IS_SUPERVISER').AsInteger);
-    chkBlackList.Checked := Boolean(FieldByName('IS_IN_BLACK_LIST').AsInteger);
+    dm.ContactBeforePost := SaveContactToDatabase;
 
-    if not TBlobField(FieldByName('PHOTO')).IsNull then
-      LoadPhotoFromDatabase;
+    FieldByName('BCONTACT_ID').AsInteger := ContactID;
+
+    if State in [dsEdit] then
+    begin
+      edtFIO.Text := FieldByName('FIO').AsString;
+      cbbSex.Text := FieldByName('GENDER').AsString;
+      if VarIsNull(FieldValues['BIRTHDAY']) then
+        edtDateBirthday.Clear
+      else
+        edtDateBirthday.Date := FieldByname('BIRTHDAY').AsDateTime;
+      edtPassport.Text := FieldByName('PASSPORT').AsString;
+      chbSpecialization.EditValue := FieldByName('SPECIALIZATION').AsString;
+      mmoCharacteristics.Text := FieldByName('CHARACTERISTICS').AsString;
+      mmoCurrentNotes.Text := FieldByName('NOTES').AsString;
+      mmoProjects.Text := FieldByName('PROJECT_LIST').AsString;
+      if VarIsNull(FieldValues['LAST_DATE']) then
+        edtDateLast.Clear
+      else
+        edtDateLast.Date := FieldByName('LAST_DATE').AsDateTime;
+      edtCountAnketa.Value := FieldByName('AMOUNT_FORMS').AsInteger;
+      edtPercentGood.Value := FieldByName('PERCENT_GOOD_FORMS').AsInteger;
+      edtPercentBad.Value := FieldByName('PERCENT_BAD_FORMS').AsInteger;
+      edtSocialNumber.Text := FieldByName('SOCIAL_NUMBER').AsString;
+      chkSupervizer.Checked := Boolean(FieldByName('IS_SUPERVISER').AsInteger);
+      chkBlackList.Checked := Boolean(FieldByName('IS_IN_BLACK_LIST').AsInteger);
+
+      if not TBlobField(FieldByName('PHOTO')).IsNull then
+        LoadPhotoFromDatabase;
+    end;
   end;
   try
     dm.qryContactInfo.Open;
     dm.qryRegions.Open;
     dm.qryTransferInfo.Open;
-  except
-
+  except on E: Exception do
+    ShowError('ѕри открытии дополнительных таблиц возникла ошибка.'#13#10 + E.Message);
   end;
 end;
 
@@ -357,10 +379,11 @@ begin
   end;
 end;
 
-procedure TfEditContacts.SavePhotoToDatabase(DataSet: TDataSet);
+procedure TfEditContacts.SaveContactToDatabase(DataSet: TDataSet);
 var
   BLOB:TStream;
 begin
+  BeforeSave;
   //сохранение картинки в базе
   if not Assigned( imgPhoto.Picture.Graphic ) then Exit;
 

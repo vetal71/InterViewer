@@ -13,15 +13,17 @@ uses
 type
   TfEditRegions = class(TfTDialog)
     lbl2: TLabel;
-    cbbRegions: TcxDBLookupComboBox;
     lbl1: TLabel;
     cbbCities: TcxDBLookupComboBox;
     dtRegions: TUniQuery;
-    dtCities: TUniQuery;
     dsRegions: TUniDataSource;
     dsCities: TUniDataSource;
+    dtCities: TUniQuery;
+    cbbRegions: TcxComboBox;
+    procedure FormCreate(Sender: TObject);
+    procedure cbbRegionsPropertiesChange(Sender: TObject);
   private
-    { Private declarations }
+    procedure FillRegionComboBox;
   public
     { Public declarations }
   end;
@@ -35,5 +37,42 @@ uses
   uDataModule;
 
 {$R *.dfm}
+
+procedure TfEditRegions.cbbRegionsPropertiesChange(Sender: TObject);
+var
+  Key: Integer;
+begin
+  with cbbRegions do
+    Key := Integer(cbbRegions.Properties.Items.Objects[ItemIndex]);
+  dtRegions.Locate('REGION_ID', Key, []);
+end;
+
+procedure TfEditRegions.FillRegionComboBox;
+begin
+  with dtRegions do
+  begin
+    while not Eof do
+    begin
+      cbbRegions.Properties.Items.AddObject(FieldByName('REGION_NAME').AsString, Pointer(FieldByName('REGION_ID').AsInteger));
+      Next;
+    end;
+  end;
+  if cbbRegions.Properties.Items.Count > 0 then
+    cbbRegions.ItemIndex := 0
+  else
+    cbbRegions.Text := '';
+end;
+
+procedure TfEditRegions.FormCreate(Sender: TObject);
+begin
+  try
+    dtRegions.Open;
+    dtCities.Open;
+    FillRegionComboBox;
+  except on E: Exception do
+    Application.MessageBox(PWideChar('Не удалось открыть таблицу регионов'#13#10 + E.Message),
+      'Ошибка открытия', MB_OK or MB_ICONERROR);
+  end;
+end;
 
 end.

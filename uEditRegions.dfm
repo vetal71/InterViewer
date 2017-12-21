@@ -2,6 +2,7 @@ inherited fEditRegions: TfEditRegions
   Caption = #1047#1086#1085#1072' '#1086#1073#1089#1083#1091#1078#1080#1074#1072#1085#1080#1103
   ClientHeight = 108
   ClientWidth = 356
+  OnCreate = FormCreate
   ExplicitWidth = 362
   ExplicitHeight = 137
   PixelsPerInch = 96
@@ -27,36 +28,11 @@ inherited fEditRegions: TfEditRegions
     ExplicitTop = 72
     ExplicitWidth = 356
   end
-  object cbbRegions: TcxDBLookupComboBox
-    Left = 72
-    Top = 11
-    DataBinding.DataField = 'REGION_ID'
-    DataBinding.DataSource = dsRegions
-    Properties.KeyFieldNames = 'REGION_ID'
-    Properties.ListColumns = <
-      item
-        FieldName = 'REGION_NAME'
-      end>
-    Properties.ListOptions.ShowHeader = False
-    Properties.ListSource = dsRegions
-    Style.BorderStyle = ebsFlat
-    Style.LookAndFeel.Kind = lfFlat
-    Style.LookAndFeel.NativeStyle = False
-    Style.ButtonStyle = btsFlat
-    StyleDisabled.LookAndFeel.Kind = lfFlat
-    StyleDisabled.LookAndFeel.NativeStyle = False
-    StyleFocused.LookAndFeel.Kind = lfFlat
-    StyleFocused.LookAndFeel.NativeStyle = False
-    StyleHot.LookAndFeel.Kind = lfFlat
-    StyleHot.LookAndFeel.NativeStyle = False
-    TabOrder = 1
-    Width = 273
-  end
   object cbbCities: TcxDBLookupComboBox
     Left = 72
     Top = 42
     DataBinding.DataField = 'CITY_ID'
-    DataBinding.DataSource = dsCities
+    DataBinding.DataSource = dm.udsRegions
     Properties.KeyFieldNames = 'CITY_ID'
     Properties.ListColumns = <
       item
@@ -77,7 +53,43 @@ inherited fEditRegions: TfEditRegions
     TabOrder = 2
     Width = 273
   end
+  object cbbRegions: TcxComboBox
+    Left = 72
+    Top = 11
+    Properties.OnChange = cbbRegionsPropertiesChange
+    Style.BorderStyle = ebsFlat
+    Style.LookAndFeel.Kind = lfFlat
+    Style.LookAndFeel.NativeStyle = False
+    Style.ButtonStyle = btsFlat
+    StyleDisabled.LookAndFeel.Kind = lfFlat
+    StyleDisabled.LookAndFeel.NativeStyle = False
+    StyleFocused.LookAndFeel.Kind = lfFlat
+    StyleFocused.LookAndFeel.NativeStyle = False
+    StyleHot.LookAndFeel.Kind = lfFlat
+    StyleHot.LookAndFeel.NativeStyle = False
+    TabOrder = 1
+    Text = 'cbbRegions'
+    Width = 273
+  end
   object dtRegions: TUniQuery
+    Connection = dm.dbFirebird
+    SQL.Strings = (
+      'select * from regions'
+      'order by region_id')
+    Left = 27
+    Top = 15
+  end
+  object dsRegions: TUniDataSource
+    DataSet = dtRegions
+    Left = 96
+    Top = 15
+  end
+  object dsCities: TUniDataSource
+    DataSet = dtCities
+    Left = 237
+    Top = 16
+  end
+  object dtCities: TUniQuery
     SQLInsert.Strings = (
       'INSERT INTO REGIONS'
       '  (REGION_ID, REGION_NAME)'
@@ -109,65 +121,18 @@ inherited fEditRegions: TfEditRegions
       ') q')
     Connection = dm.dbFirebird
     SQL.Strings = (
-      'select * from regions')
-    Left = 15
-    Top = 12
-  end
-  object dtCities: TUniQuery
-    SQLInsert.Strings = (
-      'INSERT INTO CITIES'
-      '  (CITY_ID, CITY_NAME, REGION_ID)'
-      'VALUES'
-      '  (:CITY_ID, :CITY_NAME, :REGION_ID)')
-    SQLDelete.Strings = (
-      'DELETE FROM CITIES'
-      'WHERE'
-      '  CITY_ID = :Old_CITY_ID')
-    SQLUpdate.Strings = (
-      'UPDATE CITIES'
-      'SET'
-      
-        '  CITY_ID = :CITY_ID, CITY_NAME = :CITY_NAME, REGION_ID = :REGIO' +
-        'N_ID'
-      'WHERE'
-      '  CITY_ID = :Old_CITY_ID')
-    SQLLock.Strings = (
-      'SELECT NULL FROM CITIES'
-      'WHERE'
-      'CITY_ID = :Old_CITY_ID'
-      'FOR UPDATE WITH LOCK')
-    SQLRefresh.Strings = (
-      'SELECT CITY_ID, CITY_NAME, REGION_ID FROM CITIES'
-      'WHERE'
-      '  CITY_ID = :CITY_ID')
-    SQLRecCount.Strings = (
-      'SELECT COUNT(*) FROM ('
-      'SELECT 1 AS C  FROM CITIES'
-      ''
-      ') q')
-    Connection = dm.dbFirebird
-    SQL.Strings = (
       'select * from cities')
     MasterSource = dsRegions
     MasterFields = 'REGION_ID'
     DetailFields = 'REGION_ID'
-    Left = 192
-    Top = 16
+    Left = 175
+    Top = 15
     ParamData = <
       item
-        DataType = ftUnknown
+        DataType = ftInteger
         Name = 'REGION_ID'
-        Value = nil
+        ParamType = ptInput
+        Value = 1
       end>
-  end
-  object dsRegions: TUniDataSource
-    DataSet = dtRegions
-    Left = 96
-    Top = 16
-  end
-  object dsCities: TUniDataSource
-    DataSet = dtCities
-    Left = 237
-    Top = 16
   end
 end

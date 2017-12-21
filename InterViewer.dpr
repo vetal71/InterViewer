@@ -24,10 +24,5 @@ begin
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TfMain, fMain);
   Application.CreateForm(TfTDialog, fTDialog);
-  Application.CreateForm(TfEditFIO, fEditFIO);
-  Application.CreateForm(TfEditPassport, fEditPassport);
-  Application.CreateForm(TfEditContactInfo, fEditContactInfo);
-  Application.CreateForm(TfEditRegions, fEditRegions);
-  Application.CreateForm(TfEditTransferInfo, fEditTransferInfo);
   Application.Run;
 end.

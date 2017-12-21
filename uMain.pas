@@ -431,12 +431,12 @@ begin
   dm.qryContactList.Open;
   fEdit := TfEditContacts.Create(Self);
   try
-    dm.dbFirebird.Savepoint('BeforeEdit');
     try
       if AMode = dbmAppend then
       begin
         dm.qryContactList.Append;
-        fEdit.ContactID := GenerateID;
+        FRecId := GenerateID;
+        fEdit.ContactID := FrecId;
       end
       else if AMode = dbmEdit then
       begin
@@ -450,22 +450,17 @@ begin
       end;
       if fEdit.ShowModal = mrOk then
       begin
-        if dm.qryContactList.State in [dsEdit, dsInsert] then
+        if dm.qryContactList.State in [ dsEdit ] then
           dm.qryContactList.Post;
-
-        dm.qryContacts.Refresh;
-
-        if AMode = dbmEdit then
-          dm.qryContacts.Locate('REC_ID', FRecId, [ loPartialKey, loCaseInsensitive ]);
-        dm.dbFirebird.Commit;
       end
       else
       begin
         dm.qryContactList.Cancel;
-        dm.qryContacts.Locate('REC_ID', FRecId, [ loPartialKey, loCaseInsensitive ]);
       end;
-    except
-      dm.dbFirebird.RollbackToSavepoint('BeforeEdit');
+      dm.qryContacts.Refresh;
+      dm.qryContacts.Locate('REC_ID', FRecId, [ loPartialKey, loCaseInsensitive ]);
+    except on E: Exception do
+      ShowError('Ќе удалось сохранить данные контакта'#13#10 + E.Message);
     end;
 
   finally

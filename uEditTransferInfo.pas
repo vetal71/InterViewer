@@ -24,6 +24,7 @@ type
     edtNote: TcxDBMaskEdit;
     tblTransferType: TUniQuery;
     dsTransferType: TUniDataSource;
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,5 +40,15 @@ uses
   uDataModule;
 
 {$R *.dfm}
+
+procedure TfEditTransferInfo.FormCreate(Sender: TObject);
+begin
+  try
+    tblTransferType.Open;
+  except on E: Exception do
+    Application.MessageBox(PWideChar('Не удалось открыть таблицу типов переводов'#13#10 + E.Message),
+      'Ошибка открытия', MB_OK or MB_ICONERROR);
+  end;
+end;
 
 end.

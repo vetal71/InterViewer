@@ -26,7 +26,7 @@ inherited fEditContactInfo: TfEditContactInfo
     Width = 577
     ExplicitLeft = 0
     ExplicitTop = 75
-    ExplicitWidth = 474
+    ExplicitWidth = 577
   end
   object cbbContactInfoType: TcxDBLookupComboBox
     Left = 192

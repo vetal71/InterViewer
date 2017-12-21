@@ -39,8 +39,8 @@ procedure TfEditContactInfo.FormCreate(Sender: TObject);
 begin
   try
     dtContactInfoType.Open;
-  except
-    Application.MessageBox('Не удалось открыть таблицу CONTACT_INFO_TYPES',
+  except on E: Exception do
+    Application.MessageBox(PWideChar('Не удалось открыть таблицу типов контактной информации'#13#10 + E.Message),
       'Ошибка открытия', MB_OK or MB_ICONERROR);
   end;
 end;

@@ -230,11 +230,17 @@ object dm: Tdm
       'CI_ID = :Old_CI_ID'
       'FOR UPDATE WITH LOCK')
     SQLRefresh.Strings = (
-      
-        'SELECT CI_ID, CIT_ID, CONTACT_ID, CONTACT_INFO_VALUE FROM CONTAC' +
-        'T_INFO'
+      'SELECT'
+      '    CI.CI_ID,'
+      '    CI.CIT_ID,'
+      '    CIT.CIT_NAME,'
+      '    CI.CONTACT_ID,'
+      '    CI.CONTACT_INFO_VALUE'
+      'FROM'
+      '    CONTACT_INFO CI, CONTACT_INFO_TYPES CIT'
       'WHERE'
-      '  CI_ID = :CI_ID')
+      '    CIT.CIT_ID = CI.CIT_ID '
+      '  AND CI_ID = :CI_ID')
     SQLRecCount.Strings = (
       'SELECT COUNT(*) FROM ('
       'SELECT 1 AS C  FROM CONTACT_INFO'
@@ -256,6 +262,7 @@ object dm: Tdm
     MasterSource = udsContactList
     MasterFields = 'BCONTACT_ID'
     DetailFields = 'CONTACT_ID'
+    RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     SpecificOptions.Strings = (
       'InterBase.KeyGenerator=GEN_CONTACT_INFO_ID')
     Left = 304
@@ -298,9 +305,19 @@ object dm: Tdm
       'WC_ID = :Old_WC_ID'
       'FOR UPDATE WITH LOCK')
     SQLRefresh.Strings = (
-      'SELECT WC_ID, CONTACT_ID, CITY_ID, CITY_NAME FROM WORK_CITIES'
-      'WHERE'
-      '  WC_ID = :WC_ID')
+      'SELECT'
+      '    WC.WC_ID,'
+      '    WC.CONTACT_ID,'
+      '    WC.CITY_ID,'
+      '    R.REGION_ID,'
+      '    R.REGION_NAME,'
+      '    C.CITY_NAME,'
+      '    WC.CITY_NAME AS OLD_CITY'
+      'FROM'
+      '    WORK_CITIES WC, CITIES C, REGIONS R'
+      'WHERE C.CITY_ID = WC.CITY_ID'
+      '  AND R.REGION_ID = C.REGION_ID'
+      '  AND WC_ID = :WC_ID')
     SQLRecCount.Strings = (
       'SELECT COUNT(*) FROM ('
       'SELECT 1 AS C  FROM WORK_CITIES'
@@ -323,6 +340,7 @@ object dm: Tdm
     MasterSource = udsContactList
     MasterFields = 'BCONTACT_ID'
     DetailFields = 'CONTACT_ID'
+    RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     SpecificOptions.Strings = (
       'InterBase.KeyGenerator=GEN_WORK_CITIES_ID')
     Left = 304
@@ -370,11 +388,20 @@ object dm: Tdm
       'TI_ID = :Old_TI_ID'
       'FOR UPDATE WITH LOCK')
     SQLRefresh.Strings = (
-      
-        'SELECT TI_ID, TT_ID, CONTACT_ID, BANK_NAME, CARD_NAME, CARD_PERI' +
-        'OD, NOTES FROM TRANSFER_INFO'
+      'SELECT'
+      '    TI.TI_ID,'
+      '    TI.TT_ID,'
+      '    TT.TT_NAME,'
+      '    TI.CONTACT_ID,'
+      '    TI.BANK_NAME,'
+      '    TI.CARD_NAME,'
+      '    TI.CARD_PERIOD,'
+      '    TI.NOTES'
+      'FROM'
+      '    TRANSFER_INFO TI, TRANSFER_TYPES TT'
       'WHERE'
-      '  TI_ID = :TI_ID')
+      '    TT.TT_ID = TI.TT_ID'
+      '  AND TI_ID = :TI_ID')
     SQLRecCount.Strings = (
       'SELECT COUNT(*) FROM ('
       'SELECT 1 AS C  FROM TRANSFER_INFO'
@@ -398,6 +425,7 @@ object dm: Tdm
     MasterSource = udsContactList
     MasterFields = 'BCONTACT_ID'
     DetailFields = 'CONTACT_ID'
+    RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     SpecificOptions.Strings = (
       'InterBase.KeyGenerator=GEN_TRANSFER_INFO_ID')
     Left = 304

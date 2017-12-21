@@ -2,6 +2,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
   Caption = #1060#1080#1085#1072#1085#1089#1086#1074#1072#1103' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1103
   ClientHeight = 203
   ClientWidth = 458
+  OnCreate = FormCreate
   ExplicitWidth = 464
   ExplicitHeight = 232
   PixelsPerInch = 96
