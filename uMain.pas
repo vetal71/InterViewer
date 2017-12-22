@@ -11,7 +11,8 @@ uses
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
   Vcl.Buttons, Vcl.ExtCtrls, RzPanel, RzStatus, Vcl.Controls, Vcl.Mask,
   Vcl.DBCtrls, RzCommon, cxCheckBox, cxGridExportLink, WUpdate, uLogin,
-  System.StrUtils, uFuncs, uDBFuncs, dxBarBuiltInMenu, cxPC, RzTabs;
+  System.StrUtils, uFuncs, uDBFuncs, dxBarBuiltInMenu, cxPC, RzTabs,
+  AdvCircularProgress;
 
 type
   TfMain = class(TForm)
@@ -149,6 +150,7 @@ type
     edtNUMBERCARD: TDBEdit;
     dbmmoGENERALCHARACTERISTIC: TDBMemo;
     btnView: TSpeedButton;
+    pb: TAdvCircularProgress;
     procedure FormCreate(Sender: TObject);
     procedure btnAddClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
@@ -326,6 +328,7 @@ begin
       end;
     end;
   end;
+
 end;
 
 procedure TfMain.FormDestroy(Sender: TObject);

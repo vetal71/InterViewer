@@ -153,6 +153,19 @@ object fMain: TfMain
   OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
+  object pb: TAdvCircularProgress
+    Left = 624
+    Top = 288
+    Width = 60
+    Height = 60
+    Appearance.BackGroundColor = clNone
+    Appearance.BorderColor = clNone
+    Appearance.ActiveSegmentColor = 16752543
+    Appearance.InActiveSegmentColor = clSilver
+    Appearance.TransitionSegmentColor = 10485760
+    Appearance.ProgressSegmentColor = 4194432
+    Interval = 100
+  end
   object sbMain: TRzStatusBar
     Left = 0
     Top = 776
@@ -907,6 +920,7 @@ object fMain: TfMain
             TabOrder = 0
             LookAndFeel.Kind = lfFlat
             LookAndFeel.NativeStyle = False
+            ExplicitTop = 0
             object gdvVContacts: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               FindPanel.DisplayMode = fpdmManual
@@ -919,7 +933,6 @@ object fMain: TfMain
               OptionsCustomize.ColumnGrouping = False
               OptionsCustomize.ColumnHiding = True
               OptionsCustomize.ColumnHidingOnGrouping = False
-              OptionsCustomize.ColumnMoving = False
               OptionsCustomize.ColumnsQuickCustomization = True
               OptionsData.CancelOnExit = False
               OptionsData.Deleting = False
