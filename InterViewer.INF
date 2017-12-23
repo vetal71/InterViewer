@@ -11,7 +11,7 @@ url=InterViewer.exe_NEW
 newversion=1.3.0.0
 localversion=InterViewer.exe
 targetdir={app}
-filesize=14846464
+filesize=14856192
 [file2]
 url=whats.txt
 localversion=whats.txt
@@ -20,4 +20,4 @@ filesize=533
 [application]
 appupdate=1
 appname=InterViewer.exe
-appcomps=InterViewer.exe_NEW 
+appcomps=InterViewer.exe_NEW

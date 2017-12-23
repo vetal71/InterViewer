@@ -231,11 +231,18 @@ begin
 end;
 
 procedure TfMain.btnPrintClick(Sender: TObject);
-var FileName: string;
-
+var
+  FileName: string;
+  Grid: TcxGrid;
 begin
   FileName := 'Контакты.xls';
-  ExportGridToExcel(FileName, grdContracts, False, True, True);
+
+  if pgcMain.ActivePageIndex = 0 then
+    Grid := grdVContacts
+  else if pgcMain.ActivePageIndex = 1 then
+    Grid := grdContracts;
+
+  ExportGridToExcel(FileName, Grid, False, True, True);
   ShellExecute(0, Nil, PChar(FileName), Nil, Nil, sw_Show);
 
 end;
