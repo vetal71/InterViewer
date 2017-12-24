@@ -9,9 +9,9 @@ object dm: Tdm
     SpecificOptions.Strings = (
       'InterBase.Charset=UTF-8'
       'InterBase.UseUnicode=True')
+    Options.KeepDesignConnected = False
     Username = 'sysdba'
     Server = 'localhost'
-    Connected = True
     LoginPrompt = False
     Left = 304
     Top = 24

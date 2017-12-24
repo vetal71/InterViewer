@@ -875,7 +875,7 @@ object fMain: TfMain
     Width = 1253
     Height = 699
     Hint = ''
-    ActivePage = tsOld
+    ActivePage = tsNew
     ActivePageDefault = tsNew
     Align = alClient
     ShowShadow = False

@@ -321,7 +321,6 @@ begin
     if WebUpdate1.NewVersionAvailable then
     begin
       ShowMessage('Обнаружена новая версия приложения');
-      WebUpdate1.DoUpdate(True);
 
       // Покажем форму с текстом
       if FileExists(AppDir + 'whats.txt') then
@@ -333,6 +332,9 @@ begin
           frmWhatsNew.Free;
         end;
       end;
+
+      WebUpdate1.DoUpdate(True);
+
     end;
   end;
 
