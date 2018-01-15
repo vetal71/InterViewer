@@ -921,6 +921,7 @@ object fMain: TfMain
             LookAndFeel.Kind = lfFlat
             LookAndFeel.NativeStyle = False
             object gdvVContacts: TcxGridDBTableView
+              OnDblClick = btnEditClick
               Navigator.Buttons.CustomButtons = <>
               FindPanel.DisplayMode = fpdmManual
               DataController.DataSource = dm.udsContacts

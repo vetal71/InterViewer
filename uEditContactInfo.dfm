@@ -24,7 +24,8 @@ inherited fEditContactInfo: TfEditContactInfo
   inherited dlgButtons: TRzDialogButtons
     Top = 75
     Width = 577
-    ExplicitLeft = 0
+    EnableOk = False
+    OnClickOk = dlgButtonsClickOk
     ExplicitTop = 75
     ExplicitWidth = 577
   end
@@ -40,6 +41,7 @@ inherited fEditContactInfo: TfEditContactInfo
       end>
     Properties.ListOptions.ShowHeader = False
     Properties.ListSource = dsContactInfoType
+    Properties.OnChange = cbbContactInfoTypePropertiesChange
     Style.BorderStyle = ebsFlat
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
@@ -58,6 +60,7 @@ inherited fEditContactInfo: TfEditContactInfo
     Top = 42
     DataBinding.DataField = 'CONTACT_INFO_VALUE'
     DataBinding.DataSource = dm.udsContactInfo
+    Properties.OnChange = edtValuePropertiesChange
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     StyleDisabled.LookAndFeel.Kind = lfFlat

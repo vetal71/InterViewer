@@ -41,6 +41,8 @@ object fEditContacts: TfEditContacts
     HotTrack = True
     OKDefault = False
     ShowDivider = True
+    WidthOk = 100
+    WidthCancel = 100
     TabOrder = 0
   end
   object pnlMainInfo: TRzPanel

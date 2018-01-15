@@ -24,13 +24,13 @@ inherited fEditRegions: TfEditRegions
   inherited dlgButtons: TRzDialogButtons
     Top = 72
     Width = 356
-    ExplicitLeft = 0
+    EnableOk = False
     ExplicitTop = 72
     ExplicitWidth = 356
   end
   object cbbCities: TcxDBLookupComboBox
     Left = 72
-    Top = 42
+    Top = 39
     DataBinding.DataField = 'CITY_ID'
     DataBinding.DataSource = dm.udsRegions
     Properties.KeyFieldNames = 'CITY_ID'
@@ -40,6 +40,7 @@ inherited fEditRegions: TfEditRegions
       end>
     Properties.ListOptions.ShowHeader = False
     Properties.ListSource = dsCities
+    Properties.OnChange = cbbCitiesPropertiesChange
     Style.BorderStyle = ebsFlat
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False

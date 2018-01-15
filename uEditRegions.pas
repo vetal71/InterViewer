@@ -22,8 +22,10 @@ type
     cbbRegions: TcxComboBox;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegionsPropertiesChange(Sender: TObject);
+    procedure cbbCitiesPropertiesChange(Sender: TObject);
   private
     procedure FillRegionComboBox;
+    procedure AllowSave;
   public
     { Public declarations }
   end;
@@ -38,6 +40,16 @@ uses
 
 {$R *.dfm}
 
+procedure TfEditRegions.AllowSave;
+begin
+  dlgButtons.EnableOk := (cbbRegions.Text > '') and (cbbCities.Text > '')
+end;
+
+procedure TfEditRegions.cbbCitiesPropertiesChange(Sender: TObject);
+begin
+  AllowSave;
+end;
+
 procedure TfEditRegions.cbbRegionsPropertiesChange(Sender: TObject);
 var
   Key: Integer;
@@ -45,6 +57,7 @@ begin
   with cbbRegions do
     Key := Integer(cbbRegions.Properties.Items.Objects[ItemIndex]);
   dtRegions.Locate('REGION_ID', Key, []);
+  AllowSave;
 end;
 
 procedure TfEditRegions.FillRegionComboBox;

@@ -19,7 +19,11 @@ type
     dsContactInfoType: TUniDataSource;
     edtValue: TcxDBMaskEdit;
     procedure FormCreate(Sender: TObject);
+    procedure dlgButtonsClickOk(Sender: TObject);
+    procedure cbbContactInfoTypePropertiesChange(Sender: TObject);
+    procedure edtValuePropertiesChange(Sender: TObject);
   private
+    procedure AllowSave;
     { Private declarations }
   public
     { Public declarations }
@@ -34,6 +38,27 @@ uses
   uDataModule, uFuncs;
 
 {$R *.dfm}
+
+procedure TfEditContactInfo.cbbContactInfoTypePropertiesChange(Sender: TObject);
+begin
+  AllowSave
+end;
+
+procedure TfEditContactInfo.AllowSave;
+begin
+  dlgButtons.EnableOk := (cbbContactInfoType.Text > '') and (edtValue.Text > '');
+end;
+
+procedure TfEditContactInfo.dlgButtonsClickOk(Sender: TObject);
+begin
+  if (cbbContactInfoType.Text = '') then
+    ModalResult := mrCancel;
+end;
+
+procedure TfEditContactInfo.edtValuePropertiesChange(Sender: TObject);
+begin
+  AllowSave;
+end;
 
 procedure TfEditContactInfo.FormCreate(Sender: TObject);
 begin

@@ -191,6 +191,9 @@ implementation
 uses
   IniFiles, uDataModule, uEditContacts, Winapi.ShellAPI, pingsend, uWhats;
 
+resourcestring
+  strNotOpenTable = 'Не удалось открыть таблицу %s'#13#10'%s';
+
 {$R *.dfm}
 
 procedure TfMain.AfterConstruction(Sender: TObject);
@@ -205,8 +208,12 @@ begin
   if AIsApply then
     dm.qryContacts.FilterSQL := AFilterSQL
   else dm.qryContacts.FilterSQL := '';
-  dm.qryContacts.Open;
-  dm.qryContacts.First;
+  try
+    dm.qryContacts.Open;
+    dm.qryContacts.First;
+  except on E: Exception do
+    ShowError('Не удалось получить данны контактов.'#13#10 + E.Message);
+  end;
 end;
 
 procedure TfMain.btnAddClick(Sender: TObject);
@@ -222,7 +229,7 @@ begin
     ShellExecute(0, Nil, PChar(cFileName), Nil, Nil, sw_Show)
   else Application.MessageBox(PWideChar(Format(
       'Файл договора (%s) отсутствует в каталоге.', [cFileName])),
-      'Ошибка соединения', MB_OK or MB_ICONERROR);
+      'Ошибка печати', MB_OK or MB_ICONERROR);
 end;
 
 procedure TfMain.btnExitClick(Sender: TObject);
@@ -292,14 +299,14 @@ begin
 end;
 
 procedure TfMain.DBConnect;
-const cMsgErrorConnect = 'Ошибка соединения с БД %s';
+const cMsgErrorConnect = 'Ошибка соединения с БД %s'#13#10'%s';
 begin
   InitConnection(dm.dbFirebird, AppDir + 'config.ini');
   try
     dm.dbFirebird.Connected := True;
     spDBInfo.Caption := 'Соединение с БД успешно';
-  except
-    Application.MessageBox(PWideChar(Format(cMsgErrorConnect, [dm.dbFirebird.Database])),
+  except on E: Exception do
+    Application.MessageBox(PWideChar(Format(cMsgErrorConnect, [dm.dbFirebird.Database, E.Message])),
       'Ошибка соединения', MB_OK or MB_ICONERROR);
   end;
 end;
@@ -366,7 +373,11 @@ begin
   try
     Connection := dm.dbFirebird;
     SQL.Text := 'select coalesce(max(bcontact_id) + 1, 1) from book_contacts';
-    Open;
+    try
+      Open;
+    except on E: Exception do
+      ShowError('Не удалось сгенерировать новый код.'#13#10 + E.Message);
+    end;
     if not IsEmpty then
       Result := Fields[ 0 ].AsInteger;
   finally
@@ -413,15 +424,15 @@ begin
   try
     dm.qryContacts.Open;
     dm.qryContacts.First;
-  except
-    Application.MessageBox('Не удалось открыть таблицу BOOK_CONTACTS',
+  except on E: Exception do
+    Application.MessageBox(PChar(Format(strNotOpenTable, ['BOOK_CONTACTS', E.Message])),
       'Ошибка открытия', MB_OK or MB_ICONERROR);
   end;
   try
     dm.tblContacts.Open;
     dm.tblContacts.First;
-  except
-    Application.MessageBox('Не удалось открыть таблицу CONTACTS',
+  except on E: Exception do
+    Application.MessageBox(PChar(Format(strNotOpenTable, ['CONTACTS', E.Message])),
       'Ошибка открытия', MB_OK or MB_ICONERROR);
   end;
 end;

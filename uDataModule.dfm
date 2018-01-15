@@ -5,13 +5,14 @@ object dm: Tdm
   object dbFirebird: TUniConnection
     ProviderName = 'InterBase'
     Port = 3051
-    Database = 'D:\GDriveIn\'#1056#1072#1079#1088#1072#1073#1086#1090#1082#1080'\Interviewer\data\IVIEWER.FDB'
+    Database = 'D:\GDrive\'#1056#1072#1079#1088#1072#1073#1086#1090#1082#1080'\Interviewer\data\IVIEWER.FDB'
     SpecificOptions.Strings = (
       'InterBase.Charset=UTF-8'
       'InterBase.UseUnicode=True')
     Options.KeepDesignConnected = False
     Username = 'sysdba'
     Server = 'localhost'
+    Connected = True
     LoginPrompt = False
     Left = 304
     Top = 24

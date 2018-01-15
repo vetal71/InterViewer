@@ -1,5 +1,5 @@
 [update]
-newversion=1.3.0.0
+newversion=1.3.1.0
 localversion=InterViewer.exe
 descr=- Добавлена возможность ввода контактной информации\n- Добавлена возможность ввода финансовой информации
 [action]
@@ -8,10 +8,10 @@ msg=Обновление программы
 count=2
 [file1]
 url=InterViewer.exe_NEW
-newversion=1.3.0.0
+newversion=1.3.1.0
 localversion=InterViewer.exe
 targetdir={app}
-filesize=14856192
+filesize=14855680
 [file2]
 url=whats.txt
 localversion=whats.txt

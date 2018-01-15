@@ -45,8 +45,8 @@ inherited fEditTransferInfo: TfEditTransferInfo
   inherited dlgButtons: TRzDialogButtons
     Top = 167
     Width = 458
+    EnableOk = False
     TabOrder = 5
-    ExplicitLeft = 0
     ExplicitTop = 167
     ExplicitWidth = 458
   end
@@ -54,7 +54,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     Left = 104
     Top = 11
     DataBinding.DataField = 'TT_ID'
-    DataBinding.DataSource = dsTransferType
+    DataBinding.DataSource = dm.udsTransferInfo
     Properties.KeyFieldNames = 'TT_ID'
     Properties.ListColumns = <
       item
@@ -62,6 +62,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
       end>
     Properties.ListOptions.ShowHeader = False
     Properties.ListSource = dsTransferType
+    Properties.OnChange = cbbTransferInfoTypePropertiesChange
     Style.BorderStyle = ebsFlat
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
@@ -91,11 +92,28 @@ inherited fEditTransferInfo: TfEditTransferInfo
     TabOrder = 1
     Width = 346
   end
-  object edtCard: TcxDBTextEdit
+  object edtNote: TcxDBMaskEdit
     Left = 104
-    Top = 73
+    Top = 132
+    DataBinding.DataField = 'NOTES'
+    DataBinding.DataSource = dm.udsTransferInfo
+    Style.LookAndFeel.Kind = lfFlat
+    Style.LookAndFeel.NativeStyle = False
+    StyleDisabled.LookAndFeel.Kind = lfFlat
+    StyleDisabled.LookAndFeel.NativeStyle = False
+    StyleFocused.LookAndFeel.Kind = lfFlat
+    StyleFocused.LookAndFeel.NativeStyle = False
+    StyleHot.LookAndFeel.Kind = lfFlat
+    StyleHot.LookAndFeel.NativeStyle = False
+    TabOrder = 4
+    Width = 346
+  end
+  object edtCard: TcxDBMaskEdit
+    Left = 104
+    Top = 74
     DataBinding.DataField = 'CARD_NAME'
     DataBinding.DataSource = dm.udsTransferInfo
+    Properties.EditMask = '!9999-9999-9999-9999;1;_'
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     StyleDisabled.LookAndFeel.Kind = lfFlat
@@ -107,13 +125,11 @@ inherited fEditTransferInfo: TfEditTransferInfo
     TabOrder = 2
     Width = 346
   end
-  object edtPeriodCard: TcxDBMaskEdit
+  object edtPeriodCard: TcxDBTextEdit
     Left = 104
     Top = 102
     DataBinding.DataField = 'CARD_PERIOD'
     DataBinding.DataSource = dm.udsTransferInfo
-    Properties.MaskKind = emkRegExpr
-    Properties.EditMask = '([0]{1}[1-9]{1}|([1]{1}[12]{1}))\/(\d{2})'
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False
     StyleDisabled.LookAndFeel.Kind = lfFlat
@@ -124,23 +140,6 @@ inherited fEditTransferInfo: TfEditTransferInfo
     StyleHot.LookAndFeel.NativeStyle = False
     TabOrder = 3
     Width = 105
-  end
-  object edtNote: TcxDBMaskEdit
-    Left = 104
-    Top = 132
-    DataBinding.DataField = 'NOTES'
-    DataBinding.DataSource = dm.udsTransferInfo
-    Properties.EditMask = '!9999-9999-9999-9999;1;_'
-    Style.LookAndFeel.Kind = lfFlat
-    Style.LookAndFeel.NativeStyle = False
-    StyleDisabled.LookAndFeel.Kind = lfFlat
-    StyleDisabled.LookAndFeel.NativeStyle = False
-    StyleFocused.LookAndFeel.Kind = lfFlat
-    StyleFocused.LookAndFeel.NativeStyle = False
-    StyleHot.LookAndFeel.Kind = lfFlat
-    StyleHot.LookAndFeel.NativeStyle = False
-    TabOrder = 4
-    Width = 346
   end
   object tblTransferType: TUniQuery
     SQLInsert.Strings = (

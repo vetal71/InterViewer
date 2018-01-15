@@ -17,14 +17,15 @@ type
     lbl1: TLabel;
     edtBank: TcxDBTextEdit;
     lbl3: TLabel;
-    edtCard: TcxDBTextEdit;
     lbl4: TLabel;
     lbl5: TLabel;
-    edtPeriodCard: TcxDBMaskEdit;
     edtNote: TcxDBMaskEdit;
     tblTransferType: TUniQuery;
     dsTransferType: TUniDataSource;
+    edtCard: TcxDBMaskEdit;
+    edtPeriodCard: TcxDBTextEdit;
     procedure FormCreate(Sender: TObject);
+    procedure cbbTransferInfoTypePropertiesChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,6 +41,15 @@ uses
   uDataModule;
 
 {$R *.dfm}
+
+procedure TfEditTransferInfo.cbbTransferInfoTypePropertiesChange(
+  Sender: TObject);
+begin
+  if cbbTransferInfoType.Text > '' then
+    dlgButtons.EnableOk := True
+  else
+    dlgButtons.EnableOk := False;
+end;
 
 procedure TfEditTransferInfo.FormCreate(Sender: TObject);
 begin

@@ -22,9 +22,9 @@ object fTDialog: TfTDialog
     HotTrack = True
     OKDefault = False
     ShowDivider = True
+    WidthOk = 100
+    WidthCancel = 100
+    WidthHelp = 100
     TabOrder = 0
-    ExplicitLeft = -603
-    ExplicitTop = 169
-    ExplicitWidth = 995
   end
 end

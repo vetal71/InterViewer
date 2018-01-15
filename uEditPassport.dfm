@@ -37,7 +37,7 @@ inherited fEditPassport: TfEditPassport
   inherited dlgButtons: TRzDialogButtons
     Top = 104
     Width = 656
-    ExplicitLeft = 0
+    EnableOk = False
     ExplicitTop = 104
     ExplicitWidth = 656
   end
