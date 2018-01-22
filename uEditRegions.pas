@@ -24,10 +24,12 @@ type
     procedure cbbRegionsPropertiesChange(Sender: TObject);
     procedure cbbCitiesPropertiesChange(Sender: TObject);
   private
+    FRegionId: Integer;
     procedure FillRegionComboBox;
     procedure AllowSave;
+    procedure SetRegionId(const Value: Integer);
   public
-    { Public declarations }
+    property RegionId: Integer write SetRegionId;
   end;
 
 var
@@ -86,6 +88,12 @@ begin
     Application.MessageBox(PWideChar('Не удалось открыть таблицу регионов'#13#10 + E.Message),
       'Ошибка открытия', MB_OK or MB_ICONERROR);
   end;
+end;
+
+procedure TfEditRegions.SetRegionId(const Value: Integer);
+begin
+  if Value > 0 then
+    cbbRegions.ItemIndex := cbbRegions.Properties.Items.IndexOfObject(Pointer(Value));
 end;
 
 end.

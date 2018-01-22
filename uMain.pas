@@ -304,7 +304,7 @@ begin
   InitConnection(dm.dbFirebird, AppDir + 'config.ini');
   try
     dm.dbFirebird.Connected := True;
-    spDBInfo.Caption := 'Соединение с БД успешно';
+    spDBInfo.Caption := Format('Соединение с БД %s', [dm.dbFirebird.Database]);
   except on E: Exception do
     Application.MessageBox(PWideChar(Format(cMsgErrorConnect, [dm.dbFirebird.Database, E.Message])),
       'Ошибка соединения', MB_OK or MB_ICONERROR);
@@ -367,12 +367,22 @@ begin
 end;
 
 function TfMain.GenerateID: Integer;
+const
+  cUpdate = 'execute procedure upd_sequence';
+  cSelect = 'select s.seq_value from sequences s where s.seq_table = ''BOOK_CONTACTS''';
 begin
   Result := 0;
+  // обновление
   with TUniQuery.Create(nil) do
   try
     Connection := dm.dbFirebird;
-    SQL.Text := 'select coalesce(max(bcontact_id) + 1, 1) from book_contacts';
+    SQL.Text := cUpdate;
+    try
+      ExecSQL;
+    except on E: Exception do
+      ShowError('Не удалось обновить генератор.'#13#10 + E.Message);
+    end;
+    SQL.Text := cSelect;
     try
       Open;
     except on E: Exception do
@@ -458,7 +468,12 @@ begin
       if AMode = dbmAppend then
       begin
         dm.qryContactList.Append;
-        FRecId := GenerateID;
+        try
+          FRecId := GenerateID;
+        except
+          dm.qryContactList.Cancel;
+          Exit;
+        end;
         fEdit.ContactID := FrecId;
       end
       else if AMode = dbmEdit then
@@ -498,15 +513,75 @@ begin
 end;
 
 procedure TfMain.btnDeleteClick(Sender: TObject);
+var
+  Count: Integer;
+
+function GetContactsCount(AContactID: Integer): Integer;
+var
+  eCount: Integer;
+begin
+  eCount := 0;
+  with TUniQuery.Create(nil) do
+  try
+    Connection := dm.dbFirebird;
+    SQL.Text := 'select count(*) as cnt from work_cities where contact_id = :contact_id';
+    try
+      ParamByName('contact_id').AsInteger := AContactID;
+      Open;
+      Result := FieldByName('cnt').AsInteger;
+    except on E: Exception do
+      ShowError('Не удалось получить данные по контакту'#13#10 + E.Message);
+    end;
+  finally
+    Free;
+  end;
+end;
+
+procedure DeleteContact(AContactID: Integer);
+begin
+  with TUniQuery.Create(nil) do
+  try
+    Connection := dm.dbFirebird;
+    SQL.Text := 'delete from book_contacts where bcontact_id = :contact_id';
+    try
+      ParamByName('contact_id').AsInteger := AContactID;
+      ExecSQL;
+    except on E: Exception do
+      ShowError('Не удалось удалить данные по контакту'#13#10 + E.Message);
+    end;
+  finally
+    Free;
+  end;
+end;
+
+procedure DeleteMultipleContact(AID: Integer);
+begin
+  with TUniQuery.Create(nil) do
+  try
+    Connection := dm.dbFirebird;
+    SQL.Text := 'delete from work_cities where wc_id = :wc_id';
+    try
+      ParamByName('wc_id').AsInteger := AID;
+      ExecSQL;
+    except on E: Exception do
+      ShowError('Не удалось удалить данные по контакту'#13#10 + E.Message);
+    end;
+  finally
+    Free;
+  end;
+end;
+
 begin
   // Удаление записи
   if MessageBox(0, 'Текущая запись будет удалена. Вы согласны ?', 'Запрос на удаление',
     MB_ICONQUESTION or MB_OKCANCEL) <> mrOk then Exit;
-  try
-    dm.qryContacts.Delete;
-  except
-    dm.qryContacts.Cancel;
-  end;
+
+  Count := GetContactsCount( dm.qryContacts.FieldByName('BCONTACT_ID').AsInteger );
+  if Count = 1 then
+    DeleteContact( dm.qryContacts.FieldByName('BCONTACT_ID').AsInteger )
+  else if Count > 1 then
+    DeleteMultipleContact( dm.qryContacts.FieldByName('WC_ID').AsInteger );
+  dm.qryContacts.Refresh;
 end;
 
 end.

@@ -21,6 +21,7 @@ type
     edtWhoGive: TcxTextEdit;
     edtFullPassport: TcxTextEdit;
     procedure edtSiriesPropertiesChange(Sender: TObject);
+    procedure edtFullPassportPropertiesChange(Sender: TObject);
   private
     FPassport: string;
     procedure ChangePassportData;
@@ -46,6 +47,11 @@ procedure TfEditPassport.ChangePassportData;
 begin
   FPassport := Format('Паспорт %s%s выдан %s дата выдачи %s', [ edtSiries.Text, edtNumber.Text, edtWhoGive.Text, DateToStr( edtDateGive.Date ) ]);
   edtFullPassport.Text := FPassport;
+end;
+
+procedure TfEditPassport.edtFullPassportPropertiesChange(Sender: TObject);
+begin
+  dlgButtons.EnableOk := edtFullPassport.Text > '';
 end;
 
 procedure TfEditPassport.edtSiriesPropertiesChange(Sender: TObject);

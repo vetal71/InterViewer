@@ -107,6 +107,8 @@ type
     procedure LoadPhotoFromDatabase;
     procedure SaveContactToDatabase(DataSet: TDataSet);
     procedure EditContactInfo(AMode: TDBMode);
+
+    function GetRegionIDByCityID(ACityID: Integer): Integer;
   public
     procedure FillCheckBox(cxCheckComboBox: TcxCheckComboBox; s: string);
     property ContactID: Integer read FId write FId;
@@ -192,6 +194,7 @@ begin
   begin
     EditDlg := TfEditRegions.Create(Application);
     DataSet := dm.qryRegions;
+    TfEditRegions(EditDlg).RegionId := GetRegionIDByCityID( DataSet.FieldByName('CITY_ID').AsInteger );
   end else if pgcInfo.ActivePageIndex = 2 then   // финансы
   begin
     EditDlg := TfEditTransferInfo.Create(Application);
@@ -298,6 +301,26 @@ procedure TfEditContacts.FormShow(Sender: TObject);
 begin
   Init;
   FillCheckBox(chbSpecialization, chbSpecialization.EditValue);
+end;
+
+function TfEditContacts.GetRegionIDByCityID(ACityID: Integer): Integer;
+begin
+  Result := 0;
+  with TUniQuery.Create(nil) do
+  try
+    Connection := dm.dbFirebird;
+    SQL.Text := 'select region_id from cities where city_id = :city_id';
+    try
+      ParamByName('CITY_ID').AsInteger := ACityID;
+      Open;
+    except on E: Exception do
+      ShowError('Ќе удалось получить код региона.'#13#10 + E.Message);
+    end;
+    if not IsEmpty then
+      Result := Fields[ 0 ].AsInteger;
+  finally
+    Free;
+  end;
 end;
 
 procedure TfEditContacts.imgPhotoClick(Sender: TObject);

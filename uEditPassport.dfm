@@ -108,6 +108,7 @@ inherited fEditPassport: TfEditPassport
     Left = 9
     Top = 7
     Enabled = False
+    Properties.OnChange = edtFullPassportPropertiesChange
     Style.BorderStyle = ebsSingle
     Style.LookAndFeel.Kind = lfFlat
     Style.LookAndFeel.NativeStyle = False

@@ -1151,14 +1151,14 @@ object fMain: TfMain
             Caption = #1069#1083#1077#1082#1090#1088#1086#1085#1085#1072#1103' '#1087#1086#1095#1090#1072':'
           end
           object lbl13: TLabel
-            Left = 581
+            Left = 830
             Top = 47
             Width = 93
             Height = 13
             Caption = #1057#1086#1094#1080#1072#1083#1100#1085#1099#1077' '#1089#1077#1090#1080':'
           end
           object lbl14: TLabel
-            Left = 581
+            Left = 829
             Top = 74
             Width = 94
             Height = 13
@@ -1214,7 +1214,7 @@ object fMain: TfMain
           object edtEMAIL_: TDBEdit
             Left = 136
             Top = 44
-            Width = 435
+            Width = 687
             Height = 21
             DataField = 'F_EMAIL'
             DataSource = dm.udsContacts
@@ -1222,9 +1222,9 @@ object fMain: TfMain
             TabOrder = 0
           end
           object edtSOCIALNET: TDBEdit
-            Left = 682
+            Left = 928
             Top = 44
-            Width = 558
+            Width = 312
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'F_SOCIALNET'
@@ -1233,9 +1233,9 @@ object fMain: TfMain
             TabOrder = 1
           end
           object edtPASSPORT_: TDBEdit
-            Left = 682
+            Left = 928
             Top = 71
-            Width = 558
+            Width = 312
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'PASSPORT'
@@ -1246,7 +1246,7 @@ object fMain: TfMain
           object edtADDRESS_: TDBEdit
             Left = 136
             Top = 71
-            Width = 435
+            Width = 687
             Height = 21
             DataField = 'F_ADDRESS'
             DataSource = dm.udsContacts
