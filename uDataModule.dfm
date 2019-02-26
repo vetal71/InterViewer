@@ -5,7 +5,7 @@ object dm: Tdm
   object dbFirebird: TUniConnection
     ProviderName = 'InterBase'
     Port = 3051
-    Database = 'D:\GDrive\'#1056#1072#1079#1088#1072#1073#1086#1090#1082#1080'\Interviewer\data\IVIEWER.FDB'
+    Database = 'd:\Interviewer\data\IVIEWER.FDB'
     SpecificOptions.Strings = (
       'InterBase.Charset=UTF-8'
       'InterBase.UseUnicode=True')
@@ -196,7 +196,6 @@ object dm: Tdm
       '    BC.PHOTO'
       'FROM'
       '    BOOK_CONTACTS BC')
-    BeforePost = dtContactListBeforePost
     Left = 304
     Top = 135
   end
@@ -538,5 +537,213 @@ object dm: Tdm
   object dbMonitor: TUniSQLMonitor
     Left = 640
     Top = 96
+  end
+  object qryContracts: TUniQuery
+    SQLInsert.Strings = (
+      'INSERT INTO AGREEMENTS'
+      
+        '  (AGREEMENT_ID, CONTACT_CODE, AGREEMENT_KIND, AGREEMENT_NUM, DA' +
+        'TE_START, DATE_FINISH)'
+      'VALUES'
+      
+        '  (:AGREEMENT_ID, :CONTACT_CODE, :AGREEMENT_KIND, :AGREEMENT_NUM' +
+        ', :DATE_START, :DATE_FINISH)')
+    SQLDelete.Strings = (
+      'DELETE FROM AGREEMENTS'
+      'WHERE'
+      '  AGREEMENT_ID = :Old_AGREEMENT_ID')
+    SQLUpdate.Strings = (
+      'UPDATE AGREEMENTS'
+      'SET'
+      
+        '  AGREEMENT_ID = :AGREEMENT_ID, CONTACT_CODE = :CONTACT_CODE, AG' +
+        'REEMENT_KIND = :AGREEMENT_KIND, AGREEMENT_NUM = :AGREEMENT_NUM, ' +
+        'DATE_START = :DATE_START, DATE_FINISH = :DATE_FINISH'
+      'WHERE'
+      '  AGREEMENT_ID = :Old_AGREEMENT_ID')
+    SQLLock.Strings = (
+      'SELECT NULL FROM AGREEMENTS'
+      'WHERE'
+      'AGREEMENT_ID = :Old_AGREEMENT_ID'
+      'FOR UPDATE WITH LOCK')
+    SQLRefresh.Strings = (
+      
+        'SELECT AGREEMENT_ID, CONTACT_CODE, AGREEMENT_KIND, AGREEMENT_NUM' +
+        ', DATE_START, DATE_FINISH,'
+      
+        '    CASE WHEN A.AGREEMENT_KIND = 0 THEN '#39#1056#1072#1073#1086#1090#1072' '#1087#1086' '#1087#1088#1086#1074#1077#1076#1077#1085#1080#1102' '#1089#1086 +
+        #1094#1080#1072#1083#1086#1075#1080#1095#1077#1089#1082#1080#1093' '#1086#1087#1088#1086#1089#1086#1074#39
+      '         WHEN A.AGREEMENT_KIND = 0 THEN '#39#1058#1072#1081#1085#1099#1081' '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1100#39
+      
+        '         WHEN A.AGREEMENT_KIND = 0 THEN '#39#1056#1072#1073#1086#1090#1072' '#1087#1086' '#1087#1088#1086#1074#1077#1076#1077#1085#1080#1102' '#1089#1086 +
+        #1094#1080#1072#1083#1086#1075#1080#1095#1077#1089#1082#1080#1093' '#1086#1087#1088#1086#1089#1086#1074' '#1074' '#1082#1086#1083#1083'-'#1094#1077#1085#1090#1088#1077#39
+      '    END AS KIND'
+      ' FROM AGREEMENTS'
+      'WHERE'
+      '  AGREEMENT_ID = :AGREEMENT_ID')
+    SQLRecCount.Strings = (
+      'SELECT COUNT(*) FROM ('
+      'SELECT 1 AS C  FROM AGREEMENTS'
+      ''
+      ') q')
+    Connection = dbFirebird
+    SQL.Strings = (
+      'SELECT'
+      '    A.*,'
+      
+        '    CASE WHEN A.AGREEMENT_KIND = 0 THEN '#39#1056#1072#1073#1086#1090#1072' '#1087#1086' '#1087#1088#1086#1074#1077#1076#1077#1085#1080#1102' '#1089#1086 +
+        #1094#1080#1072#1083#1086#1075#1080#1095#1077#1089#1082#1080#1093' '#1086#1087#1088#1086#1089#1086#1074#39
+      '         WHEN A.AGREEMENT_KIND = 0 THEN '#39#1058#1072#1081#1085#1099#1081' '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1100#39
+      
+        '         WHEN A.AGREEMENT_KIND = 0 THEN '#39#1056#1072#1073#1086#1090#1072' '#1087#1086' '#1087#1088#1086#1074#1077#1076#1077#1085#1080#1102' '#1089#1086 +
+        #1094#1080#1072#1083#1086#1075#1080#1095#1077#1089#1082#1080#1093' '#1086#1087#1088#1086#1089#1086#1074' '#1074' '#1082#1086#1083#1083'-'#1094#1077#1085#1090#1088#1077#39
+      '    END AS KIND'
+      'FROM'
+      '    AGREEMENTS A')
+    MasterSource = udsContacts
+    MasterFields = 'BCONTACT_ID'
+    DetailFields = 'CONTACT_CODE'
+    Active = True
+    Left = 112
+    Top = 134
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'BCONTACT_ID'
+        Value = nil
+      end>
+  end
+  object udsContracts: TUniDataSource
+    DataSet = qryContracts
+    Left = 198
+    Top = 135
+  end
+  object qryTasks: TUniQuery
+    SQLInsert.Strings = (
+      'INSERT INTO AGREEMENT_TASKS'
+      
+        '  (TASK_ID, AGREEMENT_ID, TASK_NUM, TASK_DATE, TASK_THEME, REGIO' +
+        'N_RESEARCH, OBJECT_RESEARCH, TASK_TARGET, TARIF, DATE_START, DAT' +
+        'E_FINISH)'
+      'VALUES'
+      
+        '  (:TASK_ID, :AGREEMENT_ID, :TASK_NUM, :TASK_DATE, :TASK_THEME, ' +
+        ':REGION_RESEARCH, :OBJECT_RESEARCH, :TASK_TARGET, :TARIF, :DATE_' +
+        'START, :DATE_FINISH)')
+    SQLDelete.Strings = (
+      'DELETE FROM AGREEMENT_TASKS'
+      'WHERE'
+      '  TASK_ID = :Old_TASK_ID')
+    SQLUpdate.Strings = (
+      'UPDATE AGREEMENT_TASKS'
+      'SET'
+      
+        '  TASK_ID = :TASK_ID, AGREEMENT_ID = :AGREEMENT_ID, TASK_NUM = :' +
+        'TASK_NUM, TASK_DATE = :TASK_DATE, TASK_THEME = :TASK_THEME, REGI' +
+        'ON_RESEARCH = :REGION_RESEARCH, OBJECT_RESEARCH = :OBJECT_RESEAR' +
+        'CH, TASK_TARGET = :TASK_TARGET, TARIF = :TARIF, DATE_START = :DA' +
+        'TE_START, DATE_FINISH = :DATE_FINISH'
+      'WHERE'
+      '  TASK_ID = :Old_TASK_ID')
+    SQLLock.Strings = (
+      'SELECT NULL FROM AGREEMENT_TASKS'
+      'WHERE'
+      'TASK_ID = :Old_TASK_ID'
+      'FOR UPDATE WITH LOCK')
+    SQLRefresh.Strings = (
+      
+        'SELECT TASK_ID, AGREEMENT_ID, TASK_NUM, TASK_DATE, TASK_THEME, R' +
+        'EGION_RESEARCH, OBJECT_RESEARCH, TASK_TARGET, TARIF, DATE_START,' +
+        ' DATE_FINISH FROM AGREEMENT_TASKS'
+      'WHERE'
+      '  TASK_ID = :TASK_ID')
+    SQLRecCount.Strings = (
+      'SELECT COUNT(*) FROM ('
+      'SELECT 1 AS C  FROM AGREEMENT_TASKS'
+      ''
+      ') q')
+    Connection = dbFirebird
+    SQL.Strings = (
+      'SELECT'
+      '    *'
+      'FROM'
+      '    AGREEMENT_TASKS A')
+    MasterSource = udsContracts
+    MasterFields = 'AGREEMENT_ID'
+    DetailFields = 'AGREEMENT_ID'
+    Active = True
+    Left = 112
+    Top = 192
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'AGREEMENT_ID'
+        ParamType = ptInput
+        Value = nil
+      end>
+  end
+  object udsTasks: TUniDataSource
+    DataSet = qryTasks
+    Left = 198
+    Top = 192
+  end
+  object qryActs: TUniQuery
+    SQLInsert.Strings = (
+      'INSERT INTO ACTS'
+      '  (ACT_ID, TASK_ID, ACT_NUM, ACT_DATE, COUNT_ANKETA, COST)'
+      'VALUES'
+      '  (:ACT_ID, :TASK_ID, :ACT_NUM, :ACT_DATE, :COUNT_ANKETA, :COST)')
+    SQLDelete.Strings = (
+      'DELETE FROM ACTS'
+      'WHERE'
+      '  ACT_ID = :Old_ACT_ID')
+    SQLUpdate.Strings = (
+      'UPDATE ACTS'
+      'SET'
+      
+        '  ACT_ID = :ACT_ID, TASK_ID = :TASK_ID, ACT_NUM = :ACT_NUM, ACT_' +
+        'DATE = :ACT_DATE, COUNT_ANKETA = :COUNT_ANKETA, COST = :COST'
+      'WHERE'
+      '  ACT_ID = :Old_ACT_ID')
+    SQLLock.Strings = (
+      'SELECT NULL FROM ACTS'
+      'WHERE'
+      'ACT_ID = :Old_ACT_ID'
+      'FOR UPDATE WITH LOCK')
+    SQLRefresh.Strings = (
+      
+        'SELECT ACT_ID, TASK_ID, ACT_NUM, ACT_DATE, COUNT_ANKETA, COST FR' +
+        'OM ACTS'
+      'WHERE'
+      '  ACT_ID = :ACT_ID')
+    SQLRecCount.Strings = (
+      'SELECT COUNT(*) FROM ('
+      'SELECT 1 AS C  FROM ACTS'
+      ''
+      ') q')
+    Connection = dbFirebird
+    SQL.Strings = (
+      'SELECT'
+      '    *'
+      'FROM'
+      '    ACTS A')
+    MasterSource = udsTasks
+    MasterFields = 'TASK_ID'
+    DetailFields = 'TASK_ID'
+    Active = True
+    Left = 112
+    Top = 247
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'TASK_ID'
+        ParamType = ptInput
+        Value = nil
+      end>
+  end
+  object udsActs: TUniDataSource
+    DataSet = qryActs
+    Left = 198
+    Top = 248
   end
 end

@@ -13,11 +13,10 @@ uses
   RzTabs, Vcl.Buttons, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage,
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, cxImage,
-  Vcl.ExtDlgs, Vcl.Imaging.jpeg, uDBFuncs, uFuncs;
+  Vcl.ExtDlgs, Vcl.Imaging.jpeg, uTDialog, uDBFuncs, uFuncs;
 
 type
-  TfEditContacts = class(TForm)
-    dlgButtons: TRzDialogButtons;
+  TfEditContacts = class(TfTDialog)
     pnlMainInfo: TRzPanel;
     Label2: TLabel;
     Label6: TLabel;
@@ -81,12 +80,12 @@ type
     gdvTransferCARD_PERIOD: TcxGridDBColumn;
     gdvTransferNOTES: TcxGridDBColumn;
     gdvTransferTT_NAME: TcxGridDBColumn;
-    imgPhoto: TcxImage;
     chkSupervizer: TcxCheckBox;
     chkBlackList: TcxCheckBox;
     lbl3: TLabel;
     edtSocialNumber: TcxTextEdit;
     dlgOpenPicture: TOpenPictureDialog;
+    imgPhoto: TcxImage;
     procedure FormShow(Sender: TObject);
     procedure edtFIOPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
@@ -100,18 +99,17 @@ type
     procedure edtFIOPropertiesValidate(Sender: TObject;
       var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
   private
-    FId: Integer;
-  private
-    procedure Init;
-    procedure BeforeSave;
-    procedure LoadPhotoFromDatabase;
-    procedure SaveContactToDatabase(DataSet: TDataSet);
-    procedure EditContactInfo(AMode: TDBMode);
 
+  private
+    procedure LoadPhotoFromDatabase;
+    procedure EditContactInfo(AMode: TDBMode);
     function GetRegionIDByCityID(ACityID: Integer): Integer;
+  protected
+    procedure Init; override;
+    procedure BeforeSave; override;
+    procedure SaveToDatabase(DataSet: TDataSet); override;
   public
     procedure FillCheckBox(cxCheckComboBox: TcxCheckComboBox; s: string);
-    property ContactID: Integer read FId write FId;
   end;
 
 var
@@ -120,7 +118,7 @@ var
 implementation
 
 uses
-  uEditFIO, uTDialog, uEditContactInfo, uEditRegions, uEditTransferInfo, uEditPassport;
+  uEditFIO, uEditContactInfo, uEditRegions, uEditTransferInfo, uEditPassport;
 
 {$R *.dfm}
 
@@ -205,7 +203,7 @@ begin
       DataSet.Append
     else if AMode = dbmEdit then
       DataSet.Edit;
-    DataSet.FieldByName('CONTACT_ID').AsInteger := FId;
+    DataSet.FieldByName('CONTACT_ID').AsInteger := ID;
     if EditDlg.ShowModal <> mrOk then
     begin
       if DataSet.State in [dsEdit, dsInsert] then
@@ -334,9 +332,9 @@ procedure TfEditContacts.Init;
 begin
   with dm.qryContactList do
   begin
-    dm.ContactBeforePost := SaveContactToDatabase;
+    BeforePost := SaveToDatabase;
 
-    FieldByName('BCONTACT_ID').AsInteger := ContactID;
+    FieldByName('BCONTACT_ID').AsInteger := ID;
 
     if State in [dsEdit] then
     begin
@@ -402,7 +400,7 @@ begin
   end;
 end;
 
-procedure TfEditContacts.SaveContactToDatabase(DataSet: TDataSet);
+procedure TfEditContacts.SaveToDatabase(DataSet: TDataSet);
 var
   BLOB:TStream;
 begin

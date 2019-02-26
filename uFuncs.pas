@@ -4,11 +4,13 @@ interface
 
 uses
   System.Classes, System.SysUtils, Vcl.Dialogs, System.Variants,
-  Winapi.Windows;
+  Winapi.Windows, Forms;
 
 function StrToStrL(Str : String; Delimeters: array of string): TStringList;
 
 procedure ShowError(Msg: string);
+
+function Ask(q: string): Boolean;
 
 function VarToInt(const AVariant: Variant): integer;
 
@@ -82,5 +84,15 @@ function VarToInt(const AVariant: Variant): integer;
 begin
   Result := StrToIntDef(Trim(VarToStr(AVariant)), 0);
 end;
+
+function Ask(q: string): Boolean;
+begin
+  if pos('?', Trim(q)) <> Length(Trim(q)) then q:=q+'?';
+  Result := IDYES = Application.MessageBox(
+    PChar(q),
+    PChar('Подтвердите'),
+    MB_ICONQUESTION+MB_YESNO+MB_DEFBUTTON2);
+end;
+
 
 end.

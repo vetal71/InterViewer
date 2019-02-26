@@ -5,7 +5,7 @@ interface
 uses
   Data.DB, System.Classes,
   UniProvider, InterBaseUniProvider, DBAccess, Uni, MemDS, DASQLMonitor,
-  UniSQLMonitor;
+  UniSQLMonitor, cxClasses, cxLookAndFeels;
 
 type
   Tdm = class(TDataModule)
@@ -24,11 +24,16 @@ type
     tblContacts: TUniQuery;
     dsContacts: TUniDataSource;
     dbMonitor: TUniSQLMonitor;
-    procedure dtContactListBeforePost(DataSet: TDataSet);
+    qryContracts: TUniQuery;
+    udsContracts: TUniDataSource;
+    qryTasks: TUniQuery;
+    udsTasks: TUniDataSource;
+    qryActs: TUniQuery;
+    udsActs: TUniDataSource;
   private
-    FOnBeforePost: TDataSetNotifyEvent;
+
   public
-    property ContactBeforePost: TDataSetNotifyEvent write FOnBeforePost;
+
   end;
 
 var
@@ -39,11 +44,5 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
-
-procedure Tdm.dtContactListBeforePost(DataSet: TDataSet);
-begin
-  if Assigned(FOnBeforePost) then
-    FOnBeforePost(DataSet);
-end;
 
 end.

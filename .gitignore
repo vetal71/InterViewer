@@ -11,3 +11,5 @@ __history/
 *.exe
 __recovery/
 Win32/
+/forms.ini
+/gridconfig.ini

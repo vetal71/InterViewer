@@ -12,7 +12,8 @@ uses
   Vcl.Buttons, Vcl.ExtCtrls, RzPanel, RzStatus, Vcl.Controls, Vcl.Mask,
   Vcl.DBCtrls, RzCommon, cxCheckBox, cxGridExportLink, WUpdate, uLogin,
   System.StrUtils, uFuncs, uDBFuncs, dxBarBuiltInMenu, cxPC, RzTabs,
-  AdvCircularProgress;
+  AdvCircularProgress, dxBar, cxDropDownEdit, cxLabel, cxBarEditItem,
+  System.ImageList, Vcl.ImgList, cxSplitter;
 
 type
   TfMain = class(TForm)
@@ -32,22 +33,6 @@ type
     aEdit: TAction;
     aDelete: TAction;
     aPrint: TAction;
-    pnlButton: TRzPanel;
-    btnAdd: TSpeedButton;
-    btnEdit: TSpeedButton;
-    btnDelete: TSpeedButton;
-    btnExit: TSpeedButton;
-    btnPrint: TSpeedButton;
-    pnlFilter: TRzPanel;
-    btnSuperVizer: TSpeedButton;
-    btnHidenBuyer: TSpeedButton;
-    btnOperator: TSpeedButton;
-    btnFocusGroup: TSpeedButton;
-    btnStreetInterview: TSpeedButton;
-    btnFlatInterview: TSpeedButton;
-    btnWriters: TSpeedButton;
-    btnOutSource: TSpeedButton;
-    btnContract: TSpeedButton;
     pgcMain: TRzPageControl;
     tsNew: TRzTabSheet;
     tsOld: TRzTabSheet;
@@ -100,7 +85,6 @@ type
     dbmmoGENERALCHARACTERISTIC_: TDBMemo;
     dbmmoCURRENTNOTES_: TDBMemo;
     pnlMain: TRzPanel;
-    splInfo: TSplitter;
     pnlGrid: TRzPanel;
     grdContracts: TcxGrid;
     gdvContracts: TcxGridDBTableView;
@@ -129,7 +113,36 @@ type
     gdvContractsGENERALCHARACTERISTIC: TcxGridDBColumn;
     gdvContractsISBLACKLIST: TcxGridDBColumn;
     gdlContracts: TcxGridLevel;
+    pb: TAdvCircularProgress;
+    bmMain: TdxBarManager;
+    brMainMenu: TdxBar;
+    siContacts: TdxBarSubItem;
+    bbAdd: TdxBarLargeButton;
+    dxBarButton1: TdxBarButton;
+    dxBarButton2: TdxBarButton;
+    btnEdit: TdxBarLargeButton;
+    btnDelete: TdxBarLargeButton;
+    siView: TdxBarSubItem;
+    dxBarLargeButton4: TdxBarLargeButton;
+    btnView: TdxBarLargeButton;
+    siReports: TdxBarSubItem;
+    dxBarLargeButton6: TdxBarLargeButton;
+    bbExit: TdxBarButton;
+    btnExport: TdxBarLargeButton;
+    ilMainLarge: TcxImageList;
+    btnContracts: TdxBarLargeButton;
+    dbSeparator: TdxBarSeparator;
+    dxBarSeparator1: TdxBarSeparator;
+    ilSmall: TcxImageList;
+    brMainToolbar: TdxBar;
+    dxBarButton4: TdxBarButton;
+    cxBarEditItem2: TcxBarEditItem;
+    dxBarButton5: TdxBarButton;
+    cbbFilter: TdxBarCombo;
+    btnAdd: TdxBarLargeButton;
+    spMain: TcxSplitter;
     pnlAddInfo: TRzPanel;
+    scMain: TScrollBox;
     lbl1: TLabel;
     lbl2: TLabel;
     lbl3: TLabel;
@@ -149,10 +162,8 @@ type
     edtTRANSFERTYPE: TDBEdit;
     edtNUMBERCARD: TDBEdit;
     dbmmoGENERALCHARACTERISTIC: TDBMemo;
-    btnView: TSpeedButton;
-    pb: TAdvCircularProgress;
     procedure FormCreate(Sender: TObject);
-    procedure btnAddClick(Sender: TObject);
+    procedure btAddClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
     procedure btnExitClick(Sender: TObject);
@@ -161,12 +172,12 @@ type
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
     procedure ButtonFilterClick(Sender: TObject);
-    procedure ButtonFilterDblClick(Sender: TObject);
     procedure btnPrintClick(Sender: TObject);
     procedure btnContractClick(Sender: TObject);
     procedure gdvContractsFocusedItemChanged(Sender: TcxCustomGridTableView;
       APrevFocusedItem, AFocusedItem: TcxCustomGridTableItem);
     procedure btnViewClick(Sender: TObject);
+    procedure cbbFilterChange(Sender: TObject);
   private
     Options: TOptions;
     IsFirstRun: Boolean;
@@ -177,7 +188,6 @@ type
     function GetSQLFilter(aIndex: Integer): string;
     function GetUser: string;
     procedure SetEnableButtons;
-    function GenerateID: Integer;
   public
     procedure AfterConstruction(Sender: TObject); overload;
   end;
@@ -189,10 +199,8 @@ var
 implementation
 
 uses
-  IniFiles, uDataModule, uEditContacts, Winapi.ShellAPI, pingsend, uWhats;
-
-resourcestring
-  strNotOpenTable = 'Не удалось открыть таблицу %s'#13#10'%s';
+  IniFiles, uDataModule, uEditContacts, Winapi.ShellAPI, pingsend, uWhats,
+  uContracts, uConstants;
 
 {$R *.dfm}
 
@@ -216,20 +224,24 @@ begin
   end;
 end;
 
-procedure TfMain.btnAddClick(Sender: TObject);
+procedure TfMain.btAddClick(Sender: TObject);
 begin
   // Добавить запись
   ShowEditForm(dbmAppend);
 end;
 
 procedure TfMain.btnContractClick(Sender: TObject);
-const cFileName = 'договор.doc';
+var
+  frmContracts : TfrmContracts;
 begin
-  if FileExists(AppDir + cFileName) then
-    ShellExecute(0, Nil, PChar(cFileName), Nil, Nil, sw_Show)
-  else Application.MessageBox(PWideChar(Format(
-      'Файл договора (%s) отсутствует в каталоге.', [cFileName])),
-      'Ошибка печати', MB_OK or MB_ICONERROR);
+  // Вызов формы договоров
+  frmContracts := TfrmContracts.Create(nil);
+  try
+    frmContracts.Caption := Format('Договора: %s', [ dm.qryContacts.FieldValues['FIO'] ] );
+    frmContracts.ShowModal;
+  finally
+    frmContracts.Free;
+  end;
 end;
 
 procedure TfMain.btnExitClick(Sender: TObject);
@@ -256,14 +268,14 @@ end;
 
 procedure TfMain.btnViewClick(Sender: TObject);
 begin
-  if string(TSpeedButton(Sender).Caption).Equals('Старый вариант') then
+  if TdxBarLargeButton(Sender).Tag = 0 then
   begin
-    TSpeedButton(Sender).Caption := 'Новый вариант';
+    TdxBarLargeButton(Sender).Tag := 1;
     pgcMain.ActivePage := tsOld;
   end
   else
   begin
-    TSpeedButton(Sender).Caption := 'Старый вариант';
+    TdxBarLargeButton(Sender).Tag := 0;
     pgcMain.ActivePage := tsNew;
   end;
   SetEnableButtons;
@@ -273,29 +285,12 @@ procedure TfMain.ButtonFilterClick(Sender: TObject);
 var SQLFilter: string;
 begin
   ApplyFilter('', False);
-  if not (Sender is TSpeedButton) then Exit;
-
-  case TSpeedButton(Sender).Tag of
+  case cbbFilter.Index of
+    0: SQLFilter := '';
     1: SQLFilter := 'IS_SUPERVISER=1';                                           // Фильтр по супервайзерам
-    2..8: SQLFilter := 'SPECIALIZATION CONTAINING ''' + GetSQLFilter(TSpeedButton(Sender).Tag) + '''';
+    2..8: SQLFilter := 'SPECIALIZATION CONTAINING ''' + cbbFilter.Text + '''';
   end;
-  ApplyFilter(SQLFilter, TSpeedButton(Sender).Down);
-end;
-
-procedure TfMain.ButtonFilterDblClick(Sender: TObject);
-var sSQLFilterDef, sSQLFilterNew: string;
-var aIndex: Integer;
-begin
-  // При двойном клике на кнопке - изменение фильтра
-  if not (Sender is TSpeedButton) then Exit;
-  aIndex := TSpeedButton(Sender).Tag;
-  sSQLFilterDef := GetSQLFilter(aIndex);
-
-  sSQLFilterNew := InputBox('Фильтр', 'Введите новое значение фильтра', sSQLFilterDef);
-  with TIniFile.Create( AppDir + 'config.ini' ) do
-  begin
-    WriteString('FILTER', 'Filter' + IntToStr(aIndex), sSQLFilterNew);
-  end;
+  ApplyFilter(SQLFilter, True);
 end;
 
 procedure TfMain.DBConnect;
@@ -366,35 +361,6 @@ begin
   Sender.OptionsBehavior.IncSearchItem := AFocusedItem;
 end;
 
-function TfMain.GenerateID: Integer;
-const
-  cUpdate = 'execute procedure upd_sequence';
-  cSelect = 'select s.seq_value from sequences s where s.seq_table = ''BOOK_CONTACTS''';
-begin
-  Result := 0;
-  // обновление
-  with TUniQuery.Create(nil) do
-  try
-    Connection := dm.dbFirebird;
-    SQL.Text := cUpdate;
-    try
-      ExecSQL;
-    except on E: Exception do
-      ShowError('Не удалось обновить генератор.'#13#10 + E.Message);
-    end;
-    SQL.Text := cSelect;
-    try
-      Open;
-    except on E: Exception do
-      ShowError('Не удалось сгенерировать новый код.'#13#10 + E.Message);
-    end;
-    if not IsEmpty then
-      Result := Fields[ 0 ].AsInteger;
-  finally
-    Free;
-  end;
-end;
-
 function TfMain.GetSQLFilter(aIndex: Integer): string;
 var sSQLFilterDef: string;
 begin
@@ -451,8 +417,8 @@ procedure TfMain.SetEnableButtons;
 var
   ViewType: Integer;
 begin
-  btnAdd.Enabled := pgcMain.ActivePageIndex = 0;
-  btnEdit.Enabled := pgcMain.ActivePageIndex = 0;
+  btnAdd.Enabled    := pgcMain.ActivePageIndex = 0;
+  btnEdit.Enabled   := pgcMain.ActivePageIndex = 0;
   btnDelete.Enabled := pgcMain.ActivePageIndex = 0;
 end;
 
@@ -469,17 +435,17 @@ begin
       begin
         dm.qryContactList.Append;
         try
-          FRecId := GenerateID;
+          FRecId := GenerateID('BOOK_CONTACTS', 'BCONTACT_ID');
         except
           dm.qryContactList.Cancel;
           Exit;
         end;
-        fEdit.ContactID := FrecId;
+        fEdit.ID := FrecId;
       end
       else if AMode = dbmEdit then
       begin
         FId := dm.qryContacts.FieldValues['BCONTACT_ID'];
-        fEdit.ContactID := FId;
+        fEdit.ID := FId;
         FRecId := dm.qryContacts.FieldValues['REC_ID'];
         if dm.qryContactList.Locate('BCONTACT_ID', FId, [ loPartialKey, loCaseInsensitive ]) then
           dm.qryContactList.Edit
@@ -582,6 +548,18 @@ begin
   else if Count > 1 then
     DeleteMultipleContact( dm.qryContacts.FieldByName('WC_ID').AsInteger );
   dm.qryContacts.Refresh;
+end;
+
+procedure TfMain.cbbFilterChange(Sender: TObject);
+var SQLFilter: string;
+begin
+  ApplyFilter('', False);
+  case cbbFilter.ItemIndex of
+    0: SQLFilter := '';
+    1: SQLFilter := 'IS_SUPERVISER=1';                                           // Фильтр по супервайзерам
+    2..8: SQLFilter := 'SPECIALIZATION CONTAINING ''' + cbbFilter.Text + '''';
+  end;
+  ApplyFilter(SQLFilter, True);
 end;
 
 end.

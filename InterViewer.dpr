@@ -13,7 +13,16 @@ uses
   uEditPassport in 'uEditPassport.pas' {fEditPassport},
   uEditContactInfo in 'uEditContactInfo.pas' {fEditContactInfo},
   uEditRegions in 'uEditRegions.pas' {fEditRegions},
-  uEditTransferInfo in 'uEditTransferInfo.pas' {fEditTransferInfo};
+  uEditTransferInfo in 'uEditTransferInfo.pas' {fEditTransferInfo},
+  uContracts in 'uContracts.pas' {frmContracts},
+  uConstants in 'uConstants.pas',
+  uEditContract in 'uEditContract.pas' {fEditContract},
+  uDBFuncs in 'uDBFuncs.pas',
+  uWordReport in 'uWordReport.pas',
+  uWaitForm in 'uWaitForm.pas' {fSplash},
+  uEditTask in 'uEditTask.pas' {fEditTask},
+  uEditAct in 'uEditAct.pas' {fEditAct},
+  LibMoney in 'LibMoney.pas';
 
 {$R *.res}
 
@@ -23,6 +32,5 @@ begin
   Application.Title := 'База интервьюеров';
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TfMain, fMain);
-  Application.CreateForm(TfTDialog, fTDialog);
   Application.Run;
 end.
