@@ -1,6 +1,7 @@
-[update]
-descr=- ��������� ����������� ����� ���������� ����������\n- ��������� ����������� ����� ���������� ����������
+﻿[update]
+descr=- Добавлена система ведения договоров
 datefmt=0
+
 [version]
 inctime=1
 autotime=1
@@ -11,9 +12,10 @@ hour=16
 min=40
 sec=0
 update=11
-app=D:\DevProjects\InterViewer\InterViewer.exe
+app=D:\Projects\Delphi\InterViewer\bin\InterViewer.exe
+
 [commands]
-inform=���������� ���������
+inform=Обновление программы
 query=
 weburl=
 htmldlg=
@@ -21,12 +23,14 @@ runbefore=
 runafter=
 runbeforeparam=
 runafterparam=
+
 [application]
 restart=0
 prompt=0
 cl=InterViewer.exe
 appparam=
-comps=InterViewer.exe_NEW
+comps=InterViewer.exe_NEW 
+
 [upload]
 uncdir=
 host=192.168.1.250
@@ -37,49 +41,128 @@ baseurl=
 unc=0
 ftppass=0
 ftpport=21
+
 [custom]
 procmsg=
 procparam=
 valmsg=
 valparam=
 signature=
+
 [files]
-count=2
+count=6
+
 [file0]
-url=D:\DevProjects\InterViewer\InterViewer.exe
+url=D:\Projects\Delphi\InterViewer\bin\InterViewer.exe
 major=1
 minor=3
-release=0
+release=5
 build=0
 localver=InterViewer.exe
 targetdir={app}
 compressed=0
 descr=
-newsize=14856192
-newsum=1496670786
-newcrc32sum=-837063919
+newsize=4397056
+newsum=496176637
+newcrc32sum=241793942
 includeappcomps=1
 includefilesize=0
 mandatory=0
 update=0
+
 [file1]
-url=D:\DevProjects\InterViewer\whats.txt
+url=D:\Projects\Delphi\InterViewer\Templates\Шаблон акта.doc
 major=0
 minor=0
 release=0
 build=0
-localver=whats.txt
-targetdir={app}
+localver=Шаблон акта.doc
+targetdir={app}\Templates
 compressed=0
 descr=
-newsize=533
-newsum=63525
-newcrc32sum=-1422369289
+newsize=42496
+newsum=1444861
+newcrc32sum=-128517665
 includeappcomps=0
 includefilesize=0
 mandatory=0
 update=4
+
+[file2]
+url=D:\Projects\Delphi\InterViewer\Templates\Шаблон договора по колл центру.doc
+major=0
+minor=0
+release=0
+build=0
+localver=Шаблон договора по колл центру.doc
+targetdir={app}\Templates
+compressed=0
+descr=
+newsize=72192
+newsum=2841139
+newcrc32sum=1058292675
+includeappcomps=0
+includefilesize=0
+mandatory=0
+update=4
+
+[file3]
+url=D:\Projects\Delphi\InterViewer\Templates\Шаблон договора по социологическим опросам.doc
+major=0
+minor=0
+release=0
+build=0
+localver=Шаблон договора по социологическим опросам.doc
+targetdir={app}\Templates
+compressed=0
+descr=
+newsize=70656
+newsum=2870572
+newcrc32sum=566566269
+includeappcomps=0
+includefilesize=0
+mandatory=0
+update=4
+
+[file4]
+url=D:\Projects\Delphi\InterViewer\Templates\Шаблон договора тайного покупателя.doc
+major=0
+minor=0
+release=0
+build=0
+localver=Шаблон договора тайного покупателя.doc
+targetdir={app}\Templates
+compressed=0
+descr=
+newsize=62464
+newsum=2499469
+newcrc32sum=613116658
+includeappcomps=0
+includefilesize=0
+mandatory=0
+update=4
+
+[file5]
+url=D:\Projects\Delphi\InterViewer\Templates\Шаблон задания.doc
+major=0
+minor=0
+release=0
+build=0
+localver=Шаблон задания.doc
+targetdir={app}\Templates
+compressed=0
+descr=
+newsize=39936
+newsum=1354018
+newcrc32sum=-686621536
+includeappcomps=0
+includefilesize=0
+mandatory=0
+update=4
+
 [whatsnew]
 file=
+
 [eula]
 file=
+

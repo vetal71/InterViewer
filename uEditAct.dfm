@@ -13,7 +13,7 @@ inherited fEditAct: TfEditAct
   inherited dlgButtons: TRzDialogButtons
     Top = 346
     Width = 662
-    ExplicitTop = 503
+    ExplicitTop = 346
     ExplicitWidth = 662
   end
   inherited pnlMain: TRzPanel
@@ -22,7 +22,7 @@ inherited fEditAct: TfEditAct
     ExplicitLeft = 0
     ExplicitTop = 29
     ExplicitWidth = 662
-    ExplicitHeight = 474
+    ExplicitHeight = 317
     object Label2: TLabel
       Left = 9
       Top = 194
@@ -558,6 +558,7 @@ inherited fEditAct: TfEditAct
       Top = 38
       EditValue = 0.000000000000000000
       Properties.OnChange = edtAmountPropertiesChange
+      Properties.OnEditValueChanged = edtAmountPropertiesChange
       Style.Color = clWindow
       TabOrder = 15
       Width = 125

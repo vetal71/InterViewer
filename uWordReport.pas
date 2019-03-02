@@ -44,13 +44,13 @@ begin
 //  except
     try
       FWord := CreateOleObject('Word.Application');
-      FWord.Visible := True;
     except
       Exception.Create('Ошибка создания документа Word');
     end;
 //  end;
   FVars := TDictionary<string, string>.Create;
   FWord.Documents.Open(AFilePath);
+  FWord.Visible := True;
 end;
 
 procedure TWordReport.CreateForm;
@@ -75,6 +75,7 @@ procedure TWordReport.Execute;
 begin
   if FindAndReplace then
   begin
+    FWord.Visible := True;
     FSplash.Hide;
   end;
 end;
@@ -102,7 +103,7 @@ begin
     FWord.Selection.Find.Replacement.Text := ReplaceText;
     FindAndReplace := FWord.Selection.Find.Execute( Replace := wdReplaceAll );
     FSplash.aiProgress.Update;
-//    Application.ProcessMessages;
+    Application.ProcessMessages;
   end;
 end;
 

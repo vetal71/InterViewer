@@ -244,12 +244,12 @@ var
     end;
     result:=trim(result);
     if copy(n, len - 1, 1) = '1' then
-      result:= '(' + result + ') рублей'
+      result:= result + ' рублей'
     else begin
       case StrToInt(copy(n, len, 1)) of
-        1: result:= '(' + result + ') рубль';
-        2, 3, 4: result:= '(' + result + ') рубля'
-      else result:= '(' + result + ') рублей'
+        1: result:= result + ' рубль';
+        2, 3, 4: result:= result + ' рубля'
+      else result:= result + ' рублей'
       end
     end;
 

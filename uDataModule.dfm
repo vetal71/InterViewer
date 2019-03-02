@@ -12,7 +12,6 @@ object dm: Tdm
     Options.KeepDesignConnected = False
     Username = 'sysdba'
     Server = 'localhost'
-    Connected = True
     LoginPrompt = False
     Left = 304
     Top = 24
@@ -603,7 +602,6 @@ object dm: Tdm
     MasterSource = udsContacts
     MasterFields = 'BCONTACT_ID'
     DetailFields = 'CONTACT_CODE'
-    Active = True
     Left = 112
     Top = 134
     ParamData = <
@@ -671,7 +669,6 @@ object dm: Tdm
     MasterSource = udsContracts
     MasterFields = 'AGREEMENT_ID'
     DetailFields = 'AGREEMENT_ID'
-    Active = True
     Left = 112
     Top = 192
     ParamData = <
@@ -730,7 +727,6 @@ object dm: Tdm
     MasterSource = udsTasks
     MasterFields = 'TASK_ID'
     DetailFields = 'TASK_ID'
-    Active = True
     Left = 112
     Top = 247
     ParamData = <

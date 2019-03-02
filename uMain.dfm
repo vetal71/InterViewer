@@ -689,10 +689,6 @@ object fMain: TfMain
     object tsOld: TRzTabSheet
       TabVisible = False
       Caption = 'tsOld'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object pnlMain: TRzPanel
         AlignWithMargins = True
         Left = 3

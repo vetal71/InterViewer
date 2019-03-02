@@ -92,7 +92,7 @@ begin
   begin
     BeforePost := SaveToDatabase;
 
-    FieldByName('AKT_ID').AsInteger := ID;
+    FieldByName('ACT_ID').AsInteger := ID;
 
     // Информация по договору
     cbbKind.ItemIndex    := dm.qryContracts.FieldByName('AGREEMENT_KIND').AsInteger;

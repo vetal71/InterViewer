@@ -170,8 +170,8 @@ begin
     Add('Количество',    dm.qryTasks.FieldByName('TASK_TARGET').AsString);
     Add('Тариф',         dm.qryTasks.FieldByName('TARIF').AsString);
     Add('ТарифПроп',     MoneyToStr(dm.qryTasks.FieldByName('TARIF').AsFloat));
-    Add('ДатаНачала',    FormatDateTime( 'dd mmmm yyyy г.', dm.qryTasks.FieldByName('DATE_START').AsDateTime ) );
-    Add('ДатаОкончанияЗадачи', FormatDateTime( 'dd mmmm yyyy г.', dm.qryTasks.FieldByName('DATE_FINISH').AsDateTime ) );
+    Add('ДатаНачала',    FormatDateTime( 'dd.mm.yyyy г.', dm.qryTasks.FieldByName('DATE_START').AsDateTime ) );
+    Add('ДатаОкончанияЗадания', FormatDateTime( 'dd.mm.yyyy г.', dm.qryTasks.FieldByName('DATE_FINISH').AsDateTime ) );
     Add('НомерАкта',     dm.qryActs.FieldByName('ACT_NUM').AsString);
     Add('ДатаАкта',      FormatDateTime( 'dd mmmm yyyy г.', dm.qryActs.FieldByName('ACT_DATE').AsDateTime ) );
     Add('КоличествоАнкет',    dm.qryActs.FieldByName('COUNT_ANKETA').AsString);

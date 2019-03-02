@@ -52,7 +52,6 @@ object frmContracts: TfrmContracts
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          ExplicitTop = 28
           ExplicitWidth = 125
         end
         object dkContracts: TSpTBXDock
@@ -109,8 +108,6 @@ object frmContracts: TfrmContracts
           TabOrder = 1
           LookAndFeel.Kind = lfFlat
           LookAndFeel.NativeStyle = False
-          ExplicitTop = 49
-          ExplicitHeight = 132
           object gdvVContracts: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             FindPanel.DisplayMode = fpdmManual
@@ -196,7 +193,6 @@ object frmContracts: TfrmContracts
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          ExplicitTop = 28
           ExplicitWidth = 56
         end
         object dkTasks: TSpTBXDock
@@ -251,8 +247,6 @@ object frmContracts: TfrmContracts
           TabOrder = 1
           LookAndFeel.Kind = lfFlat
           LookAndFeel.NativeStyle = False
-          ExplicitTop = 49
-          ExplicitHeight = 131
           object gdvVTasks: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             FindPanel.DisplayMode = fpdmManual
@@ -369,7 +363,6 @@ object frmContracts: TfrmContracts
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          ExplicitTop = 28
           ExplicitWidth = 176
         end
         object dkActs: TSpTBXDock
@@ -423,8 +416,6 @@ object frmContracts: TfrmContracts
           TabOrder = 1
           LookAndFeel.Kind = lfFlat
           LookAndFeel.NativeStyle = False
-          ExplicitTop = 49
-          ExplicitHeight = 167
           object gdvVActs: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             FindPanel.DisplayMode = fpdmManual
