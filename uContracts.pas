@@ -169,11 +169,13 @@ begin
     Add('ТемаЗадания',   dm.qryTasks.FieldByName('TASK_THEME').AsString);
     Add('Количество',    dm.qryTasks.FieldByName('TASK_TARGET').AsString);
     Add('Тариф',         dm.qryTasks.FieldByName('TARIF').AsString);
+    Add('ТарифПроп',     MoneyToStr(dm.qryTasks.FieldByName('TARIF').AsFloat));
     Add('ДатаНачала',    FormatDateTime( 'dd mmmm yyyy г.', dm.qryTasks.FieldByName('DATE_START').AsDateTime ) );
     Add('ДатаОкончанияЗадачи', FormatDateTime( 'dd mmmm yyyy г.', dm.qryTasks.FieldByName('DATE_FINISH').AsDateTime ) );
     Add('НомерАкта',     dm.qryActs.FieldByName('ACT_NUM').AsString);
     Add('ДатаАкта',      FormatDateTime( 'dd mmmm yyyy г.', dm.qryActs.FieldByName('ACT_DATE').AsDateTime ) );
     Add('КоличествоАнкет',    dm.qryActs.FieldByName('COUNT_ANKETA').AsString);
+    Add('КоличествоАнкетПроп', MoneyToStr(dm.qryActs.FieldByName('COUNT_ANKETA').AsInteger, 1));
     Add('Стоимость',         dm.qryActs.FieldByName('COST').AsString);
     Add('СтоимостьПроп', MoneyToStr( dm.qryActs.FieldByName('COST').AsFloat ) );
   end;
