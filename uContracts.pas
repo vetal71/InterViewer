@@ -76,7 +76,6 @@ type
     gdvVActsCOST: TcxGridDBColumn;
     gdvVActsACT_NUM: TcxGridDBColumn;
     gdvVActsACT_DATE: TcxGridDBColumn;
-    procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure iAddClick(Sender: TObject);
     procedure iDeleteClick(Sender: TObject);
@@ -91,13 +90,13 @@ type
     procedure iaDeleteClick(Sender: TObject);
     procedure iaPrintClick(Sender: TObject);
   private
-    FVars: TDictionary<string, string>;
+    FTemplateId: Integer;
   private
     procedure OpenData;
     procedure ShowEditContractForm(AMode: TDBMode);
     procedure ShowEditTaskForm(AMode: TDBMode);
     procedure ShowEditActForm(AMode: TDBMode);
-    procedure FillVars;
+    procedure FillVars(AVars: TDictionary<string, string>);
     procedure GenerateReport;
   public
     { Public declarations }
@@ -120,27 +119,47 @@ begin
   0: Result := 'Шаблон договора по социологическим опросам.doc';
   1: Result := 'Шаблон договора тайного покупателя.doc';
   2: Result := 'Шаблон договора по колл центру.doc';
+  4: Result := 'Шаблон задания.doc';
+  5: Result := 'Шаблон акта.doc';
   else Result := 'Неизвестный вид договора';
   end;
 end;
 
-
-procedure TfrmContracts.FormDestroy(Sender: TObject);
+function FIO(AFIO: string): string;
+var
+  lex: TArray<string>;
+  I: Integer;
+  List: TStringList;
 begin
-  FVars.Free;
+  // Делим на ликсемы по пробелу
+  List := TStringList.Create;
+  try
+    ExtractStrings([' '], [], PChar(AFIO), List);
+    if List.Count > 0 then
+      Result := List[ 0 ];
+    if List.Count > 1 then
+      Result := Format('%s %s.', [ Result, Copy(List[ 1 ], 1, 1) ]);
+    if List.Count > 2 then
+      Result := Format('%s%s.', [ Result, Copy(List[ 2 ], 1, 1) ]);
+  finally
+    List.Free;
+  end;
+
 end;
 
-procedure TfrmContracts.FillVars;
+procedure TfrmContracts.FillVars(AVars: TDictionary<string, string>);
 begin
-  with FVars do
+  with AVars do
   begin
     Add('Номер',         dm.qryContracts.FieldByName('AGREEMENT_NUM').AsString);
     Add('ДатаДоговора',  FormatDateTime( 'dd mmmm yyyy г.', dm.qryContracts.FieldByName('DATE_START').AsDateTime ) );
     Add('ДатаОкончания', FormatDateTime( 'dd mmmm yyyy г.', dm.qryContracts.FieldByName('DATE_FINISH').AsDateTime ) );
-    Add('ДатаРождения',  FormatDateTime( 'dd mmmm yyyy г.', dm.qryContracts.FieldByName('BIRTHDATE').AsDateTime ) );
+    Add('ДатаРождения',  FormatDateTime( 'dd.mm.yyyy г.', dm.qryContacts.FieldByName('BIRTHDAY').AsDateTime ) );
     Add('ФИО',           dm.qryContacts.FieldByName('FIO').AsString);
+    Add('ФИОСокр',       FIO(dm.qryContacts.FieldByName('FIO').AsString));
     Add('ТемаДоговора',  dm.qryContracts.FieldByName('KIND').AsString);
-    Add('Паспорт',       dm.qryContracts.FieldByName('PASSPORT').AsString);
+    Add('Паспорт',       dm.qryContacts.FieldByName('PASSPORT').AsString);
+    Add('ЛичныйНомер',   dm.qryContacts.FieldByName('SOCIAL_NUMBER').AsString);
     Add('Адрес',         GetFieldValue('CONTACT_INFO', 'CONTACT_INFO_VALUE',
       Format('CIT_ID = 1 AND CONTACT_ID = %d', [ dm.qryContacts.FieldByName('BCONTACT_ID').AsInteger ])));
     Add('НомерЗадания',  dm.qryTasks.FieldByName('TASK_NUM').AsString);
@@ -151,7 +170,7 @@ begin
     Add('Количество',    dm.qryTasks.FieldByName('TASK_TARGET').AsString);
     Add('Тариф',         dm.qryTasks.FieldByName('TARIF').AsString);
     Add('ДатаНачала',    FormatDateTime( 'dd mmmm yyyy г.', dm.qryTasks.FieldByName('DATE_START').AsDateTime ) );
-    Add('ДатаОкончания', FormatDateTime( 'dd mmmm yyyy г.', dm.qryTasks.FieldByName('DATE_FINISH').AsDateTime ) );
+    Add('ДатаОкончанияЗадачи', FormatDateTime( 'dd mmmm yyyy г.', dm.qryTasks.FieldByName('DATE_FINISH').AsDateTime ) );
     Add('НомерАкта',     dm.qryActs.FieldByName('ACT_NUM').AsString);
     Add('ДатаАкта',      FormatDateTime( 'dd mmmm yyyy г.', dm.qryActs.FieldByName('ACT_DATE').AsDateTime ) );
     Add('КоличествоАнкет',    dm.qryActs.FieldByName('COUNT_ANKETA').AsString);
@@ -163,13 +182,13 @@ end;
 procedure TfrmContracts.FormCreate(Sender: TObject);
 begin
   OpenData;
-  FVars := TDictionary<string, string>.Create;
 end;
 
 procedure TfrmContracts.GenerateReport;
 var
   WordReport: TWordReport;
   FilePath, FileName: string;
+  FVars : TDictionary<string, string>;
 begin
   // Печать договора
   with TIniFile.Create(AppDir + 'config.ini') do
@@ -183,17 +202,19 @@ begin
   if not DirectoryExists(FilePath) then
     raise Exception.Create('Каталог с шаблонами форм не найден.');
 
-  FileName := GetTemplateFileName( dm.qryContracts.FieldByName('AGREEMENT_KIND').AsInteger );
+  FileName := GetTemplateFileName( FTemplateId );
   if not FileExists(FilePath + FileName) then
     raise Exception.CreateFmt('Файл %s не найден.', [ FilePath + FileName ] );
 
   WordReport := TWordReport.Create( FilePath + FileName );
+  FVars := TDictionary<string, string>.Create;
   try
     // Заполнение переменных
-    FillVars;
+    FillVars(FVars);
     WordReport.SetVars(FVars);
     WordReport.Execute;
   finally
+    FVars.Free;
     WordReport.Free;
   end;
 end;
@@ -225,7 +246,8 @@ end;
 
 procedure TfrmContracts.iaPrintClick(Sender: TObject);
 begin
-  iPrintClick(nil);
+  FTemplateId := 5; //Акт
+  GenerateReport;
 end;
 
 procedure TfrmContracts.iDeleteClick(Sender: TObject);
@@ -245,6 +267,7 @@ end;
 
 procedure TfrmContracts.iPrintClick(Sender: TObject);
 begin
+  FTemplateId := dm.qryContracts.FieldByName('AGREEMENT_KIND').AsInteger;
   GenerateReport;
 end;
 
@@ -270,7 +293,8 @@ end;
 
 procedure TfrmContracts.itPrintClick(Sender: TObject);
 begin
-  iPrintClick(nil)
+  FTemplateId := 4;
+  GenerateReport;
 end;
 
 procedure TfrmContracts.OpenData;

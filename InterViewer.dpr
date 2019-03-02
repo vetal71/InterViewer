@@ -19,10 +19,10 @@ uses
   uEditContract in 'uEditContract.pas' {fEditContract},
   uDBFuncs in 'uDBFuncs.pas',
   uWordReport in 'uWordReport.pas',
-  uWaitForm in 'uWaitForm.pas' {fSplash},
   uEditTask in 'uEditTask.pas' {fEditTask},
   uEditAct in 'uEditAct.pas' {fEditAct},
-  LibMoney in 'LibMoney.pas';
+  LibMoney in 'LibMoney.pas',
+  uWaitForm in 'uWaitForm.pas' {fSplash};
 
 {$R *.res}
 

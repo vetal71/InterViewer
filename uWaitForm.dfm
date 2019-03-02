@@ -1,0 +1,59 @@
+object fSplash: TfSplash
+  Left = 0
+  Top = 0
+  BorderStyle = bsNone
+  ClientHeight = 109
+  ClientWidth = 409
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object RzPanel1: TRzPanel
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 403
+    Height = 103
+    Align = alClient
+    BorderOuter = fsFlatRounded
+    TabOrder = 0
+    ExplicitLeft = 6
+    ExplicitTop = -2
+    ExplicitWidth = 513
+    ExplicitHeight = 229
+    object Label1: TLabel
+      Left = 2
+      Top = 2
+      Width = 399
+      Height = 18
+      Align = alTop
+      Alignment = taCenter
+      Caption = #1060#1086#1088#1084#1080#1088#1086#1074#1072#1085#1080#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1072'. '#1046#1076#1080#1090#1077'...'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      ExplicitWidth = 249
+    end
+    object aiProgress: TdxActivityIndicator
+      Left = 2
+      Top = 20
+      Width = 399
+      Height = 81
+      Align = alClient
+      PropertiesClassName = 'TdxActivityIndicatorHorizontalDotsProperties'
+      ExplicitLeft = 0
+      ExplicitTop = 18
+      ExplicitWidth = 391
+      ExplicitHeight = 62
+    end
+  end
+end
