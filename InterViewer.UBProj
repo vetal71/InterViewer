@@ -1,5 +1,5 @@
 ﻿[update]
-descr=- Добавлена система ведения договоров
+descr=
 datefmt=0
 
 [version]
@@ -15,7 +15,7 @@ update=11
 app=D:\Projects\Delphi\InterViewer\bin\InterViewer.exe
 
 [commands]
-inform=Обновление программы
+inform=Исправление ошибок
 query=
 weburl=
 htmldlg=
@@ -57,14 +57,14 @@ url=D:\Projects\Delphi\InterViewer\bin\InterViewer.exe
 major=1
 minor=3
 release=5
-build=0
+build=1
 localver=InterViewer.exe
-targetdir={app}
+targetdir=
 compressed=0
 descr=
 newsize=4397056
-newsum=496176637
-newcrc32sum=241793942
+newsum=496097844
+newcrc32sum=-1100478700
 includeappcomps=1
 includefilesize=0
 mandatory=0

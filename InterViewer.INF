@@ -1,47 +1,51 @@
 ﻿[update]
-newversion=1.3.5.0
+newversion=1.3.5.1
 localversion=InterViewer.exe
-descr=- Добавлена система ведения договоров
 
 [action]
-msg=Обновление программы
+msg=Исправление ошибок
 
 [files]
 count=6
 
 [file1]
 url=InterViewer.exe_NEW
-newversion=1.3.5.0
+newversion=1.3.5.1
 localversion=InterViewer.exe
-targetdir={app}
+filesize=4397056
 
 [file2]
 url=Шаблон акта.doc
 localversion=Шаблон акта.doc
 targetdir={app}\Templates
+filesize=42496
 
 [file3]
 url=Шаблон договора по колл центру.doc
 localversion=Шаблон договора по колл центру.doc
 targetdir={app}\Templates
+filesize=72192
 
 [file4]
 url=Шаблон договора по социологическим опросам.doc
 localversion=Шаблон договора по социологическим опросам.doc
 targetdir={app}\Templates
+filesize=70656
 
 [file5]
 url=Шаблон договора тайного покупателя.doc
 localversion=Шаблон договора тайного покупателя.doc
 targetdir={app}\Templates
+filesize=62464
 
 [file6]
 url=Шаблон задания.doc
 localversion=Шаблон задания.doc
 targetdir={app}\Templates
+filesize=39936
 
 [application]
 appupdate=1
 appname=InterViewer.exe
-appcomps=InterViewer.exe_NEW 
+appcomps=InterViewer.exe_NEW
 

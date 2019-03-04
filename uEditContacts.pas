@@ -42,7 +42,6 @@ type
     edtDateLast: TcxDateEdit;
     edtPercentGood: TcxCalcEdit;
     edtPercentBad: TcxCalcEdit;
-    lbl2: TLabel;
     pnlAddInfo: TRzPanel;
     pnlButtons: TRzPanel;
     btnAdd: TSpeedButton;
