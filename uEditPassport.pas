@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTDialog, Vcl.ExtCtrls, RzPanel,
   RzDlgBtn, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
   cxContainer, cxEdit, cxTextEdit, Vcl.StdCtrls, Vcl.ComCtrls, dxCore,
-  cxDateUtils, cxMaskEdit, cxDropDownEdit, cxCalendar, System.AnsiStrings;
+  cxDateUtils, cxMaskEdit, cxDropDownEdit, cxCalendar, System.AnsiStrings,
+  cxClasses;
 
 type
   TfEditPassport = class(TfTDialog)

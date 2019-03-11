@@ -8,7 +8,7 @@ uses
   RzDlgBtn, Vcl.StdCtrls, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxContainer, cxEdit, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, Data.DB,
-  cxDBEdit, DBAccess, Uni, MemDS;
+  cxDBEdit, DBAccess, Uni, MemDS, cxClasses;
 
 type
   TfEditContactInfo = class(TfTDialog)

@@ -42,6 +42,9 @@ inherited fEditTransferInfo: TfEditTransferInfo
     Height = 14
     Caption = #1055#1077#1088#1080#1086#1076' '#1082#1072#1088#1090#1099':'
   end
+  inherited lblCaption: TLabel
+    Width = 452
+  end
   inherited dlgButtons: TRzDialogButtons
     Top = 167
     Width = 458
@@ -50,7 +53,12 @@ inherited fEditTransferInfo: TfEditTransferInfo
     ExplicitTop = 167
     ExplicitWidth = 458
   end
-  object cbbTransferInfoType: TcxDBLookupComboBox
+  inherited pnlMain: TRzPanel
+    Width = 458
+    Height = 138
+    TabOrder = 6
+  end
+  object cbbTransferInfoType: TcxDBLookupComboBox [8]
     Left = 104
     Top = 11
     DataBinding.DataField = 'TT_ID'
@@ -76,7 +84,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     TabOrder = 0
     Width = 346
   end
-  object edtBank: TcxDBTextEdit
+  object edtBank: TcxDBTextEdit [9]
     Left = 104
     Top = 42
     DataBinding.DataField = 'BANK_NAME'
@@ -92,7 +100,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     TabOrder = 1
     Width = 346
   end
-  object edtNote: TcxDBMaskEdit
+  object edtNote: TcxDBMaskEdit [10]
     Left = 104
     Top = 132
     DataBinding.DataField = 'NOTES'
@@ -108,7 +116,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     TabOrder = 4
     Width = 346
   end
-  object edtCard: TcxDBMaskEdit
+  object edtCard: TcxDBMaskEdit [11]
     Left = 104
     Top = 74
     DataBinding.DataField = 'CARD_NAME'
@@ -125,7 +133,7 @@ inherited fEditTransferInfo: TfEditTransferInfo
     TabOrder = 2
     Width = 346
   end
-  object edtPeriodCard: TcxDBTextEdit
+  object edtPeriodCard: TcxDBTextEdit [12]
     Left = 104
     Top = 102
     DataBinding.DataField = 'CARD_PERIOD'

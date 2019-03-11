@@ -34,6 +34,9 @@ inherited fEditPassport: TfEditPassport
     Height = 14
     Caption = #1042#1099#1076#1072#1085':'
   end
+  inherited lblCaption: TLabel
+    Width = 650
+  end
   inherited dlgButtons: TRzDialogButtons
     Top = 104
     Width = 656
@@ -41,7 +44,12 @@ inherited fEditPassport: TfEditPassport
     ExplicitTop = 104
     ExplicitWidth = 656
   end
-  object edtSiries: TcxTextEdit
+  inherited pnlMain: TRzPanel
+    Width = 656
+    Height = 75
+    TabOrder = 6
+  end
+  object edtSiries: TcxTextEdit [7]
     Left = 59
     Top = 39
     Properties.OnChange = edtSiriesPropertiesChange
@@ -57,7 +65,7 @@ inherited fEditPassport: TfEditPassport
     Text = 'KB'
     Width = 40
   end
-  object edtNumber: TcxTextEdit
+  object edtNumber: TcxTextEdit [8]
     Left = 156
     Top = 39
     Properties.OnChange = edtSiriesPropertiesChange
@@ -72,7 +80,7 @@ inherited fEditPassport: TfEditPassport
     TabOrder = 2
     Width = 100
   end
-  object edtDateGive: TcxDateEdit
+  object edtDateGive: TcxDateEdit [9]
     Left = 343
     Top = 39
     Properties.UseNullString = True
@@ -89,7 +97,7 @@ inherited fEditPassport: TfEditPassport
     TabOrder = 3
     Width = 120
   end
-  object edtWhoGive: TcxTextEdit
+  object edtWhoGive: TcxTextEdit [10]
     Left = 59
     Top = 71
     Properties.OnChange = edtSiriesPropertiesChange
@@ -104,7 +112,7 @@ inherited fEditPassport: TfEditPassport
     TabOrder = 4
     Width = 590
   end
-  object edtFullPassport: TcxTextEdit
+  object edtFullPassport: TcxTextEdit [11]
     Left = 9
     Top = 7
     Enabled = False

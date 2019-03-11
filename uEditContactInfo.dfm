@@ -21,6 +21,9 @@ inherited fEditContactInfo: TfEditContactInfo
     Height = 14
     Caption = #1047#1085#1072#1095#1077#1085#1080#1077':'
   end
+  inherited lblCaption: TLabel
+    Width = 571
+  end
   inherited dlgButtons: TRzDialogButtons
     Top = 75
     Width = 577
@@ -29,7 +32,12 @@ inherited fEditContactInfo: TfEditContactInfo
     ExplicitTop = 75
     ExplicitWidth = 577
   end
-  object cbbContactInfoType: TcxDBLookupComboBox
+  inherited pnlMain: TRzPanel
+    Width = 577
+    Height = 46
+    TabOrder = 3
+  end
+  object cbbContactInfoType: TcxDBLookupComboBox [5]
     Left = 192
     Top = 11
     DataBinding.DataField = 'CIT_ID'
@@ -55,7 +63,7 @@ inherited fEditContactInfo: TfEditContactInfo
     TabOrder = 1
     Width = 377
   end
-  object edtValue: TcxDBMaskEdit
+  object edtValue: TcxDBMaskEdit [6]
     Left = 192
     Top = 42
     DataBinding.DataField = 'CONTACT_INFO_VALUE'

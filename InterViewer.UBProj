@@ -29,7 +29,7 @@ restart=0
 prompt=0
 cl=InterViewer.exe
 appparam=
-comps=InterViewer.exe_NEW 
+comps=InterViewer.exe_NEW
 
 [upload]
 uncdir=
@@ -50,21 +50,21 @@ valparam=
 signature=
 
 [files]
-count=6
+count=7
 
 [file0]
 url=D:\Projects\Delphi\InterViewer\bin\InterViewer.exe
 major=1
 minor=3
 release=5
-build=1
+build=2
 localver=InterViewer.exe
 targetdir=
 compressed=0
 descr=
-newsize=4397056
-newsum=496097844
-newcrc32sum=-1100478700
+newsize=4419072
+newsum=499134561
+newcrc32sum=-579229023
 includeappcomps=1
 includefilesize=0
 mandatory=0
@@ -86,7 +86,7 @@ newcrc32sum=-128517665
 includeappcomps=0
 includefilesize=0
 mandatory=0
-update=4
+update=2
 
 [file2]
 url=D:\Projects\Delphi\InterViewer\Templates\Шаблон договора по колл центру.doc
@@ -104,7 +104,7 @@ newcrc32sum=1058292675
 includeappcomps=0
 includefilesize=0
 mandatory=0
-update=4
+update=2
 
 [file3]
 url=D:\Projects\Delphi\InterViewer\Templates\Шаблон договора по социологическим опросам.doc
@@ -122,7 +122,7 @@ newcrc32sum=566566269
 includeappcomps=0
 includefilesize=0
 mandatory=0
-update=4
+update=2
 
 [file4]
 url=D:\Projects\Delphi\InterViewer\Templates\Шаблон договора тайного покупателя.doc
@@ -140,7 +140,7 @@ newcrc32sum=613116658
 includeappcomps=0
 includefilesize=0
 mandatory=0
-update=4
+update=2
 
 [file5]
 url=D:\Projects\Delphi\InterViewer\Templates\Шаблон задания.doc
@@ -155,6 +155,24 @@ descr=
 newsize=39936
 newsum=1354018
 newcrc32sum=-686621536
+includeappcomps=0
+includefilesize=0
+mandatory=0
+update=2
+
+[file6]
+url=D:\Projects\Delphi\InterViewer\config.ini
+major=0
+minor=0
+release=0
+build=0
+localver=config.ini
+targetdir={app}
+compressed=0
+descr=
+newsize=192
+newsum=18662
+newcrc32sum=-1955832349
 includeappcomps=0
 includefilesize=0
 mandatory=0

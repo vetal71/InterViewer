@@ -21,6 +21,9 @@ inherited fEditRegions: TfEditRegions
     Height = 14
     Caption = #1043#1086#1088#1086#1076':'
   end
+  inherited lblCaption: TLabel
+    Width = 350
+  end
   inherited dlgButtons: TRzDialogButtons
     Top = 72
     Width = 356
@@ -28,7 +31,12 @@ inherited fEditRegions: TfEditRegions
     ExplicitTop = 72
     ExplicitWidth = 356
   end
-  object cbbCities: TcxDBLookupComboBox
+  inherited pnlMain: TRzPanel
+    Width = 356
+    Height = 43
+    TabOrder = 3
+  end
+  object cbbCities: TcxDBLookupComboBox [5]
     Left = 72
     Top = 39
     DataBinding.DataField = 'CITY_ID'
@@ -54,7 +62,7 @@ inherited fEditRegions: TfEditRegions
     TabOrder = 2
     Width = 273
   end
-  object cbbRegions: TcxComboBox
+  object cbbRegions: TcxComboBox [6]
     Left = 72
     Top = 11
     Properties.OnChange = cbbRegionsPropertiesChange

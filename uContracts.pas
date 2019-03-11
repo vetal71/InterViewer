@@ -195,7 +195,7 @@ begin
   // Печать договора
   with TIniFile.Create(AppDir + 'config.ini') do
   try
-    FilePath := ReadString('PATH', 'TemplateDir', '');
+    FilePath := ReadString('PATH', 'TemplateDir', AppDir + 'Templates');
   finally
     Free;
   end;

@@ -27,15 +27,22 @@ inherited fEditFIO: TfEditFIO
     Height = 14
     Caption = #1048#1084#1103':'
   end
+  inherited lblCaption: TLabel
+    Width = 533
+  end
   inherited dlgButtons: TRzDialogButtons
     Top = 131
     Width = 539
     TabOrder = 4
-    ExplicitLeft = 0
     ExplicitTop = 131
     ExplicitWidth = 539
   end
-  object edtSecondName: TcxTextEdit
+  inherited pnlMain: TRzPanel
+    Width = 539
+    Height = 102
+    TabOrder = 5
+  end
+  object edtSecondName: TcxTextEdit [6]
     Left = 128
     Top = 40
     Anchors = [akLeft, akTop, akRight]
@@ -51,7 +58,7 @@ inherited fEditFIO: TfEditFIO
     TabOrder = 1
     Width = 403
   end
-  object edtSeName: TcxTextEdit
+  object edtSeName: TcxTextEdit [7]
     Left = 128
     Top = 99
     Anchors = [akLeft, akTop, akRight]
@@ -67,7 +74,7 @@ inherited fEditFIO: TfEditFIO
     TabOrder = 3
     Width = 403
   end
-  object edtName: TcxTextEdit
+  object edtName: TcxTextEdit [8]
     Left = 128
     Top = 70
     Anchors = [akLeft, akTop, akRight]
@@ -83,7 +90,7 @@ inherited fEditFIO: TfEditFIO
     TabOrder = 2
     Width = 403
   end
-  object edtFullFIO: TcxTextEdit
+  object edtFullFIO: TcxTextEdit [9]
     Left = 8
     Top = 8
     Enabled = False

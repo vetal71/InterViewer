@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTDialog, Vcl.ExtCtrls, RzPanel,
   RzDlgBtn, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
-  cxContainer, cxEdit, cxTextEdit, Vcl.StdCtrls, uFuncs;
+  cxContainer, cxEdit, cxTextEdit, Vcl.StdCtrls, uFuncs, cxClasses;
 
 type
   TfEditFIO = class(TfTDialog)
