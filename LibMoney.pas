@@ -10,6 +10,7 @@ c=2 - 21.05 -> "21-05", 21.00 -> "21="
 
 function MoneyToStr(n: double; c: byte = 0): string;
 function NumToStr(n: double; c: byte = 0): string;
+function propis(default:double):string;
 function F2W(number: Currency): ShortString; stdcall;
 
 implementation
@@ -292,7 +293,260 @@ begin
   Result:=NumToStr(n, c);
 end;
 
+var mass:array[0..4]of integer;
+    razr:array[0..5] of string;//разр€ды
+    mill:array[0..9] of string;//миллион+, миллиард+, ...
+    tysa4:array[0..9] of string;//тыс€ч+
+    sotn:array[0..9] of string;//сотни
+    des:array[0..9] of string;//дес€тки
+    desd:array[0..9] of string;//20>i>10
+    edin:array[0..1,0..9] of string;//единицы
+    ruble:array[0..9] of string;//рубл+
+    kopeek:array[0..9] of string;//копейки
+    nacion:array[0..9] of string;//белорусски+
+
+procedure Init;
+begin
+  razr[0]:='';
+  razr[1]:='тыс€ч';
+  razr[2]:='миллион';
+  razr[3]:='миллиард';
+  razr[4]:='триллион';
+
+  mill[0]:='ов ';
+  mill[1]:=' ';
+  mill[2]:='a ';
+  mill[3]:='а ';
+  mill[4]:='а ';
+  mill[5]:='ов ';
+  mill[6]:='ов ';
+  mill[7]:='ов ';
+  mill[8]:='ов ';
+  mill[9]:='ов ';
+
+  tysa4[0]:=' ';
+  tysa4[1]:='а ';
+  tysa4[2]:='и ';
+  tysa4[3]:='и ';
+  tysa4[4]:='и ';
+  tysa4[5]:=' ';
+  tysa4[6]:=' ';
+  tysa4[7]:=' ';
+  tysa4[8]:=' ';
+  tysa4[9]:=' ';
+
+  sotn[0]:=' ';
+  sotn[1]:='сто ';
+  sotn[2]:='двесте ';
+  sotn[3]:='триста ';
+  sotn[4]:='четыреста ';
+  sotn[5]:='п€тьсот ';
+  sotn[6]:='шестьсот ';
+  sotn[7]:='семьсот ';
+  sotn[8]:='восемьсот ';
+  sotn[9]:='дев€тьсот ';
+
+  des[0]:=' ';
+  des[1]:='дес€ть ';
+  des[2]:='двадцать ';
+  des[3]:='тридцать ';
+  des[4]:='сорок ';
+  des[5]:='п€тьдес€т ';
+  des[6]:='шестьдес€т ';
+  des[7]:='семьдес€т ';
+  des[8]:='восемьдес€т ';
+  des[9]:='дев€носто ';
+
+  desd[0]:=' ';
+  desd[1]:='одиннадцать ';
+  desd[2]:='двенадцать ';
+  desd[3]:='тринадцать ';
+  desd[4]:='четырнадцать ';
+  desd[5]:='п€тнадцать ';
+  desd[6]:='шеснадцать ';
+  desd[7]:='семнадцать ';
+  desd[8]:='восемнадцать ';
+  desd[9]:='дев€тнадцать ';
+
+  edin[0,0]:=' ';
+  edin[0,1]:='один ';
+  edin[0,2]:='два ';
+  edin[0,3]:='три ';
+  edin[0,4]:='четыре ';
+  edin[0,5]:='п€ть ';
+  edin[0,6]:='шесть ';
+  edin[0,7]:='семь ';
+  edin[0,8]:='восемь ';
+  edin[0,9]:='дев€ть ';
+  edin[1,0]:=' ';
+  edin[1,1]:='одна ';
+  edin[1,2]:='две ';
+  edin[1,3]:='три ';
+  edin[1,4]:='четыре ';
+  edin[1,5]:='п€ть ';
+  edin[1,6]:='шесть ';
+  edin[1,7]:='семь ';
+  edin[1,8]:='восемь ';
+  edin[1,9]:='дев€ть ';
+
+  ruble[0]:='ей ';
+  ruble[1]:='ь ';
+  ruble[2]:='€ ';
+  ruble[3]:='€ ';
+  ruble[4]:='€ ';
+  ruble[5]:='ей ';
+  ruble[6]:='ей ';
+  ruble[7]:='ей ';
+  ruble[8]:='ей ';
+  ruble[9]:='ей ';
+
+  kopeek[0]:='ек';
+  kopeek[1]:='йка';
+  kopeek[2]:='йки';
+  kopeek[3]:='йки';
+  kopeek[4]:='йки';
+  kopeek[5]:='ек';
+  kopeek[6]:='ек';
+  kopeek[7]:='ек';
+  kopeek[8]:='ек';
+  kopeek[9]:='ек';
+
+  nacion[0]:='их ';
+  nacion[1]:='ий ';
+  nacion[2]:='их ';
+  nacion[3]:='их ';
+  nacion[4]:='их ';
+  nacion[5]:='их ';
+  nacion[6]:='их ';
+  nacion[7]:='их ';
+  nacion[8]:='их ';
+  nacion[9]:='их ';
+end;
+
+function ed1(i:integer):string;
+var s:string;
+begin
+  s:='';
+  if i>99 then
+    s:=s+sotn[i div 100];
+  i:=i mod 100;
+  if (i<20) and (i>10) then
+    s:=s+desd[i mod 10];
+  if ((i>19) and (i<100)) or (i=10) then begin
+    s:=s+des[i div 10];
+    i:=i mod 10;
+  end;
+  if i<10 then
+    s:=s+edin[0,i];
+  result:=s;
+end;
+
+function ed2(i:integer):string;
+var s:string;
+begin
+  s:='';
+  if i>99 then
+    s:=s+sotn[i div 100];
+  i:=i mod 100;
+  if (i<20) and (i>10) then
+    s:=s+desd[i mod 10];
+  if ((i>19) and (i<100)) or (i=10) then begin
+    s:=s+des[i div 10];
+    i:=i mod 10;
+  end;
+  if i<10 then
+    s:=s+edin[1,i];
+  result:=s;
+end;
+
+function OkRazr1(i:integer):string;
+var s:string;
+begin
+  s:='';
+  i:=i mod 100;
+  if (i<20) and (i>9) then
+    s:=s+'ов '
+  else begin
+    s:=mill[i mod 10];
+  end;
+  result:=s;
+end;
+
+function OkRazr2(i:integer):string;
+var s:string;
+begin
+  s:='';
+  i:=i mod 100;
+  if (i<20) and (i>10) then
+  s:=s+' '
+  else begin
+    s:=tysa4[i mod 10];
+  end;
+  result:=s;
+end;
+
+function StrFloat(s:string):boolean;
+var i:double;
+begin
+  if TryStrTofloat(s,i) then Result:=true
+  else Result:=false;
+end;
+
+function propis(default:double):string;
+var rez, rezR, rezK,temp_s,temp_r:String;
+    ishR,ishK,kol,i,rub,kop:int64;
+begin
+  kol:=0;
+  rez:='';
+  rub:=Trunc(Abs(default));
+  kop:=Abs(Round(Frac(default)*100));
+  Init();
+  if rub<1000000000000  then
+  begin
+    rezR:='';
+    kol:=0;
+    while rub>0 do
+    begin
+      mass[kol]:=rub mod 1000;
+      rub:=rub div 1000;
+      kol:=kol+1;
+    end;
+    for i := kol-1 downto 0 do
+    begin
+      if mass[i]>0 then
+      begin
+        if i>1 then
+          rezR:=rezR+ed1(mass[i])+razr[i]+OkRazr1(mass[i])
+        else
+          if i=1 then
+            rezR:=rezR+ed2(mass[i])+razr[i]+OkRazr2(mass[i])
+          else
+            if (mass[i]>10) and (mass[i]<20)then
+              rezR:=rezR+ed1(mass[i])+'рублей '
+            else
+              rezR:=rezR+ed1(mass[i])+'рубл'+ruble[mass[0] mod 10];
+      end;
+    end;
+    rezK:='';
+    if kop>0 then
+    begin
+      if (kop<20) and (kop>10) then
+       rezK:=rezK+desd[kop mod 10]+'копеек';
+      if ((kop>=20) and (kop<100)) or (kop=10) then
+      begin
+        rezK:=rezK+des[kop div 10];
+        kop:=kop mod 10;
+      end;
+      if kop<10 then
+        rezK:=rezK+edin[1,kop]+'копе'+kopeek[kop];
+    end;
+    rez:=rezR+rezK;
+    temp_s:=AnsiUpperCase(copy(rez,0,1));
+    temp_r:=Copy(rez,1,Length(rez)-1);
+    insert(temp_s,rez,1);
+    delete(rez,2,1);
+    result:=rez;
+  end;
+end;
+
 end.
-
-
-

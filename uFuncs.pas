@@ -6,6 +6,19 @@ uses
   System.Classes, System.SysUtils, Vcl.Dialogs, System.Variants,
   Winapi.Windows, Forms;
 
+// **** UBPFD *********** by delphibase.endimus.com ****
+// *** Преобразование даты (месяц прописью)
+//
+// Преобразование даты. Например: 23.02.02 преобразуется в 23 февраля 2002 года.
+//
+// Зависимости: DecodeDate
+// Автор:       mukha, mukha@vistcom.ru, Волгоград
+// Copyright:   mukha
+// Дата:        17 ноября 2002 г.
+//*****************************************************
+
+function MonthStr(S: string; isYearFull: Boolean = False; isFirstUpper: Boolean = True): string;
+
 function StrToStrL(Str : String; Delimeters: array of string): TStringList;
 
 procedure ShowError(Msg: string);
@@ -94,5 +107,30 @@ begin
     MB_ICONQUESTION+MB_YESNO+MB_DEFBUTTON2);
 end;
 
+function MonthStr(S: string; isYearFull: Boolean; isFirstUpper: Boolean): string;
+const
+  Mes: array[1..12] of string = ('января', 'февраля', 'марта', 'апреля',
+    'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября',
+    'декабря');
+var
+  Year, Month, Day: Word;
+  YearFull, MonthFull: string;
+begin
+  try
+    StrToDate(S); // пр-ка правильности ввода даты
+    DecodeDate(StrToDate(S), Year, Month, Day);
+    YearFull := 'г.';
+    if isYearFull then
+      YearFull := 'года';
+    MonthFull := Mes[Month];
+    if isFirstUpper then
+      if (Length(MonthFull) > 0) then  //можно еще и так if (S <> '') then но с Length на мой взгляд лучше
+        MonthFull[1] := AnsiUpperCase(MonthFull[1])[1];
+    Result := Format('%s %s %s %s', [IntToStr(day), MonthFull, IntToStr(Year), YearFull]);
+  except
+    raise
+      Exception.Create('"' + s + '"' + ' - такой даты нет!');
+  end;
+end;
 
 end.

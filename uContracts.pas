@@ -152,32 +152,32 @@ begin
   with AVars do
   begin
     Add('Номер',         dm.qryContracts.FieldByName('AGREEMENT_NUM').AsString);
-    Add('ДатаДоговора',  FormatDateTime( 'dd mmmm yyyy г.', dm.qryContracts.FieldByName('DATE_START').AsDateTime ) );
-    Add('ДатаОкончания', FormatDateTime( 'dd mmmm yyyy г.', dm.qryContracts.FieldByName('DATE_FINISH').AsDateTime ) );
-    Add('ДатаРождения',  FormatDateTime( 'dd.mm.yyyy г.', dm.qryContacts.FieldByName('BIRTHDAY').AsDateTime ) );
+    Add('ДатаДоговора',  MonthStr( dm.qryContracts.FieldByName('DATE_START').AsString ) );
+    Add('ДатаОкончания', MonthStr( dm.qryContracts.FieldByName('DATE_FINISH').AsString ) );
+    Add('ДатаРождения',  MonthStr( dm.qryContacts.FieldByName('BIRTHDAY').AsString ) );
     Add('ФИО',           dm.qryContacts.FieldByName('FIO').AsString);
     Add('ФИОСокр',       FIO(dm.qryContacts.FieldByName('FIO').AsString));
-    Add('ТемаДоговора',  dm.qryContracts.FieldByName('KIND').AsString);
+    Add('ТемаДоговора',  (dm.qryContracts.FieldByName('KIND').AsString).ToLower);
     Add('Паспорт',       dm.qryContacts.FieldByName('PASSPORT').AsString);
     Add('ЛичныйНомер',   dm.qryContacts.FieldByName('SOCIAL_NUMBER').AsString);
     Add('Адрес',         GetFieldValue('CONTACT_INFO', 'CONTACT_INFO_VALUE',
       Format('CIT_ID = 1 AND CONTACT_ID = %d', [ dm.qryContacts.FieldByName('BCONTACT_ID').AsInteger ])));
     Add('НомерЗадания',  dm.qryTasks.FieldByName('TASK_NUM').AsString);
-    Add('ДатаЗадания',   FormatDateTime( 'dd mmmm yyyy г.', dm.qryTasks.FieldByName('TASK_DATE').AsDateTime ) );
+    Add('ДатаЗадания',   MonthStr( dm.qryTasks.FieldByName('TASK_DATE').AsString ) );
     Add('Регион',        dm.qryTasks.FieldByName('REGION_RESEARCH').AsString);
     Add('Объект',        dm.qryTasks.FieldByName('OBJECT_RESEARCH').AsString);
     Add('ТемаЗадания',   dm.qryTasks.FieldByName('TASK_THEME').AsString);
     Add('Количество',    dm.qryTasks.FieldByName('TASK_TARGET').AsString);
     Add('Тариф',         dm.qryTasks.FieldByName('TARIF').AsString);
-    Add('ТарифПроп',     MoneyToStr(dm.qryTasks.FieldByName('TARIF').AsFloat));
-    Add('ДатаНачала',    FormatDateTime( 'dd.mm.yyyy г.', dm.qryTasks.FieldByName('DATE_START').AsDateTime ) );
-    Add('ДатаОкончанияЗадания', FormatDateTime( 'dd.mm.yyyy г.', dm.qryTasks.FieldByName('DATE_FINISH').AsDateTime ) );
+    Add('ТарифПроп',     Propis(dm.qryTasks.FieldByName('TARIF').AsFloat));
+    Add('ДатаНачала',    MonthStr( dm.qryTasks.FieldByName('DATE_START').AsString ) );
+    Add('ДатаОкончанияЗадания', MonthStr( dm.qryTasks.FieldByName('DATE_FINISH').AsString ) );
     Add('НомерАкта',     dm.qryActs.FieldByName('ACT_NUM').AsString);
-    Add('ДатаАкта',      FormatDateTime( 'dd mmmm yyyy г.', dm.qryActs.FieldByName('ACT_DATE').AsDateTime ) );
+    Add('ДатаАкта',      MonthStr( dm.qryActs.FieldByName('ACT_DATE').AsString ) );
     Add('КоличествоАнкет',    dm.qryActs.FieldByName('COUNT_ANKETA').AsString);
     Add('КоличествоАнкетПроп', MoneyToStr(dm.qryActs.FieldByName('COUNT_ANKETA').AsInteger, 1));
     Add('Стоимость',         dm.qryActs.FieldByName('COST').AsString);
-    Add('СтоимостьПроп', MoneyToStr( dm.qryActs.FieldByName('COST').AsFloat ) );
+    Add('СтоимостьПроп', Propis( dm.qryActs.FieldByName('COST').AsFloat ) );
   end;
 end;
 
