@@ -67,6 +67,8 @@ begin
 end;
 
 procedure TfEditContract.Init;
+var
+  vAddress: Variant;
 begin
   with dm.qryContracts do
   begin
@@ -88,8 +90,14 @@ begin
     end;
   end;
   try
-    edtAddress.Text := GetFieldValue('CONTACT_INFO', 'CONTACT_INFO_VALUE',
+    vAddress := GetFieldValue('CONTACT_INFO', 'CONTACT_INFO_VALUE',
       Format('CIT_ID = 1 AND CONTACT_ID = %d', [ dm.qryContacts.FieldByName('BCONTACT_ID').AsInteger ]));
+    if VarIsNull(vAddress) then
+    begin
+      ShowError(Format('У контакта %s не заполнен адрес.', [ edtFIO.Text ] ));
+    end;
+    edtAddress.Text := VarToStr(vAddress);
+
   except on E: Exception do
     ShowError('При открытии дополнительных таблиц возникла ошибка.'#13#10 + E.Message);
   end;

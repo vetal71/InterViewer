@@ -160,8 +160,8 @@ begin
     Add('ТемаДоговора',  (dm.qryContracts.FieldByName('KIND').AsString).ToLower);
     Add('Паспорт',       dm.qryContacts.FieldByName('PASSPORT').AsString);
     Add('ЛичныйНомер',   dm.qryContacts.FieldByName('SOCIAL_NUMBER').AsString);
-    Add('Адрес',         GetFieldValue('CONTACT_INFO', 'CONTACT_INFO_VALUE',
-      Format('CIT_ID = 1 AND CONTACT_ID = %d', [ dm.qryContacts.FieldByName('BCONTACT_ID').AsInteger ])));
+    Add('Адрес',         VarToStr( GetFieldValue('CONTACT_INFO', 'CONTACT_INFO_VALUE',
+      Format('CIT_ID = 1 AND CONTACT_ID = %d', [ dm.qryContacts.FieldByName('BCONTACT_ID').AsInteger ]))) );
     Add('НомерЗадания',  dm.qryTasks.FieldByName('TASK_NUM').AsString);
     Add('ДатаЗадания',   MonthStr( dm.qryTasks.FieldByName('TASK_DATE').AsString ) );
     Add('Регион',        dm.qryTasks.FieldByName('REGION_RESEARCH').AsString);

@@ -543,7 +543,7 @@ begin
     MB_ICONQUESTION or MB_OKCANCEL) <> mrOk then Exit;
 
   Count := GetContactsCount( dm.qryContacts.FieldByName('BCONTACT_ID').AsInteger );
-  if Count = 1 then
+  if Count <= 1 then
     DeleteContact( dm.qryContacts.FieldByName('BCONTACT_ID').AsInteger )
   else if Count > 1 then
     DeleteMultipleContact( dm.qryContacts.FieldByName('WC_ID').AsInteger );
