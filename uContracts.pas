@@ -162,22 +162,28 @@ begin
     Add('ЛичныйНомер',   dm.qryContacts.FieldByName('SOCIAL_NUMBER').AsString);
     Add('Адрес',         VarToStr( GetFieldValue('CONTACT_INFO', 'CONTACT_INFO_VALUE',
       Format('CIT_ID = 1 AND CONTACT_ID = %d', [ dm.qryContacts.FieldByName('BCONTACT_ID').AsInteger ]))) );
-    Add('НомерЗадания',  dm.qryTasks.FieldByName('TASK_NUM').AsString);
-    Add('ДатаЗадания',   MonthStr( dm.qryTasks.FieldByName('TASK_DATE').AsString ) );
-    Add('Регион',        dm.qryTasks.FieldByName('REGION_RESEARCH').AsString);
-    Add('Объект',        dm.qryTasks.FieldByName('OBJECT_RESEARCH').AsString);
-    Add('ТемаЗадания',   dm.qryTasks.FieldByName('TASK_THEME').AsString);
-    Add('Количество',    dm.qryTasks.FieldByName('TASK_TARGET').AsString);
-    Add('Тариф',         dm.qryTasks.FieldByName('TARIF').AsString);
-    Add('ТарифПроп',     Propis(dm.qryTasks.FieldByName('TARIF').AsFloat));
-    Add('ДатаНачала',    MonthStr( dm.qryTasks.FieldByName('DATE_START').AsString ) );
-    Add('ДатаОкончанияЗадания', MonthStr( dm.qryTasks.FieldByName('DATE_FINISH').AsString ) );
-    Add('НомерАкта',     dm.qryActs.FieldByName('ACT_NUM').AsString);
-    Add('ДатаАкта',      MonthStr( dm.qryActs.FieldByName('ACT_DATE').AsString ) );
-    Add('КоличествоАнкет',    dm.qryActs.FieldByName('COUNT_ANKETA').AsString);
-    Add('КоличествоАнкетПроп', MoneyToStr(dm.qryActs.FieldByName('COUNT_ANKETA').AsInteger, 1));
-    Add('Стоимость',         dm.qryActs.FieldByName('COST').AsString);
-    Add('СтоимостьПроп', Propis( dm.qryActs.FieldByName('COST').AsFloat ) );
+    if dm.qryTasks.RecordCount > 0 then
+    begin
+      Add('НомерЗадания',  dm.qryTasks.FieldByName('TASK_NUM').AsString);
+      Add('ДатаЗадания',   MonthStr( dm.qryTasks.FieldByName('TASK_DATE').AsString ) );
+      Add('Регион',        dm.qryTasks.FieldByName('REGION_RESEARCH').AsString);
+      Add('Объект',        dm.qryTasks.FieldByName('OBJECT_RESEARCH').AsString);
+      Add('ТемаЗадания',   dm.qryTasks.FieldByName('TASK_THEME').AsString);
+      Add('Количество',    dm.qryTasks.FieldByName('TASK_TARGET').AsString);
+      Add('Тариф',         dm.qryTasks.FieldByName('TARIF').AsString);
+      Add('ТарифПроп',     Propis(dm.qryTasks.FieldByName('TARIF').AsFloat));
+      Add('ДатаНачала',    MonthStr( dm.qryTasks.FieldByName('DATE_START').AsString ) );
+      Add('ДатаОкончанияЗадания', MonthStr( dm.qryTasks.FieldByName('DATE_FINISH').AsString ) );
+    end;
+    if dm.qryActs.RecordCount > 0 then
+    begin
+      Add('НомерАкта',     dm.qryActs.FieldByName('ACT_NUM').AsString);
+      Add('ДатаАкта',      MonthStr( dm.qryActs.FieldByName('ACT_DATE').AsString ) );
+      Add('КоличествоАнкет',    dm.qryActs.FieldByName('COUNT_ANKETA').AsString);
+      Add('КоличествоАнкетПроп', MoneyToStr(dm.qryActs.FieldByName('COUNT_ANKETA').AsInteger, 1));
+      Add('Стоимость',         dm.qryActs.FieldByName('COST').AsString);
+      Add('СтоимостьПроп', Propis( dm.qryActs.FieldByName('COST').AsFloat ) );
+    end;
   end;
 end;
 

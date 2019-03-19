@@ -1,5 +1,5 @@
 ﻿[update]
-newversion=1.3.5.5
+newversion=1.3.5.6
 localversion=InterViewer.exe
 
 [action]
@@ -10,43 +10,50 @@ count=7
 
 [file1]
 url=InterViewer.exe_NEW
-newversion=1.3.5.5
+newversion=1.3.5.6
 localversion=InterViewer.exe
+filesize=4399616
 
 [file2]
 url=Шаблон акта.doc
 localversion=Шаблон акта.doc
 targetdir={app}\Templates
 newchecksum=1234616
+filesize=35840
 
 [file3]
 url=Шаблон договора по колл центру.doc
 localversion=Шаблон договора по колл центру.doc
 targetdir={app}\Templates
 newchecksum=2802907
+filesize=71680
 
 [file4]
 url=Шаблон договора по социологическим опросам.doc
 localversion=Шаблон договора по социологическим опросам.doc
 targetdir={app}\Templates
 newchecksum=2789243
+filesize=69120
 
 [file5]
 url=Шаблон договора тайного покупателя.doc
 localversion=Шаблон договора тайного покупателя.doc
 targetdir={app}\Templates
 newchecksum=2499469
+filesize=62464
 
 [file6]
 url=Шаблон задания.doc
 localversion=Шаблон задания.doc
 targetdir={app}\Templates
 newchecksum=1175694
+filesize=35328
 
 [file7]
 url=config.ini
 localversion=config.ini
 targetdir={app}
+filesize=192
 
 [application]
 appupdate=1
