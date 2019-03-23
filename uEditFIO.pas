@@ -38,8 +38,8 @@ implementation
 
 procedure TfEditFIO.ChangeFIO;
 begin
-  FFIO := Format('%s %s %s', [ edtSecondName.Text, edtName.Text, edtSeName.Text ]);
-  edtFullFIO.Text := TrimRight(FFIO);
+  FFIO := TrimRight(Format('%s %s %s', [ edtSecondName.Text, edtName.Text, edtSeName.Text ]));
+  edtFullFIO.Text := FFIO;
 end;
 
 procedure TfEditFIO.edtSecondNamePropertiesChange(Sender: TObject);

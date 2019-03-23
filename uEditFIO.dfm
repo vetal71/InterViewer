@@ -9,7 +9,7 @@ inherited fEditFIO: TfEditFIO
   inherited dlgButtons: TRzDialogButtons
     Top = 137
     Width = 539
-    ExplicitTop = 164
+    ExplicitTop = 137
     ExplicitWidth = 539
   end
   inherited pnlMain: TRzPanel
@@ -17,7 +17,7 @@ inherited fEditFIO: TfEditFIO
     Height = 137
     ExplicitTop = 0
     ExplicitWidth = 539
-    ExplicitHeight = 164
+    ExplicitHeight = 137
     object lbl1: TLabel
       Left = 8
       Top = 73
