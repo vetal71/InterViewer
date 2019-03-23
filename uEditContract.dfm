@@ -13,8 +13,6 @@ inherited fEditContract: TfEditContract
   inherited pnlMain: TRzPanel [1]
     Width = 695
     Height = 229
-    ExplicitLeft = 0
-    ExplicitTop = 29
     ExplicitWidth = 695
     ExplicitHeight = 229
     object Label1: TLabel

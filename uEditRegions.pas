@@ -4,14 +4,14 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTDialog, Vcl.ExtCtrls, RzPanel,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTEditDialog, Vcl.ExtCtrls, RzPanel,
   RzDlgBtn, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
   cxContainer, cxEdit, Data.DB, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, Vcl.StdCtrls,
   DBAccess, Uni, MemDS, cxClasses;
 
 type
-  TfEditRegions = class(TfTDialog)
+  TfEditRegions = class(TfTEditDialog)
     lbl2: TLabel;
     lbl1: TLabel;
     cbbCities: TcxDBLookupComboBox;

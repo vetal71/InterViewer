@@ -220,7 +220,7 @@ begin
     dm.qryContacts.Open;
     dm.qryContacts.First;
   except on E: Exception do
-    ShowError('Ќе удалось получить данны контактов.'#13#10 + E.Message);
+    ShowError('Ќе удалось получить данные контактов.'#13#10 + E.Message);
   end;
 end;
 

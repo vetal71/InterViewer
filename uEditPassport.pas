@@ -4,14 +4,14 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTDialog, Vcl.ExtCtrls, RzPanel,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTEditDialog, Vcl.ExtCtrls, RzPanel,
   RzDlgBtn, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
   cxContainer, cxEdit, cxTextEdit, Vcl.StdCtrls, Vcl.ComCtrls, dxCore,
   cxDateUtils, cxMaskEdit, cxDropDownEdit, cxCalendar, System.AnsiStrings,
   cxClasses;
 
 type
-  TfEditPassport = class(TfTDialog)
+  TfEditPassport = class(TfTEditDialog)
     lbl2: TLabel;
     edtSiries: TcxTextEdit;
     lbl1: TLabel;

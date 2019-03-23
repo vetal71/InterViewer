@@ -22,7 +22,8 @@ uses
   uEditTask in 'uEditTask.pas' {fEditTask},
   uEditAct in 'uEditAct.pas' {fEditAct},
   LibMoney in 'LibMoney.pas',
-  uWaitForm in 'uWaitForm.pas' {fSplash};
+  uWaitForm in 'uWaitForm.pas' {fSplash},
+  uTEditDialog in 'uTEditDialog.pas' {fTEditDialog};
 
 {$R *.res}
 
@@ -32,5 +33,6 @@ begin
   Application.Title := 'База интервьюеров';
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TfMain, fMain);
+  Application.CreateForm(TfTEditDialog, fTEditDialog);
   Application.Run;
 end.

@@ -4,12 +4,12 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTDialog, Vcl.ExtCtrls, RzPanel,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTEditDialog, Vcl.ExtCtrls, RzPanel,
   RzDlgBtn, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
   cxContainer, cxEdit, cxTextEdit, Vcl.StdCtrls, uFuncs, cxClasses;
 
 type
-  TfEditFIO = class(TfTDialog)
+  TfEditFIO = class(TfTEditDialog)
     edtSecondName: TcxTextEdit;
     lbl2: TLabel;
     lbl3: TLabel;
@@ -39,7 +39,7 @@ implementation
 procedure TfEditFIO.ChangeFIO;
 begin
   FFIO := Format('%s %s %s', [ edtSecondName.Text, edtName.Text, edtSeName.Text ]);
-  edtFullFIO.Text := FFIO;
+  edtFullFIO.Text := TrimRight(FFIO);
 end;
 
 procedure TfEditFIO.edtSecondNamePropertiesChange(Sender: TObject);

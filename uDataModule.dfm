@@ -10,6 +10,7 @@ object dm: Tdm
       'InterBase.Charset=UTF-8'
       'InterBase.UseUnicode=True')
     Options.KeepDesignConnected = False
+    Debug = True
     Username = 'sysdba'
     Server = 'localhost'
     Connected = True

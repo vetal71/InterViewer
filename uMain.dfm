@@ -7,7 +7,7 @@ object fMain: TfMain
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -12
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -152,7 +152,7 @@ object fMain: TfMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object pb: TAdvCircularProgress
     Left = 624
     Top = 288
@@ -248,7 +248,7 @@ object fMain: TfMain
     Align = alClient
     ShowShadow = False
     TabOrder = 1
-    FixedDimension = 19
+    FixedDimension = 20
     object tsNew: TRzTabSheet
       TabVisible = False
       Caption = 'tsNew'
@@ -518,29 +518,29 @@ object fMain: TfMain
           object lbl12: TLabel
             Left = 13
             Top = 47
-            Width = 104
-            Height = 13
+            Width = 115
+            Height = 14
             Caption = #1069#1083#1077#1082#1090#1088#1086#1085#1085#1072#1103' '#1087#1086#1095#1090#1072':'
           end
           object lbl13: TLabel
             Left = 830
             Top = 47
-            Width = 93
-            Height = 13
+            Width = 103
+            Height = 14
             Caption = #1057#1086#1094#1080#1072#1083#1100#1085#1099#1077' '#1089#1077#1090#1080':'
           end
           object lbl14: TLabel
             Left = 829
             Top = 74
-            Width = 94
-            Height = 13
+            Width = 103
+            Height = 14
             Caption = #1044#1072#1085#1085#1099#1077' '#1087#1072#1089#1087#1086#1088#1090#1072':'
           end
           object lbl15: TLabel
             Left = 13
             Top = 74
-            Width = 100
-            Height = 13
+            Width = 114
+            Height = 14
             Caption = #1040#1076#1088#1077#1089' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103':'
           end
           object lbl16: TLabel
@@ -559,15 +559,15 @@ object fMain: TfMain
           object lbl17: TLabel
             Left = 13
             Top = 128
-            Width = 89
-            Height = 13
+            Width = 98
+            Height = 14
             Caption = #1057#1087#1086#1089#1086#1073#1099' '#1086#1087#1083#1072#1090#1099':'
           end
           object lbl19: TLabel
             Left = 13
             Top = 150
-            Width = 141
-            Height = 13
+            Width = 155
+            Height = 14
             Caption = #1054#1089#1085#1086#1074#1085#1099#1077' '#1093#1072#1088#1072#1082#1090#1077#1088#1080#1089#1090#1080#1082#1080':'
           end
           object lbl20: TLabel
@@ -587,17 +587,17 @@ object fMain: TfMain
             Left = 136
             Top = 44
             Width = 687
-            Height = 21
+            Height = 22
             DataField = 'F_EMAIL'
             DataSource = dm.udsContacts
             ReadOnly = True
             TabOrder = 0
           end
           object edtSOCIALNET: TDBEdit
-            Left = 928
+            Left = 939
             Top = 44
-            Width = 334
-            Height = 21
+            Width = 323
+            Height = 22
             Anchors = [akLeft, akTop, akRight]
             DataField = 'F_SOCIALNET'
             DataSource = dm.udsContacts
@@ -605,10 +605,10 @@ object fMain: TfMain
             TabOrder = 1
           end
           object edtPASSPORT_: TDBEdit
-            Left = 928
+            Left = 938
             Top = 71
-            Width = 334
-            Height = 21
+            Width = 324
+            Height = 22
             Anchors = [akLeft, akTop, akRight]
             DataField = 'PASSPORT'
             DataSource = dm.udsContacts
@@ -619,7 +619,7 @@ object fMain: TfMain
             Left = 136
             Top = 71
             Width = 687
-            Height = 21
+            Height = 22
             DataField = 'F_ADDRESS'
             DataSource = dm.udsContacts
             ReadOnly = True
@@ -647,7 +647,7 @@ object fMain: TfMain
             Left = 136
             Top = 125
             Width = 1126
-            Height = 21
+            Height = 22
             Anchors = [akLeft, akTop, akRight]
             DataField = 'F_TRANSFERS'
             DataSource = dm.udsContacts
@@ -964,29 +964,29 @@ object fMain: TfMain
             object lbl3: TLabel
               Left = 5
               Top = 39
-              Width = 104
-              Height = 13
+              Width = 115
+              Height = 14
               Caption = #1069#1083#1077#1082#1090#1088#1086#1085#1085#1072#1103' '#1087#1086#1095#1090#1072':'
             end
             object lbl4: TLabel
               Left = 573
               Top = 39
-              Width = 117
-              Height = 13
+              Width = 131
+              Height = 14
               Caption = #1044#1088#1091#1075#1080#1077' '#1089#1087#1086#1089#1086#1073#1099' '#1089#1074#1103#1079#1080':'
             end
             object lbl5: TLabel
               Left = 5
               Top = 66
-              Width = 100
-              Height = 13
+              Width = 114
+              Height = 14
               Caption = #1040#1076#1088#1077#1089' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103':'
             end
             object lbl6: TLabel
               Left = 573
               Top = 66
-              Width = 94
-              Height = 13
+              Width = 103
+              Height = 14
               Caption = #1044#1072#1085#1085#1099#1077' '#1087#1072#1089#1087#1086#1088#1090#1072':'
             end
             object lbl7: TLabel
@@ -1005,22 +1005,22 @@ object fMain: TfMain
             object lbl8: TLabel
               Left = 5
               Top = 120
-              Width = 92
-              Height = 13
+              Width = 103
+              Height = 14
               Caption = #1057#1087#1086#1089#1086#1073' '#1087#1077#1088#1077#1074#1086#1076#1072':'
             end
             object lbl9: TLabel
               Left = 573
               Top = 120
-              Width = 103
-              Height = 13
+              Width = 115
+              Height = 14
               Caption = #1053#1086#1084#1077#1088#1072' '#1082#1072#1088#1090'-'#1089#1095#1077#1090#1086#1074
             end
             object lbl10: TLabel
               Left = 5
               Top = 142
-              Width = 141
-              Height = 13
+              Width = 155
+              Height = 14
               Caption = #1054#1089#1085#1086#1074#1085#1099#1077' '#1093#1072#1088#1072#1082#1090#1077#1088#1080#1089#1090#1080#1082#1080':'
             end
             object dbmmoCURRENTNOTES: TDBMemo
@@ -1045,7 +1045,7 @@ object fMain: TfMain
               Left = 128
               Top = 36
               Width = 435
-              Height = 21
+              Height = 22
               DataField = 'EMAIL'
               DataSource = dm.dsContacts
               ReadOnly = True
@@ -1055,7 +1055,7 @@ object fMain: TfMain
               Left = 689
               Top = 36
               Width = 569
-              Height = 21
+              Height = 22
               Anchors = [akLeft, akTop, akRight]
               DataField = 'OTHERTYPELINKS'
               DataSource = dm.dsContacts
@@ -1066,7 +1066,7 @@ object fMain: TfMain
               Left = 128
               Top = 63
               Width = 435
-              Height = 21
+              Height = 22
               DataField = 'ADDRESS'
               DataSource = dm.dsContacts
               ReadOnly = True
@@ -1076,7 +1076,7 @@ object fMain: TfMain
               Left = 689
               Top = 63
               Width = 569
-              Height = 21
+              Height = 22
               Anchors = [akLeft, akTop, akRight]
               DataField = 'PASSPORT'
               DataSource = dm.dsContacts
@@ -1105,7 +1105,7 @@ object fMain: TfMain
               Left = 128
               Top = 117
               Width = 435
-              Height = 21
+              Height = 22
               DataField = 'TRANSFERTYPE'
               DataSource = dm.dsContacts
               ReadOnly = True
@@ -1115,7 +1115,7 @@ object fMain: TfMain
               Left = 689
               Top = 117
               Width = 569
-              Height = 21
+              Height = 22
               Anchors = [akLeft, akTop, akRight]
               DataField = 'NUMBERCARD'
               DataSource = dm.dsContacts

@@ -8,21 +8,20 @@ inherited fEditContacts: TfEditContacts
   inherited lblCaption: TLabel
     Width = 869
     Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103' '#1086' '#1082#1086#1085#1090#1072#1082#1090#1077
-    ExplicitTop = 32
     ExplicitWidth = 241
   end
   inherited dlgButtons: TRzDialogButtons
     Top = 709
     Width = 875
-    ExplicitTop = 586
+    ExplicitTop = 709
     ExplicitWidth = 875
   end
   inherited pnlMain: TRzPanel
     Width = 875
     Height = 680
-    ExplicitTop = 444
+    ExplicitTop = 29
     ExplicitWidth = 875
-    ExplicitHeight = 142
+    ExplicitHeight = 680
     object pnlMainInfo: TRzPanel
       Left = 0
       Top = 0
@@ -37,7 +36,6 @@ inherited fEditContacts: TfEditContacts
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      ExplicitTop = 29
       object Label2: TLabel
         Left = 11
         Top = 218
@@ -199,7 +197,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 4
+        TabOrder = 5
         Width = 581
       end
       object edtFIO: TcxButtonEdit
@@ -245,7 +243,7 @@ inherited fEditContacts: TfEditContacts
               0000000000000000000000000000000000000000000000000000}
             Kind = bkGlyph
           end>
-        Properties.ValidationOptions = [evoRaiseException, evoShowErrorIcon, evoAllowLoseFocus]
+        Properties.ValidationOptions = [evoShowErrorIcon, evoAllowLoseFocus]
         Properties.OnButtonClick = edtFIOPropertiesButtonClick
         Properties.OnValidate = edtFIOPropertiesValidate
         Style.LookAndFeel.Kind = lfFlat
@@ -256,7 +254,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 0
+        TabOrder = 1
         TextHint = #1044#1083#1103' '#1087#1088#1072#1074#1080#1083#1100#1085#1086#1075#1086' '#1074#1074#1086#1076#1072' '#1080#1089#1087#1086#1083#1100#1079#1091#1081#1090#1077' '#1082#1085#1086#1087#1082#1091' '#1089#1087#1088#1072#1074#1072
         OnExit = edtFIOExit
         Width = 581
@@ -275,7 +273,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 1
+        TabOrder = 2
         Text = #1046
         Width = 59
       end
@@ -290,7 +288,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 8
+        TabOrder = 9
         Height = 45
         Width = 850
       end
@@ -306,7 +304,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 9
+        TabOrder = 10
         Height = 43
         Width = 850
       end
@@ -322,7 +320,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 10
+        TabOrder = 11
         Height = 43
         Width = 850
       end
@@ -373,7 +371,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 12
+        TabOrder = 13
         Width = 70
       end
       object edtDateBirthday: TcxDateEdit
@@ -424,7 +422,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 2
+        TabOrder = 3
         Width = 120
       end
       object edtPassport: TcxButtonEdit
@@ -479,7 +477,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 3
+        TabOrder = 4
         TextHint = #1044#1083#1103' '#1087#1088#1072#1074#1080#1083#1100#1085#1086#1075#1086' '#1074#1074#1086#1076#1072' '#1080#1089#1087#1086#1083#1100#1079#1091#1081#1090#1077' '#1082#1085#1086#1087#1082#1091' '#1089#1087#1088#1072#1074#1072
         Width = 581
       end
@@ -530,7 +528,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 11
+        TabOrder = 12
         Width = 120
       end
       object edtPercentGood: TcxCalcEdit
@@ -580,7 +578,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 13
+        TabOrder = 14
         Width = 70
       end
       object edtPercentBad: TcxCalcEdit
@@ -630,7 +628,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 14
+        TabOrder = 15
         Width = 70
       end
       object chkSupervizer: TcxCheckBox
@@ -651,7 +649,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 6
+        TabOrder = 7
       end
       object chkBlackList: TcxCheckBox
         Left = 609
@@ -671,7 +669,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 7
+        TabOrder = 8
       end
       object edtSocialNumber: TcxTextEdit
         Left = 134
@@ -684,7 +682,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 5
+        TabOrder = 6
         Width = 353
       end
       object imgPhoto: TcxImage
@@ -701,7 +699,7 @@ inherited fEditContacts: TfEditContacts
         StyleFocused.LookAndFeel.NativeStyle = False
         StyleHot.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.NativeStyle = False
-        TabOrder = 15
+        TabOrder = 0
         OnClick = imgPhotoClick
         Height = 158
         Width = 140
@@ -717,8 +715,6 @@ inherited fEditContacts: TfEditContacts
       BorderOuter = fsNone
       BorderSides = [sdTop]
       TabOrder = 1
-      ExplicitTop = 29
-      ExplicitHeight = 680
       object pnlButtons: TRzPanel
         Left = 0
         Top = 1
@@ -868,11 +864,9 @@ inherited fEditContacts: TfEditContacts
         Align = alClient
         TabIndex = 0
         TabOrder = 1
-        ExplicitHeight = 638
         FixedDimension = 20
         object tsContactInfo: TRzTabSheet
           Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1072#1103' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1103
-          ExplicitHeight = 614
           object grdContactInfo: TcxGrid
             AlignWithMargins = True
             Left = 3
@@ -883,7 +877,6 @@ inherited fEditContacts: TfEditContacts
             TabOrder = 0
             LookAndFeel.Kind = lfFlat
             LookAndFeel.NativeStyle = False
-            ExplicitHeight = 608
             object gdvContactInfo: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               FindPanel.DisplayMode = fpdmManual
@@ -946,18 +939,16 @@ inherited fEditContacts: TfEditContacts
         end
         object tsRegions: TRzTabSheet
           Caption = #1047#1086#1085#1072' '#1086#1073#1089#1083#1091#1078#1080#1074#1072#1085#1080#1103
-          ExplicitHeight = 76
           object grdRegions: TcxGrid
             AlignWithMargins = True
             Left = 3
             Top = 3
             Width = 865
-            Height = 608
+            Height = 222
             Align = alClient
             TabOrder = 0
             LookAndFeel.Kind = lfFlat
             LookAndFeel.NativeStyle = False
-            ExplicitHeight = 70
             object gdvRegions: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               FindPanel.DisplayMode = fpdmManual
@@ -1026,18 +1017,16 @@ inherited fEditContacts: TfEditContacts
         end
         object tsTransferInfo: TRzTabSheet
           Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103' '#1086#1073' '#1086#1087#1083#1072#1090#1077
-          ExplicitHeight = 76
           object grdTransfer: TcxGrid
             AlignWithMargins = True
             Left = 3
             Top = 3
             Width = 865
-            Height = 608
+            Height = 222
             Align = alClient
             TabOrder = 0
             LookAndFeel.Kind = lfFlat
             LookAndFeel.NativeStyle = False
-            ExplicitHeight = 70
             object gdvTransfer: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               FindPanel.DisplayMode = fpdmManual

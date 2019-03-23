@@ -13,7 +13,7 @@ uses
   RzTabs, Vcl.Buttons, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage,
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, cxImage,
-  Vcl.ExtDlgs, Vcl.Imaging.jpeg, uTDialog, uDBFuncs, uFuncs;
+  Vcl.ExtDlgs, Vcl.Imaging.jpeg, uTEditDialog, uDBFuncs, uFuncs, uTDialog;
 
 type
   TfEditContacts = class(TfTDialog)
@@ -180,7 +180,7 @@ end;
 
 procedure TfEditContacts.EditContactInfo(AMode: TDBMode);
 var
-  EditDlg: TfTDialog;
+  EditDlg: TfTEditDialog;
   DataSet: TDataSet;
 begin
   if pgcInfo.ActivePageIndex = 0 then            // контактная информация
@@ -250,6 +250,11 @@ begin
   begin
     Error := True;
     ErrorText := 'Поле не может быть пустым.';
+  end;
+  if CheckExistValue('BOOK_CONTACTS', Format('UPPER(FIO) like ''%s''', [ AnsiUpperCase(TrimRight(edtFIO.Text)) ] )) > 0 then
+  begin
+    Error := True;
+    ErrorText := Format('Контакт %s уже существует. Проверьте.', [ edtFIO.Text ]);
   end;
 end;
 
