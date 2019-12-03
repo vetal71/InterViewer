@@ -175,7 +175,7 @@ object fMain: TfMain
     BorderOuter = fsNone
     BorderSides = [sdLeft, sdTop, sdRight, sdBottom]
     BorderWidth = 0
-    TabOrder = 0
+    TabOrder = 5
     object spText: TRzStatusPane
       Left = 0
       Top = 0
@@ -247,7 +247,7 @@ object fMain: TfMain
     ActivePageDefault = tsNew
     Align = alClient
     ShowShadow = False
-    TabOrder = 1
+    TabOrder = 2
     FixedDimension = 20
     object tsNew: TRzTabSheet
       TabVisible = False
@@ -613,7 +613,7 @@ object fMain: TfMain
             DataField = 'PASSPORT'
             DataSource = dm.udsContacts
             ReadOnly = True
-            TabOrder = 2
+            TabOrder = 3
           end
           object edtADDRESS_: TDBEdit
             Left = 136
@@ -623,7 +623,7 @@ object fMain: TfMain
             DataField = 'F_ADDRESS'
             DataSource = dm.udsContacts
             ReadOnly = True
-            TabOrder = 3
+            TabOrder = 2
           end
           object edtSPECIALIZATION_: TDBEdit
             Left = 136
@@ -689,6 +689,10 @@ object fMain: TfMain
     object tsOld: TRzTabSheet
       TabVisible = False
       Caption = 'tsOld'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object pnlMain: TRzPanel
         AlignWithMargins = True
         Left = 3
@@ -1544,14 +1548,14 @@ object fMain: TfMain
       Text = '('#1042#1089#1077')'
       Items.Strings = (
         '('#1042#1089#1077')'
-        #1057#1091#1087#1077#1088#1074#1072#1081#1079#1077#1088
-        #1058#1072#1081#1085#1099#1081' '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1100
-        #1054#1087#1077#1088#1072#1090#1086#1088' call-'#1094#1077#1085#1090#1088#1072
-        #1060#1086#1082#1091#1089'-'#1075#1088#1091#1087#1087#1072
-        #1059#1083#1080#1095#1085#1099#1081' '#1086#1087#1088#1086#1089
-        #1055#1086#1082#1074#1072#1088#1090#1080#1088#1085#1099#1081' '#1086#1087#1088#1086#1089
-        #1042#1073#1080#1074#1097#1080#1082
-        #1040#1091#1090#1089#1086#1088#1089)
+        #1089#1091#1087#1077#1088#1074#1072#1081#1079#1077#1088
+        #1090#1072#1081#1085#1099#1081' '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1100
+        #1076#1080#1089#1087#1077#1090#1095#1077#1088' '#1082#1086#1083#1083'-'#1094#1077#1085#1090#1088#1072
+        #1092#1086#1082#1091#1089'-'#1075#1088#1091#1087#1087#1072
+        #1091#1083#1080#1095#1085#1099#1081' '#1086#1087#1088#1086#1089
+        #1087#1086#1082#1074#1072#1088#1090#1080#1088#1085#1099#1081' '#1086#1087#1088#1086#1089
+        #1074#1073#1080#1074#1082#1072
+        #1072#1091#1090#1089#1086#1088#1089)
       ItemIndex = 0
     end
   end

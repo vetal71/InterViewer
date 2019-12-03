@@ -7,26 +7,19 @@ inherited fEditContactInfo: TfEditContactInfo
   ExplicitHeight = 172
   PixelsPerInch = 96
   TextHeight = 14
-  inherited lblCaption: TLabel
-    Width = 573
-    Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1072#1103' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1103
-    ExplicitWidth = 246
-  end
   inherited dlgButtons: TRzDialogButtons
     Top = 107
     Width = 579
     EnableOk = False
     OnClickOk = dlgButtonsClickOk
-    ExplicitTop = 75
-    ExplicitWidth = 577
+    ExplicitTop = 107
+    ExplicitWidth = 579
   end
   inherited pnlMain: TRzPanel
     Width = 579
-    Height = 78
-    ExplicitLeft = 0
-    ExplicitTop = 29
-    ExplicitWidth = 577
-    ExplicitHeight = 46
+    Height = 107
+    ExplicitWidth = 579
+    ExplicitHeight = 107
     object lbl1: TLabel
       Left = 8
       Top = 47
